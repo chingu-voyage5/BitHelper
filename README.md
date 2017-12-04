@@ -12,6 +12,7 @@ Coming soon
 ## User stories 
 
 **As a help seeker or as a helper, I can...**
+
 | User story | Version | Status |
 | --- | --- | --- |
 | view a list of help wanted posts on main page | MVP | :red_circle: |
