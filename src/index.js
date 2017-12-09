@@ -13,7 +13,7 @@ axios.get(apiUrl)
   app(apiUrl);
 })    
 .catch(err => {
-  console.error('local server not running. using heroku deployment of the server.');
+  console.error('local server not running. using heroku deployment of the server instead.');
   app(process.env.REACT_APP_APIURL);
 });
 
