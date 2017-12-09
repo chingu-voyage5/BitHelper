@@ -5,20 +5,21 @@ import CommentBox from './CommentBox';
 
 require('dotenv').load();
 
-const apiUrl = process.env.REACT_APP_APIURL;
-const apiUrlTest = window.location.origin + '/api';
+let apiUrl = window.location.origin + '/api';
 
 axios.get(apiUrl)
 .then(res => {
-  console.log(res);
-})
+  console.log('using local server');
+  app(apiUrl);
+})    
+.catch(err => {
+  console.error('local server not running. using heroku deployment of the server.');
+  app(process.env.REACT_APP_APIURL);
+});
 
-axios.get(apiUrlTest)
-.then(res => {
-  console.log(res);
-})
-/*
-ReactDOM.render(<CommentBox 
-    url={apiUrl + '/comments'}
-    pollInterval={2000} />, document.getElementById('root'));
-*/
+const app = (apiUrl) => {
+    console.log('apiUrl = ', apiUrl);
+    ReactDOM.render(<CommentBox 
+        url={apiUrl + '/comments'}
+        pollInterval={2000} />, document.getElementById('root'));   
+}
