@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import CommentBox from './CommentBox';
 
-import App from './App';
+require('dotenv').load();
+console.log(process.env);
 
+const apiUrl = process.env.REACT_APP_APIURL;
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<CommentBox 
+    url={apiUrl + '/comments'}
+    pollInterval={2000} />, document.getElementById('root'));
