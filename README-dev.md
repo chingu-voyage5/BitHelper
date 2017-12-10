@@ -66,7 +66,8 @@ The app will automatically choose Local if local node server is running, or othe
 Post
 {
     id: String,
-    owner: String         //username of the creator 
+    title: String,        //title of the project
+    owner: String,        //username of the creator 
     description: String,  //project description
     status: String,       //status of project, why it's stuck
     repoUrl: String,      //GitHub repo URL

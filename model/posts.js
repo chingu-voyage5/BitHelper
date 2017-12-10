@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 //the shape of your database entries.
 const PostsSchema = new Schema({
     id: String, 
+    title: String,        //title of the project
     owner: String,        //username of the post creator
     description: String,  //project description
     status: String,       //status of project, why it's stuck

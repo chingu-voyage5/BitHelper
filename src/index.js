@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import CommentBox from './CommentBox';
+import PostsList from './PostsList.js';
 
 require('dotenv').load();
 
@@ -19,7 +19,7 @@ axios.get(apiUrl)
 
 const app = (apiUrl) => {
     console.log('apiUrl = ', apiUrl);
-    ReactDOM.render(<CommentBox 
-        url={apiUrl + '/comments'}
-        pollInterval={2000} />, document.getElementById('root'));   
+    ReactDOM.render(<PostsList 
+      url={apiUrl + '/posts'}
+      />, document.getElementById('root'));   
 }
