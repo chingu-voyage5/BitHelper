@@ -11,7 +11,6 @@ Coming soon
 
 ## User stories 
 
-**As a user, I can...**
 | User Story                                                                                                | Version | Status       |
 |-----------------------------------------------------------------------------------------------------------|---------|--------------|
 | view a list of help wanted posts on main page                                                             | MVP     | :red_circle: |
@@ -27,3 +26,4 @@ Coming soon
 | I get a notification when someone comments on one of my "help wanted" projects or commits to help         | v2      | :red_circle: |
 | As an authenticated user, I can bookmark projects                                                         | v2      | :red_circle: |
 | All the projects where I helped are showed on my profile, along with my reward points                     | v2      | :red_circle: |
+
