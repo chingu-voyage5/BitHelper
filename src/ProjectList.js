@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import style from './style';
+import './style.css';
 
-class PostsList extends Component {
+class ProjectList extends Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
     }
-    loadPosts = () => {
+    loadProjects = () => {
         axios.get(this.props.url)
           .then(res => {
             this.setState({ data: res.data });
           });1
     }
     componentDidMount() {
-        this.loadPosts();
+        this.loadProjects();
     }
     render() {
         console.log(this.state.data);
         return (
             <div>
-                <h1 style={style.title} >Posts List</h1>
+                <h1>Projects List</h1>
                 <div>
-                    <p>Posts by Title:</p>
+                    <p>Projects by Title:</p>
                     {this.state.data.map((item,i) => <li key={i}>{item.title}</li>)}
                 </div>
             </div>
@@ -30,4 +30,4 @@ class PostsList extends Component {
     }
 }
 
-export default PostsList;
+export default ProjectList;

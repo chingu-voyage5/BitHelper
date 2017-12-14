@@ -1,77 +1,81 @@
-const Post = require('../model/posts');
+const Project = require('../model/projects');
 const User = require('../model/users');
 
 module.exports = function(router) {
 
-    console.log('router post');
+    console.log('router');
 
     // Go to /api to just check if API is working
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
     });
 
-    // POST ROUTES
+    // PROJECT ROUTES
 
-    router.route('/posts')
-    // retrieve all posts from the database
+    router.route('/projects')
+    // retrieve all projects from the database
     .get(function(req, res) {
-      Post.find(function(err, posts) {
+      Project.find(function(err, projects) {
         if (err) { res.send(err); }
         //responds with a json object of our database comments.
-        res.json(posts)
+        res.json(projects)
       });
     })
-    // post new posts to the database
+    // post new projects to the database
     .post(function(req, res) {
-      let post = new Post();
+      let project = new Project();
       // body parser lets us use the req.body
-      post.title = req.body.title;
-      post.owner = req.body.owner;
-      post.description = req.body.description;
-      post.status = req.body.status;
-      post.repoUrl = req.body.repoUrl;
-      post.img = req.body.img;
+      project.title = req.body.title;
+      project.owner = req.body.owner;
+      project.description = req.body.description;
+      project.status = req.body.status;
+      project.repoUrl = req.body.repoUrl;
+      project.img = req.body.img;
       
       // save to database
-      post.save(function(err) {
+      project.save(function(err) {
         if (err) { res.send(err); }
-        res.json({ message: 'Post successfully added!' });
+        res.json({ message: 'Project successfully added!' });
       });
     });
     
-    // Adding a route to a specific post based on the database ID
-    router.route('/posts/:post_id')
-    //get post info by ID
+    // Adding a route to a specific project based on the database ID
+    router.route('/projects/:project_id')
+    //get project info by ID
     .get(function(req, res) {
-      Post.findById(req.params.post_id, function(err, post) {
+      Project.findById(req.params.project_id, function(err, project) {
         if (err) { res.send(err); }
-        else { res.json(post); }
+        else { res.json(project); }
       });
     })
-    // The put updates post based on the ID passed to the route
+    // The put updates project based on the ID passed to the route
     .put(function(req, res) {
-     Post.findById(req.params.post_id, function(err, post) {
+     Project.findById(req.params.project_id, function(err, project) {
        if (err) { res.send(err); }
-       post.title = req.body.title;
-       post.owner = req.body.owner;
-       post.description = req.body.description;
-       post.status = req.body.status;
-       post.repoUrl = req.body.repoUrl;
-       post.img = req.body.img;
-       //save post
-       post.save(function(err) {
-         if (err) { res.send(err); }
-         res.json({ message: 'Post has been updated' });
-       });
+       if (project) {
+        project.title = req.body.title;
+        project.owner = req.body.owner;
+        project.description = req.body.description;
+        project.status = req.body.status;
+        project.repoUrl = req.body.repoUrl;
+        project.img = req.body.img;
+        //save project
+        project.save(function(err) {
+          if (err) { res.send(err); }
+          res.json({ message: 'Project has been updated' });
+        });
+       } else {
+         res.json({ message: "Project not found by the id... no action performed" });
+       }
      });
     })
     
-    //delete method for removing a post from our database
+    //delete method for removing a project from our database
     .delete(function(req, res) {
-     //selects the post by its ID, then removes it.
-     Post.remove({ _id: req.params.post_id }, function(err, post) {
+     //selects the project by its ID, then removes it.
+     Project.remove({ _id: req.params.project_id }, function(err, project) {
        if (err) { res.send(err); }
-       res.json({ message: 'Post has been deleted' })
+       res.json({ message: 'Project has been deleted' })
      })
     });
 
@@ -116,16 +120,21 @@ module.exports = function(router) {
     User.findById(req.params.user_id, function(err, user) {
       console.log(user);
       if (err) { res.send(err); }
-      user.username = req.body.username;
-      user.displayName = req.body.displayName;
-      user.avatar = req.body.avatar;
-      user.skillset = req.body.skillset;
-      user.email = req.body.email;
-      //save user
-      user.save(function(err) {
-        if (err) { res.send(err); }
-        res.json({ message: 'User has been updated'});
-      });
+      if (user) {
+        user.username = req.body.username;
+        user.displayName = req.body.displayName;
+        user.avatar = req.body.avatar;
+        user.skillset = req.body.skillset;
+        user.email = req.body.email;
+        //save user
+        user.save(function(err) {
+          if (err) { res.send(err); }
+          res.json({ message: 'User has been updated'});
+        });
+      } else {
+        res.json({ message: 'User not found by id... no action performed'});
+      }
+      
     });
     })
 
@@ -133,7 +142,7 @@ module.exports = function(router) {
     .delete(function(req, res) {
     //selects the user by its ID, then removes it.
     User.remove({ _id: req.params.user_id }, function(err, user) {
-      if (err) { res.send(err); }
+      if (err) { res.send(err); } 
       res.json({ message: 'User has been deleted' })
     })
   });

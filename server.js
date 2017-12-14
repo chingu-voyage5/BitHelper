@@ -34,20 +34,19 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Serve static assets
-app.use(express.static(path.resolve('build')));
-
-// If request doesn't match api request always return the main index.html, so react-router render the route in the client
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve('build', 'index.html'));
-});
-
 // Load api routes
 routes(router);
+
+// Serve static assets
+app.use(express.static(path.resolve('build')));
 
 // Defines api route root
 app.use('/api', router);
 
+// If request doesn't match api request always return the main index.html, so react-router render the route in the client
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('build', 'index.html'));
+});
 
 app.listen(port, function() {
  console.log(`api running on port ${port}`);
