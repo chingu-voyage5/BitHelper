@@ -43,8 +43,8 @@ routes(router);
 
 // auth
 passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID_HEROKU,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET_HEROKU,
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
     callbackURL: "/auth/github/callback",
     proxy: true
   },
