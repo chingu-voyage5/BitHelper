@@ -45,7 +45,8 @@ routes(router);
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/auth/github/callback"
+    callbackURL: "/auth/github/callback",
+    proxy: true
   },
   function(accessToken, refreshToken, profile, cb) {
 
