@@ -61,10 +61,10 @@ passport.use(new GitHubStrategy({
         if (!user) {
             user = new User({
                 id: profile.id,
-                displayName: profile.name,
-                email: profile.email,
-                userName: profile.login,
-                avatar: profile.avatar_url
+                displayName: profile._json.name,
+                email: profile._json.email,
+                userName: profile._json.login,
+                avatar: profile._json.avatar_url
 
             });
             user.save(function(err) {
