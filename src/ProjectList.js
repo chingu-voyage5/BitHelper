@@ -20,6 +20,8 @@ class ProjectList extends Component {
         console.log(this.state.data);
         return (
             <div>
+
+                <a href="/auth/github">Log In with github</a>
                 <h1>Projects List</h1>
                 <div>
                     <p>Projects by Title:</p>
