@@ -15,8 +15,6 @@ const auth = require('./routes/auth')
 
 require('dotenv').load();
 
-console.log(process.env.PORT);
-
 const port = process.env.PORT || 4000;
 
 // db config
@@ -47,7 +45,7 @@ routes(router);
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/auth/github/callback"
+    callbackURL: "/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
 
