@@ -15,7 +15,7 @@ const auth = require('./routes/auth')
 
 require('dotenv').load();
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3001;
 
 // db config
 const mongoDB = process.env.MONGODB_URI;
