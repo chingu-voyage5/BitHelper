@@ -36,21 +36,29 @@ class Header extends Component {
       return (
         <header>
           <div className='title'>Bears-20 App</div>
-          <div className='login'>
-            <Auth isLoggedIn={this.state.isLoggedIn} />
-            <button onClick={this.getUserInfo}>get auth</button>
-          </div>
+          <Auth user={this.state.user} 
+            isLoggedIn={this.state.isLoggedIn} 
+            onNameClick={this.props.onNameClick}/>
         </header>
       );
     }
   }
 
   class Auth extends Component {
+      handleClick =() => {
+          console.log('click');
+          this.props.onNameClick('5a3699922f244403bba5992e');
+      }
       render() {
           if (this.props.isLoggedIn) {
-            return <a href="/auth/logout">Log Out</a>;
-          } else {
-            return <a href="/auth/github">Log In</a>;
+            return (
+                <div className='login'>
+                    <p>Welcome <span className='link' onClick={this.handleClick}>{this.props.user.displayName}</span>
+                    <span> | </span><a href="/auth/logout">Log Out</a></p>
+                </div>
+            );
+            } else {
+            return <div className='login'><a href="/auth/github">Log In</a></div>;
           }
       }
   }

@@ -29,6 +29,9 @@ a {
     right: 10px;
     line-height: 50px;
 }
+.link:hover {
+    cursor: pointer;
+}
 
 /* Project List View */
 .project-list-wrapper {
@@ -61,4 +64,15 @@ a {
 }
 button {
     margin: 20px;
+}
+
+/* User Info View */
+.user-info-card {
+    border-radius: 10px;
+    background-color: #eee;
+    width: 80%;
+    height: 500px;
+    padding: 20px;
+    margin: auto;
+    box-shadow: 3px 3px 2px #999;
 }

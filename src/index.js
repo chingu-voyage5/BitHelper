@@ -5,6 +5,7 @@ import './style.css';
 import Header from './Header.js';
 import ProjectList from './ProjectList.js';
 import ProjectInfo from './ProjectInfo.js';
+import UserInfo from './UserInfo.js';
 
 require('dotenv').load();
 
@@ -24,23 +25,12 @@ axios.get(url + '/api')
 
 
 class Main extends Component {
-  render() {
-    console.log('main', this.props.url+'/api');
-    return (
-      <div>
-        <Header authUrl={this.props.url+'/auth'} />
-        <Body apiUrl={this.props.url+'/api'} />
-      </div>
-    );
-  }
-}
-
-class Body extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       render: 'ProjectList',
-      projectId: ''
+      projectId: '',
+      userId: ''
     };
   }
   showProjectInfo = (id) => {
@@ -57,17 +47,45 @@ class Body extends Component {
       projectId: ''
     })
   }
+  onNameClick = (id) => {
+    console.log('show user info');
+    this.setState({
+      render: 'UserInfo',
+      userId: id
+    });
+  }
+  render() {
+    console.log('main', this.props.url+'/api');
+    return (
+      <div>
+        <Header authUrl={this.props.url+'/auth'} 
+          onNameClick={this.onNameClick} />
+        <Body apiUrl={this.props.url+'/api'}
+          mainState={this.state} 
+          showProjectInfo={this.showProjectInfo} 
+          showProjectList={this.showProjectList} />
+      </div>
+    );
+  }
+}
+
+class Body extends Component {
   render () {
-    switch (this.state.render) {
+    switch (this.props.mainState.render) {
       case 'ProjectList':
         return (
           <ProjectList url={this.props.apiUrl + '/projects'} 
-            onCardClick={this.showProjectInfo}/>
+            onCardClick={this.props.showProjectInfo}/>
         );
       case 'ProjectInfo':
         return (
-          <ProjectInfo url={this.props.apiUrl + '/projects/' + this.state.projectId} 
-          backToMain={this.showProjectList}/>
+          <ProjectInfo url={this.props.apiUrl + '/projects/' + this.props.mainState.projectId} 
+          backToMain={this.props.showProjectList}/>
+        );  
+      case 'UserInfo':
+        return (
+          <UserInfo url={this.props.apiUrl + '/users/' + this.props.mainState.userId} 
+          backToMain={this.props.showProjectList}/>
         );  
       default:
     }
