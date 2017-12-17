@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './style.css';
 
+
 class ProjectList extends Component {
     constructor(props) {
         super(props);
@@ -11,21 +12,26 @@ class ProjectList extends Component {
         axios.get(this.props.url)
           .then(res => {
             this.setState({ data: res.data });
-          });1
+          });
     }
     componentDidMount() {
         this.loadProjects();
     }
+    handleClick = (e) => {
+        console.log(e.target.id);
+        this.props.onCardClick(e.target.id);
+    }
     render() {
-        console.log(this.state.data);
         return (
             <div>
-
-                <a href="/auth/github">Log In with github</a>
                 <h1>Projects List</h1>
-                <div>
-                    <p>Projects by Title:</p>
-                    {this.state.data.map((item,i) => <li key={i}>{item.title}</li>)}
+                <div className='project-list-wrapper'>
+                    {this.state.data.map((item,i) => 
+                        <div className='project-card' 
+                            onClick={this.handleClick} 
+                            key={i}
+                            id={item._id}>{item.title}
+                        </div>)}
                 </div>
             </div>
         );
