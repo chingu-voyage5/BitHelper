@@ -11,6 +11,7 @@ class ProjectList extends Component {
     loadProjects = () => {
         axios.get(this.props.url)
           .then(res => {
+              console.log('project list data', res.data)
             this.setState({ data: res.data });
           });
     }

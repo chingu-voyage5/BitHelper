@@ -17,6 +17,7 @@ router.get('/github/callback',
 });
 
 router.get('/', function(req, res) {
+  console.log(req.user);
   res.json(req.user);
 });
 
