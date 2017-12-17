@@ -12,8 +12,12 @@ router.get('/github/callback',
     // Successful authentication.
     console.log('authenticated')
 
-    // return user
-    res.json(req.user)
+    // redirect to main
+    res.redirect('/');
+});
+
+router.get('/', function(req, res) {
+  res.json(req.user);
 });
 
 module.exports = router;
