@@ -6,7 +6,8 @@ class Header extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            user: {}
+            user: null,
+            isLoggedIn: false
         }
     }
     componentWillMount() {
@@ -18,20 +19,40 @@ class Header extends Component {
         axios.get(this.props.authUrl)
         .then(res => {
             console.log('header api response:', res.data);
-            });
+            if (res.data._id) {
+                this.setState({
+                    user: res.data,
+                    isLoggedIn: true
+                });
+            } else {
+                this.setState({
+                    user: null,
+                    isLoggedIn: false
+                });
+            }
+        });
     }
     render () {
-        console.log('header state: ', this.state);
       return (
         <header>
           <div className='title'>Bears-20 App</div>
           <div className='login'>
-            <a href="/auth/github">Log In with github</a>
+            <Auth isLoggedIn={this.state.isLoggedIn} />
             <button onClick={this.getUserInfo}>get auth</button>
           </div>
         </header>
       );
     }
+  }
+
+  class Auth extends Component {
+      render() {
+          if (this.props.isLoggedIn) {
+            return <a href="/auth/logout">Log Out</a>;
+          } else {
+            return <a href="/auth/github">Log In</a>;
+          }
+      }
   }
 
   export default Header;
