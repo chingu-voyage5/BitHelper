@@ -7,7 +7,7 @@ const routes = require('./routes/routes.js');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const User = require('./model/users');
-//const session = require('express-sessions')
+const session = require('express-session')
 
 const app = express();
 const router = express.Router();
@@ -15,9 +15,7 @@ const auth = require('./routes/auth')
 
 require('dotenv').load();
 
-console.log(process.env.PORT);
-
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3001;
 
 // db config
 const mongoDB = process.env.MONGODB_URI;
@@ -28,6 +26,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 // configure body parser for json format
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(session({
+    secret: 'bears-20',
+	resave: false,
+	saveUninitialized: true
+}));
 
 //To prevent errors from Cross Origin Resource Sharing, we will set our headers to allow CORS with middleware like so:
 app.use(function(req, res, next) {
@@ -47,12 +50,13 @@ routes(router);
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3001/auth/github/callback"
+    callbackURL: "/auth/github/callback",
+    proxy: true
   },
   function(accessToken, refreshToken, profile, cb) {
 
     User.findOne({
-        'id': profile.id
+        'githubId': profile.id
     }, function(err, user) {
         if (err) {
             return cb(err);
@@ -60,11 +64,11 @@ passport.use(new GitHubStrategy({
         //No user was found... so create a new user with values from github
         if (!user) {
             user = new User({
-                id: profile.id,
-                displayName: profile.name,
-                email: profile.email,
-                userName: profile.login,
-                avatar: profile.avatar_url
+                githubId: profile.id,
+                displayName: profile._json.name,
+                email: profile._json.email,
+                userName: profile._json.login,
+                avatar: profile._json.avatar_url
 
             });
             user.save(function(err) {

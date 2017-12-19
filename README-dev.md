@@ -1,4 +1,14 @@
 
+## Setup
+
+Please create a `.env` in the root directory. It should contain:
+```
+PORT=<database server port number (optional)>
+MONGODB_URI=<MongoDB URI>
+REACT_APP_APIURL=<Heroku deployed api URL>
+GITHUB_CLIENT_ID=<GitHub App ID>
+GITHUB_CLIENT_SECRET=<GitHub App Secret>
+```
 
 ## How to run the database server for development work
 

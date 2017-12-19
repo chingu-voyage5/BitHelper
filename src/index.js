@@ -10,7 +10,7 @@ let apiUrl = window.location.origin + '/api';
 
 axios.get(apiUrl)
 .then(res => {
-  console.log('using local server');
+  console.log('api = ', apiUrl);
   app(apiUrl);
 })    
 .catch(err => {
@@ -19,7 +19,6 @@ axios.get(apiUrl)
 });
 
 const app = (apiUrl) => {
-    console.log('apiUrl = ', apiUrl);
     ReactDOM.render(<ProjectList 
       url={apiUrl + '/projects'}
       />, document.getElementById('root'));   
