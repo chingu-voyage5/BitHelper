@@ -12,32 +12,32 @@ class Header extends Component {
     }
     componentWillMount() {
         console.log('component will mount header');
-        this.getUserInfo();
+        // this.getUserInfo();
     }
-    getUserInfo = () => {
-        console.log('get user info', this.props.authUrl);
-        axios.get(this.props.authUrl)
-        .then(res => {
-            console.log('header api response:', res.data);
-            if (res.data._id) {
-                this.setState({
-                    user: res.data,
-                    isLoggedIn: true
-                });
-            } else {
-                this.setState({
-                    user: null,
-                    isLoggedIn: false
-                });
-            }
-        });
-    }
+    // getUserInfo = () => {
+    //     console.log('get user info', this.props.authUrl);
+    //     axios.get(this.props.authUrl)
+    //     .then(res => {
+    //         console.log('header api response:', res.data);
+    //         if (res.data._id) {
+    //             this.setState({
+    //                 user: res.data,
+    //                 isLoggedIn: true
+    //             });
+    //         } else {
+    //             this.setState({
+    //                 user: null,
+    //                 isLoggedIn: false
+    //             });
+    //         }
+    //     });
+    // }
     render () {
       return (
         <header>
           <div className='title'>Bears-20 App</div>
-          <Auth user={this.state.user} 
-            isLoggedIn={this.state.isLoggedIn} 
+          <Auth user={this.state.user}
+            isLoggedIn={this.state.isLoggedIn}
             onNameClick={this.props.onNameClick}/>
         </header>
       );

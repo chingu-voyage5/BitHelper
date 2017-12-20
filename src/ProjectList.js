@@ -6,33 +6,36 @@ import './style.css';
 class ProjectList extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
-    }
-    loadProjects = () => {
-        axios.get(this.props.url)
-          .then(res => {
-              console.log('project list data', res.data)
-            this.setState({ data: res.data });
-          });
+        console.log('projects props', this.props)
+        this.projects = props.projects
     }
     componentDidMount() {
-        this.loadProjects();
+
     }
-    handleClick = (e) => {
-        console.log(e.target.id);
-        this.props.onCardClick(e.target.id);
+
+    setProjects() {
+
+      if (this.props.projects.length > 0) {
+        return this.props.projects.map((item,i) => {
+            return (
+              <div className='project-card'
+                onClick={() => this.props.history.push('/project/' + item._id)}
+                key={i}
+                id={item._id}>{item.title}
+              </div>)
+        })
+
+      } else {
+        return <div>loading...</div>
+      }
     }
     render() {
-        return (
+
+         return (
             <div>
                 <h1>Projects List</h1>
                 <div className='project-list-wrapper'>
-                    {this.state.data.map((item,i) => 
-                        <div className='project-card' 
-                            onClick={this.handleClick} 
-                            key={i}
-                            id={item._id}>{item.title}
-                        </div>)}
+                    {this.setProjects()}
                 </div>
             </div>
         );

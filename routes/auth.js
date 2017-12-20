@@ -13,7 +13,7 @@ router.get('/github/callback',
     console.log('authenticated')
 
     // redirect to main
-    res.redirect('/');
+    res.json(req.user);
 });
 
 router.get('/', function(req, res) {

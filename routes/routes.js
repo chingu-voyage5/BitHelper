@@ -31,14 +31,14 @@ module.exports = function(router) {
       project.status = req.body.status;
       project.repoUrl = req.body.repoUrl;
       project.img = req.body.img;
-      
+
       // save to database
       project.save(function(err) {
         if (err) { res.send(err); }
         res.json({ message: 'Project successfully added!' });
       });
     });
-    
+
     // Adding a route to a specific project based on the database ID
     router.route('/projects/:project_id')
     //get project info by ID
@@ -69,7 +69,7 @@ module.exports = function(router) {
        }
      });
     })
-    
+
     //delete method for removing a project from our database
     .delete(function(req, res) {
      //selects the project by its ID, then removes it.
@@ -134,7 +134,7 @@ module.exports = function(router) {
       } else {
         res.json({ message: 'User not found by id... no action performed'});
       }
-      
+
     });
     })
 
@@ -142,7 +142,7 @@ module.exports = function(router) {
     .delete(function(req, res) {
     //selects the user by its ID, then removes it.
     User.remove({ _id: req.params.user_id }, function(err, user) {
-      if (err) { res.send(err); } 
+      if (err) { res.send(err); }
       res.json({ message: 'User has been deleted' })
     })
   });
