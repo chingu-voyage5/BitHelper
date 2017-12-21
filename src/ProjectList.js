@@ -6,11 +6,8 @@ import './style.css';
 class ProjectList extends Component {
     constructor(props) {
         super(props);
-        console.log('projects props', this.props)
+  
         this.projects = props.projects
-    }
-    componentDidMount() {
-
     }
 
     setProjects() {

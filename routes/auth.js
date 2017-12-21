@@ -12,8 +12,10 @@ router.get('/github/callback',
     // Successful authentication.
     console.log('authenticated')
 
-    // redirect to main
-    res.json(req.user);
+    // set userId cookie using passport session
+    res.cookie('userId', req.session.passport.user)
+    // redirect to homepage cant be done in react as github response doesn't allow cors
+    res.redirect('/');
 });
 
 router.get('/', function(req, res) {
@@ -22,8 +24,10 @@ router.get('/', function(req, res) {
 });
 
 router.get('/logout', function(req, res){
+  // logout session on server
   req.logout();
-  res.redirect('/');
+  // dont redirect react user state will handle view
+  res.end();
 });
 
 module.exports = router;
