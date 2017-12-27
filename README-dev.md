@@ -1,4 +1,14 @@
 
+## Setup
+
+Please create a `.env` in the root directory. It should contain:
+```
+PORT=<database server port number (optional)>
+MONGODB_URI=<MongoDB URI>
+REACT_APP_APIURL=<Heroku deployed api URL>
+GITHUB_CLIENT_ID=<GitHub App ID>
+GITHUB_CLIENT_SECRET=<GitHub App Secret>
+```
 
 ## How to run the database server for development work
 
@@ -63,9 +73,11 @@ The app will automatically choose Local if local node server is running, or othe
 
 **Schema**
 ```
-Post
+Project
 {
-    id: String, 
+    id: String,
+    title: String,        //title of the project
+    owner: String,        //username of the creator 
     description: String,  //project description
     status: String,       //status of project, why it's stuck
     repoUrl: String,      //GitHub repo URL
@@ -76,7 +88,7 @@ Post
 ```
 User
 {
-    id: String, 
+    id: String,
     username: String,     //username
     displayName: String,  //display name
     avatar: String,       //avatar image URL, can be empty
@@ -86,15 +98,25 @@ User
 ```
 
 **Routes**  
-Get list of all Posts
->request: GET to `/posts`  
+Get list of all Projects
+>request: GET to `/projects/`  
 >send: nothing  
 >receive: array of json documents
 
 Get Post by ID
->request: POST to `/posts/:post_id`  
+>request: POST to `/projects/:project_id`  
 >send: nothing  
->receive: json document of Post
+>receive: json document of Project
+
+Create new Project
+>request: POST to `/projects/`  
+>send: full Post object except id (id automattically assign)  
+>receive: { message: String }
+
+Update Project
+>request: PUT to `/projects/:project_id`  
+>send: full Project object  
+>receive: { message: String }
 
 Get User profile by ID
 >request: GET to `/users/:user_id`  
@@ -109,16 +131,6 @@ Create new User
 Update User by ID
 >request: PUT to `/users/:user_id`  
 >send: full User object  
->receive: { message: String }
-
-Create new Post
->request: POST to `/posts/`  
->send: full Post object except id (id automattically assign)  
->receive: { message: String }
-
-Update Post
->request: PUT to `/posts/:post_id`  
->send: full Post object  
 >receive: { message: String }
 
 ## Backend To-do
@@ -139,10 +151,10 @@ Update Post
 
 Tasks:  
 
-1. Create a Schema for help wanted posts (Post)
+1. Create a Schema for help wanted posts (Project)
     * id (string), description (string), status (string), repoLink (string), img (arr of strings)
-2. Get list of all Posts
-3. Get Post by ID
+2. Get list of all Projects
+3. Get Project post by ID
 4. Create a Schema for user profile (User)
     * id (string), username (string), displayName (string), avatar (img url in string), skillset (arr of strings), email (string)
 5. Get User by ID
@@ -150,7 +162,7 @@ Tasks:
 7. GitHub auth: Login existing user
 8. Filter functionality access by a "isLoggedIn" fuction
 9. Find and update User by ID
-10. Create new Post
+10. Create new Project
 11. Find and update Post by ID
 
 **Version 2**
