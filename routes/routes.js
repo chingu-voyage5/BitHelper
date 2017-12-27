@@ -12,6 +12,19 @@ module.exports = function(router) {
 
     // PROJECT ROUTES
 
+    const setProjectObj = (input, project) => {
+      project.title = input.title;
+      project.owner = input.owner;
+      project.category = input.category;
+      project.description = input.description;
+      project.stack = input.stack;
+      project.status = input.status;
+      project.repoUrl = input.repoUrl;
+      project.img = input.img;
+
+      return project;
+    }
+
     router.route('/projects')
     // retrieve all projects from the database
     .get(function(req, res) {
@@ -24,14 +37,7 @@ module.exports = function(router) {
     // post new projects to the database
     .post(function(req, res) {
       let project = new Project();
-      // body parser lets us use the req.body
-      project.title = req.body.title;
-      project.owner = req.body.owner;
-      project.description = req.body.description;
-      project.status = req.body.status;
-      project.repoUrl = req.body.repoUrl;
-      project.img = req.body.img;
-
+      project = setProjectObj(req.body, project);
       // save to database
       project.save(function(err) {
         if (err) { res.send(err); }
@@ -53,12 +59,7 @@ module.exports = function(router) {
      Project.findById(req.params.project_id, function(err, project) {
        if (err) { res.send(err); }
        if (project) {
-        project.title = req.body.title;
-        project.owner = req.body.owner;
-        project.description = req.body.description;
-        project.status = req.body.status;
-        project.repoUrl = req.body.repoUrl;
-        project.img = req.body.img;
+        project = setProjectObj(req.body, project)
         //save project
         project.save(function(err) {
           if (err) { res.send(err); }
