@@ -2,29 +2,20 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './style.css';
 
-class ProjectInfo extends Component {
-    constructor(props) {
-        super(props);
+export default (props) => {
 
-      this.props.data = props.projects.filter((project) => {
-        return project._id === props.match.params.id
-      });
 
-    }
-    componentDidMount() {
+  const currentProject = props.projects.filter((project) => {
+    return project._id === props.match.params.id
+  });
 
-    }
 
-    render() {
-        return (
-            <div>
-                <h1>Project Detail</h1>
-                <div className='project-info-card'>{JSON.stringify(this.props.data)}
-                </div>
-                <button id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
-            </div>
-        );
-    }
+  return (
+      <div>
+          <h1>Project Detail</h1>
+          <div className='project-info-card'>{JSON.stringify(currentProject)}
+          </div>
+          <button id='backToList' onClick={() => props.history.push('/')}>Back to Main</button>
+      </div>
+  );
 }
-
-export default ProjectInfo;

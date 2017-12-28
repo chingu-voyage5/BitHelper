@@ -12,6 +12,7 @@ import Header from './Header.js';
 import ProjectList from './ProjectList.js';
 import ProjectInfo from './ProjectInfo.js';
 import UserInfo from './UserInfo.js';
+import UserEdit from './UserEdit.js';
 
 require('dotenv').load();
 
@@ -76,6 +77,10 @@ class App extends Component {
          }/>
          <Route path="/user/:id" render={(routeProps)=> {
            return <UserInfo {...routeProps} {...{user: this.state.user}} />
+          }
+         }/>
+         <Route path="/edit/user/:id" render={(routeProps)=> {
+           return <UserEdit {...routeProps} {...{user: this.state.user}} />
           }
          }/>
       </div>
