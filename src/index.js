@@ -50,8 +50,16 @@ class App extends Component {
 
     this.logoutUser = this.logoutUser.bind(this)
   }
-
-
+  postUser = (data) => {
+    console.log('post user', data);
+    axios.put(url + '/api/users/' + data._id)
+    .then(res => {
+      console.log('update user success');
+    })
+    .catch(err => {
+      console.error('error posting user update');
+    });
+  }
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
       
@@ -61,6 +69,7 @@ class App extends Component {
 
   }
   render() {
+    console.log("index.js", this.state);
     return(
     <Router>
       <div>
@@ -80,7 +89,10 @@ class App extends Component {
           }
          }/>
          <Route path="/edit/user/:id" render={(routeProps)=> {
-           return <UserEdit {...routeProps} {...{user: this.state.user}} />
+           return <UserEdit {...routeProps} {...{
+              user: this.state.user,
+              onUserPost: this.postUser
+            }} />
           }
          }/>
       </div>
