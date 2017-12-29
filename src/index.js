@@ -7,11 +7,11 @@ import {
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
-import './style.css';
-import Header from './Header.js';
-import ProjectList from './ProjectList.js';
-import ProjectInfo from './ProjectInfo.js';
-import UserInfo from './UserInfo.js';
+// import './style.css';
+import Header from './components/Header.js';
+import ProjectList from './components/ProjectList.js';
+import ProjectInfo from './components/ProjectInfo.js';
+import UserInfo from './components/UserInfo.js';
 
 require('dotenv').load();
 
