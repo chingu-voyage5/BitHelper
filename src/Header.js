@@ -24,7 +24,10 @@ class Header extends Component {
     if (props.user.displayName) {
       return (
           <div className='login'>
-              <p>Welcome <span className='link' >{props.user.displayName}</span>
+              <p>Welcome 
+                <a href={'/user/'+props.user._id} 
+                  className='link' >{props.user.displayName}
+                </a>
               <span> | </span><a onClick={props.logoutUser} href="">Log Out</a></p>
           </div>
       );
