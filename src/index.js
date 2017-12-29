@@ -52,7 +52,7 @@ class App extends Component {
   }
   postUser = (data) => {
     console.log('post user', data);
-    axios.put(url + '/api/users/' + data._id)
+    axios.put(window.location.origin + '/api/users/' + data._id, data)
     .then(res => {
       console.log('update user success');
     })
