@@ -16,6 +16,7 @@ class UserEdit extends Component {
         user.skillset = skillset;
         user.email = this.refs.email.value;
         this.props.onUserPost(user);
+        this.props.history.push('/user/'+user._id);
     }
     render() {
         return (
