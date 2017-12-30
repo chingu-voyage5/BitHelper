@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./routes/routes.js');
+const faker = require("faker"); // for dev only
 
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;

@@ -9,12 +9,10 @@ export default (props) => {
     return project._id === props.match.params.id
   });
 
-    const stack = currentProject[0].stack;
-    console.log(stack);
-    const stackList = stack.map((item) =>
-  <li>{item}</li>
-);
-  console.log(stackList);
+  const stack = currentProject[0].stack;
+  const stackList = stack.map((item) =>
+    <li>{item}</li>
+  );
 
 
   return (
@@ -22,19 +20,26 @@ export default (props) => {
      <div className="row">
        <div className="col">
          <div className="project-info">
-           <div className="meta">
-            <p>{currentProject[0].category}</p>
-            <p>{currentProject[0].owner}</p>
+           <div className="project-meta row">
+            <p className="project-category col">{currentProject[0].category}</p>
+            <p className="project-owner col text-md-right">{currentProject[0].owner}</p>
             <hr/>
           </div>
            <h1>{currentProject[0].title}</h1>
            <p>{currentProject[0].description}</p>
+           <div className="row">
+           <div className="project-attachments col-md-6">
             <h2>Attachments</h2>
-            <img src="currentProject[0].img" alt="Project image"/>
+            <img src="currentProject[0].img" className="img-fluid" alt="Project image"/>
+            </div>
+            <div className="project-tech col-md-4">
             <h3>Github repo</h3>
             <a href="{currentProject[0].repoUrl}">{currentProject[0].repoUrl}</a>
             <h3>Stack</h3>
-            <ul>{stackList}</ul>           
+            <ul>{stackList}</ul>      
+
+            </div>
+            </div>     
          </div>
          <button className="btn btn-primary" id='backToList' onClick={() => props.history.push('/')}>All projects</button>
 
