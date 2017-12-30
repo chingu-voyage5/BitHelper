@@ -62,14 +62,13 @@ class App extends Component {
   }
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
-      
+
       Cookies.remove("userId")
       this.setState({user: null})
     })
 
   }
   render() {
-    console.log("index.js", this.state);
     return(
     <Router>
       <div>

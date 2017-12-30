@@ -4,26 +4,31 @@ import './style.css';
 class UserEdit extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = this.props.user;
     }
-    componentWillReceiveProps(nextProps) {
-        console.log('will receive props', nextProps);
-        this.setState(nextProps.user);
+    shouldComponentUpdate(nextProps, nextState) {
+        // React isn't catching the changes to state somehow... 
+        // for now I am forcing update with each change.
+        return true;
     }
     handleChange = (e) => {
         let obj = {};
-        obj[e.target.name] = e.target.value;
+        if (e.target.name === 'skillset') {
+            let arr = e.target.value.split(',');
+            obj[e.target.name] = arr;
+        } else {
+            obj[e.target.name] = e.target.value;            
+        }
         this.setState(obj);
     }
     handlePost = (e) => {
         e.preventDefault();
-        let skillset = this.state.skillset.split(',');
         let user = {};
         user._id = this.state._id;
         user.username = this.state.username;
         user.displayName = this.state.displayName;
         user.avatar = this.state.avatar;
-        user.skillset = skillset;
+        user.skillset = this.state.skillset;
         user.email = this.state.email;
         this.props.onUserPost(user);
         this.props.history.push('/user/'+user._id);
@@ -38,7 +43,7 @@ class UserEdit extends Component {
                         Display Name: <input type='text' name='displayName' value={this.state.displayName} onChange={this.handleChange}/><br/>
                         Email: <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/><br/>
                         Avatar URL: <input type='text' name='avatar' value={this.state.avatar} onChange={this.handleChange}/><br/>
-                        Skillset: <input type='text' name='skillset' value={this.state.skillset} onChange={this.handleChange}/><br/>
+                        Skillset: <input type='text' name='skillset' value={this.state.skillset.toString()} onChange={this.handleChange}/><br/>
                         <input type='submit' value='Submit'/>
                     </form>
                 
