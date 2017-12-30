@@ -21,7 +21,7 @@ class Header extends Component {
 
   const Auth = (props) =>  {
 
-    if (props.user.displayName) {
+    if (props.user) {
       return (
           <div className='login'>
               <p>Welcome <span className='link' >{props.user.displayName}</span>

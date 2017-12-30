@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
 import './style.css';
+
 import Header from './Header.js';
 import ProjectList from './ProjectList.js';
 import ProjectInfo from './ProjectInfo.js';
 import UserInfo from './UserInfo.js';
+import AddProject from './AddProject.js'
 
 require('dotenv').load();
 
@@ -21,11 +24,19 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    let url = window.location.origin;
     this.state = {
       projects: [],
-      user: {}
+      user: null,
+      isLoggedIn: false
     }
+
+    this.logoutUser = this.logoutUser.bind(this);
+    this.createPoll = this.createPoll.bind(this);
+  }
+
+  componentDidMount() {
+    let url = window.location.origin;
+
 
     // get projects
     axios.get(url + '/api/projects')
@@ -43,19 +54,32 @@ class App extends Component {
 
       axios.get(url + '/api/users/' + userId)
       .then(res => {
-        this.setState({user: res.data})
+        this.setState({
+          user: res.data,
+          isLoggedIn: true
+        })
       })
     }
-
-    this.logoutUser = this.logoutUser.bind(this)
   }
-
+  createPoll = (data) => {
+    console.log('create poll', data);
+    axios.post(window.location.origin + '/api/projects', data)
+    .then(res => {
+      console.log('poll created');
+    })
+    .catch(err => {
+      console.error('error posting new poll');
+    });
+  }
 
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
-      
+
       Cookies.remove("userId")
-      this.setState({user: null})
+      this.setState({
+        user: null,
+        isLoggedIn: false
+      })
     })
 
   }
@@ -78,6 +102,20 @@ class App extends Component {
            return <UserInfo {...routeProps} {...{user: this.state.user}} />
           }
          }/>
+         // Wrapper component that only renders routes when user islogged in
+         <AuthenticatedUser isLoggedin={this.state.user}>
+           <Route path="/addproject" render={(routeProps)=> {
+                return <AddProject
+                  {...routeProps}
+                  {...{
+                    user: this.state.user,
+                    createPoll: this.createPoll
+                  }} />
+            }
+          }/>
+        </AuthenticatedUser>
+
+
       </div>
      </Router>
    )
@@ -85,5 +123,18 @@ class App extends Component {
 
 }
 
-  ReactDOM.render(<App
-  />, document.getElementById('root'));
+// wrapper function for protected routes
+const AuthenticatedUser = ({user, children}) =>  {
+
+    if (user) {
+      // return protected routes
+      return <div>{children}</div>
+    } else {
+      console.log('user not logged in')
+      // todo: should redirect to a login page
+      return null
+    }
+}
+
+ReactDOM.render(<App
+/>, document.getElementById('root'));
