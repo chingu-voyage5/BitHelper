@@ -2,30 +2,37 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './style.css';
 
+
 class ProjectList extends Component {
     constructor(props) {
         super(props);
-        this.state = { data: [] };
+  
+        this.projects = props.projects
     }
-    loadProjects = () => {
-        axios.get(this.props.url)
-          .then(res => {
-            this.setState({ data: res.data });
-          });1
-    }
-    componentDidMount() {
-        this.loadProjects();
+
+    setProjects() {
+
+      if (this.props.projects.length > 0) {
+        return this.props.projects.map((item,i) => {
+            return (
+              <div className='project-card'
+                onClick={() => this.props.history.push('/project/' + item._id)}
+                key={i}
+                id={item._id}>{item.title}
+              </div>)
+        })
+
+      } else {
+        return <div>loading...</div>
+      }
     }
     render() {
-        console.log(this.state.data);
-        return (
-            <div>
 
-                <a href="/auth/github">Log In with github</a>
+         return (
+            <div>
                 <h1>Projects List</h1>
-                <div>
-                    <p>Projects by Title:</p>
-                    {this.state.data.map((item,i) => <li key={i}>{item.title}</li>)}
+                <div className='project-list-wrapper'>
+                    {this.setProjects()}
                 </div>
             </div>
         );
