@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
+import "./stylesheets/base/layout.css"
 // import './style.css';
 import Header from './components/Header.js';
 import ProjectCard from './components/ProjectCard.js';

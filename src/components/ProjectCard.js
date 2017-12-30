@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import './style.css';
+import '../stylesheets/components/ProjectCard.css';
 
 
 class ProjectList extends Component {
