@@ -21,14 +21,15 @@
     "devDependencies": {
         "foreman": "^2.0.0",
         "nodemon": "^1.12.5",
+        "npm-run-all": "^4.1.2",
         "react-scripts": "1.0.17"
     },
     "scripts": {
         "start": "react-scripts start",
-        "start-server": "react-scripts build && nodemon server.js",
+        "start-server": "react-scripts build && nodemon server.js && npm run watch-css",
         "build": "react-scripts build",
         "build-css": "node-sass-chokidar src/ -o src/",
-        "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+        "watch-css": "npm run build-css && node-sass-chokidar src/stylesheets/ -o src/ --watch --recursive",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
     }
