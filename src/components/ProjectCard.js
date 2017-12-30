@@ -19,7 +19,6 @@ class ProjectList extends Component {
                 onClick={() => this.props.history.push('/project/' + item._id)}
                 key={i}
                 id={item._id}>
-
                 <div class="card-body">
                 <h4 className="card-title">{item.title}</h4>
                 <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

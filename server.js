@@ -115,5 +115,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, function() {
- console.log(`api running on port ${port}`);
+ console.log(`API running on port ${port}`);
 });
