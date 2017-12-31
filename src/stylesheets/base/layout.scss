@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
+@import "./helpers.scss";
+* {
+    color: $dark-grey;
+    font-family: $font-family;
+    box-size: border-box;
+}
+
+html,
+body {
+    // background: red;
+    font-weight: $font-weight-light;
+    font-size: 100%;
+    font-size: 18px;
+    height: 100%;
+    left: 0;
+    line-height: $font-height;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    min-width: 100%;
+}
