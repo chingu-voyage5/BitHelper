@@ -1,0 +1,26 @@
+@import url("https://fonts.googleapis.com/css?family=Work+Sans:300,400,700");
+.btn {
+  background-color: #FE3D3E;
+  border-color: #FE3D3E; }
+
+.btn:hover {
+  background-color: #fe7070;
+  border-color: #fe7070; }
+
+* {
+  color: #707070;
+  font-family: "Work Sans", sans-serif;
+  box-size: border-box; }
+
+html,
+body {
+  font-weight: 300;
+  font-size: 100%;
+  font-size: 18px;
+  height: 100%;
+  left: 0;
+  line-height: 1.7;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  min-width: 100%; }

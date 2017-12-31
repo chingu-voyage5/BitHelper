@@ -1,32 +1,36 @@
 {
-  "name": "bears-20",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.17.1",
-    "body-parser": "^1.18.2",
-    "cookie.js": "^3.0.0",
-    "dotenv": "^4.0.0",
-    "express": "^4.16.2",
-    "express-session": "^1.15.6",
-    "marked": "^0.3.7",
-    "mongoose": "^4.13.6",
-    "passport": "^0.4.0",
-    "passport-github": "^1.1.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-router-dom": "^4.2.2"
-  },
-  "devDependencies": {
-    "foreman": "^2.0.0",
-    "nodemon": "^1.12.5",
-    "react-scripts": "1.0.17"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "start-server": "react-scripts build && nodemon server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+    "name": "bears-20",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^0.17.1",
+        "body-parser": "^1.18.2",
+        "cookie.js": "^3.0.0",
+        "dotenv": "^4.0.0",
+        "express": "^4.16.2",
+        "express-session": "^1.15.6",
+        "marked": "^0.3.7",
+        "mongoose": "^4.13.6",
+        "node-sass-chokidar": "0.0.3",
+        "passport": "^0.4.0",
+        "passport-github": "^1.1.0",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-router-dom": "^4.2.2"
+    },
+    "devDependencies": {
+        "faker": "^4.1.0",
+        "foreman": "^2.0.0",
+        "nodemon": "^1.12.5",
+        "react-scripts": "1.0.17"
+    },
+    "scripts": {
+        "start": "react-scripts start && npm run watch-css",
+        "start-server": "rm src/**/*.css && npm run build-css && react-scripts build && nodemon server.js && npm run watch-css",
+        "build": "react-scripts build",
+        "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+        "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject"
+    }
 }
