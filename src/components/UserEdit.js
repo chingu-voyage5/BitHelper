@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 //import './style.css';
+import '../stylesheets/components/UserEdit.css';
 
 class UserEdit extends Component {
     constructor(props) {
@@ -35,21 +36,53 @@ class UserEdit extends Component {
     }
     render() {
         return (
-            <div>
-                <h1>Edit User Profile</h1>
-                <div className='user-info-card'>
-                    <form onSubmit={this.handlePost}>
-                        User Name: <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/><br/>
-                        Display Name: <input type='text' name='displayName' value={this.state.displayName} onChange={this.handleChange}/><br/>
-                        Email: <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/><br/>
-                        Avatar URL: <input type='text' name='avatar' value={this.state.avatar} onChange={this.handleChange}/><br/>
-                        Skillset: <input type='text' name='skillset' value={this.state.skillset.toString()} onChange={this.handleChange}/><br/>
-                        <input type='submit' value='Submit'/>
-                    </form>
-                
-                
+            <div className="container">
+                <div className="row">
+                    <div className="col">
+                        <div className='user-edit' >
+                            <h1>Edit User Profile</h1>
+                            <form>
+                                <table>
+                                    <tr>
+                                        <td className='table-col-1'>User Name: </td>
+                                        <td className='table-col-2'>
+                                            <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className='table-col-1'>Display Name: </td>
+                                        <td className='table-col-2'>
+                                            <input type='text' name='displayName' value={this.state.displayName} onChange={this.handleChange}/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className='table-col-1'>Email: </td>
+                                        <td className='table-col-2'>
+                                            <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className='table-col-1'>Avatar URL: </td>
+                                        <td className='table-col-2'>
+                                            <input type='text' name='avatar' value={this.state.avatar} onChange={this.handleChange}/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className='table-col-1'>Skillset: </td>
+                                        <td className='table-col-2'>
+                                            <input type='text' name='skillset' value={this.state.skillset.toString()} onChange={this.handleChange}/><br/>            
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <div className="btn-row">
+                                <button className='btn btn-primary' onClick={this.handlePost}>Submit</button>
+                                <button className='btn btn-primary' onClick={() => this.props.history.push('/user/'+this.state._id)}>Cancel</button>
+                            </div>
+                        </div>
+                        <button className='btn btn-primary' onClick={() => this.props.history.push('/')}>Back to Home</button>
+                    </div>
                 </div>
-                <button id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
             </div>
         );
     }

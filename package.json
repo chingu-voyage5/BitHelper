@@ -26,7 +26,7 @@
     },
     "scripts": {
         "start": "react-scripts start && npm run watch-css",
-        "start-server": "rm src/**/*.css && npm run build-css && react-scripts build && nodemon server.js && npm run watch-css",
+        "start-server": "rm src/**/*.css && npm run build-css && react-scripts build && nodemon server.js",
         "build": "react-scripts build",
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
