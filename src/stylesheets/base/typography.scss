@@ -1,0 +1,70 @@
+@import "./helpers.scss";
+h1,
+h2,
+h3,
+h4 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 1.2em 0 0.5em;
+    color: #707070;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 2.441em;
+    @media screen and (min-width: 990px) {
+        margin-top: 1.42rem;
+    }
+}
+
+h2 {
+    font-size: 1.953em;
+}
+
+h3 {
+    font-size: 1.563em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+p {
+    font-size: 1em;
+    margin-bottom: 1.3em;
+}
+
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+    font-weight: 400;
+    color: $primary;
+}
+
+code {
+    font-family: monospace;
+    margin-bottom: 1.3em;
+}
+
+blockquote {
+    font-size: 1.32em;
+    font-style: italic;
+}
+
+// .accent {
+//     color: $accent;
+// }
+.larger-heading {
+    font-size: 3.157em;
+    margin-top: 0;
+    @media only screen and (max-width: 500px) {
+        font-size: 3em;
+    }
+}
+
+.lighter-heading {
+    color: $light-grey;
+    font-weight: 300;
+    margin: -10px 0;
+}
