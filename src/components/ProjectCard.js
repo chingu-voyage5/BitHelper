@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../stylesheets/components/ProjectCard.css';
 
-class ProjectList extends Component {
+class ProjectCard extends Component {
     constructor(props) {
         super(props);
   
@@ -46,4 +46,4 @@ class ProjectList extends Component {
     }
 }
 
-export default ProjectList;
+export default ProjectCard;
