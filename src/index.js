@@ -13,6 +13,7 @@ import Header from './components/Header.js';
 import ProjectCard from './components/ProjectCard.js';
 import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
+import UserEdit from './components/UserEdit.js';
 
 require('dotenv').load();
 
@@ -50,11 +51,19 @@ class App extends Component {
 
     this.logoutUser = this.logoutUser.bind(this)
   }
-
-
+  postUser = (data) => {
+    console.log('post user', data);
+    axios.put(window.location.origin + '/api/users/' + data._id, data)
+    .then(res => {
+      console.log('update user success');
+    })
+    .catch(err => {
+      console.error('error posting user update');
+    });
+  }
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
-      
+
       Cookies.remove("userId")
       this.setState({user: null})
     })
@@ -77,6 +86,13 @@ class App extends Component {
          }/>
          <Route path="/user/:id" render={(routeProps)=> {
            return <UserInfo {...routeProps} {...{user: this.state.user}} />
+          }
+         }/>
+         <Route path="/edit/user/:id" render={(routeProps)=> {
+           return <UserEdit {...routeProps} {...{
+              user: this.state.user,
+              onUserPost: this.postUser
+            }} />
           }
          }/>
       </div>
