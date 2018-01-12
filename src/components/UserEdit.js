@@ -10,7 +10,9 @@ class UserEdit extends Component {
         // if user is not logged in and therefore user info is null, redirect to home
         // redirect to login page in the future
         if (!this.state) {
-            this.props.history.push('/');
+            setTimeout(() => {
+                this.props.history.push('/');
+            }, 3000);
         }
     }
     shouldComponentUpdate(nextProps, nextState) {
@@ -41,60 +43,65 @@ class UserEdit extends Component {
         this.props.history.push('/user/'+user._id);
     }
     render() {
-        let skillset = 'Enter data, separating values by commas.';
-        if (typeof this.state.skillset === 'object') {
-            skillset = this.state.skillset.toString();
-        }
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="col">
-                        <div className='user-edit' >
-                            <h1>Edit User Profile</h1>
-                            <form>
-                                <table>
-                                    <tr>
-                                        <td className='table-col-1'>User Name: </td>
-                                        <td className='table-col-2'>
-                                            <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/><br/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className='table-col-1'>Display Name: </td>
-                                        <td className='table-col-2'>
-                                            <input type='text' name='displayName' value={this.state.displayName} onChange={this.handleChange}/><br/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className='table-col-1'>Email: </td>
-                                        <td className='table-col-2'>
-                                            <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/><br/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className='table-col-1'>Avatar URL: </td>
-                                        <td className='table-col-2'>
-                                            <input type='text' name='avatar' value={this.state.avatar} onChange={this.handleChange}/><br/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className='table-col-1'>Skillset: </td>
-                                        <td className='table-col-2'>
-                                            <input type='text' name='skillset' value={skillset} onChange={this.handleChange}/><br/>            
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                            <div className="btn-row">
-                                <button className='btn btn-primary' onClick={this.handlePost}>Submit</button>
-                                <button className='btn btn-primary' onClick={() => this.props.history.push('/user/'+this.state._id)}>Cancel</button>
+        if (!this.state) {
+            return <h3>ERROR: No user data. Redirecting...</h3>;
+        } else {
+            let skillset = 'Enter data, separating values by commas.';
+            if (typeof this.state.skillset === 'object') {
+                skillset = this.state.skillset.toString();
+            }
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="col">
+                            <div className='user-edit' >
+                                <h1>Edit User Profile</h1>
+                                <form>
+                                    <table>
+                                        <tr>
+                                            <td className='table-col-1'>User Name: </td>
+                                            <td className='table-col-2'>
+                                                <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='table-col-1'>Display Name: </td>
+                                            <td className='table-col-2'>
+                                                <input type='text' name='displayName' value={this.state.displayName} onChange={this.handleChange}/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='table-col-1'>Email: </td>
+                                            <td className='table-col-2'>
+                                                <input type='text' name='email' value={this.state.email} onChange={this.handleChange}/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='table-col-1'>Avatar URL: </td>
+                                            <td className='table-col-2'>
+                                                <input type='text' name='avatar' value={this.state.avatar} onChange={this.handleChange}/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className='table-col-1'>Skillset: </td>
+                                            <td className='table-col-2'>
+                                                <input type='text' name='skillset' value={skillset} onChange={this.handleChange}/><br/>            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                                <div className="btn-row">
+                                    <button className='btn btn-primary' onClick={this.handlePost}>Submit</button>
+                                    <button className='btn btn-primary' onClick={() => this.props.history.push('/user/'+this.state._id)}>Cancel</button>
+                                </div>
                             </div>
+                            <button className='btn btn-primary' onClick={() => this.props.history.push('/')}>Back to Home</button>
                         </div>
-                        <button className='btn btn-primary' onClick={() => this.props.history.push('/')}>Back to Home</button>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        
     }
 }
 
