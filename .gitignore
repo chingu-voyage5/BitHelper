@@ -1,3 +1,4 @@
 node_modules/
 .env
 src/**/*.css
+build/
