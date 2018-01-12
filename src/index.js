@@ -88,7 +88,7 @@ class App extends Component {
            return <UserInfo {...routeProps} {...{user: this.state.user}} />
           }
          }/>
-         <Route path="/edit/user/:id" render={(routeProps)=> {
+         <Route path="/editUser" render={(routeProps)=> {
            return <UserEdit {...routeProps} {...{
               user: this.state.user,
               onUserPost: this.postUser

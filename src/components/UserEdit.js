@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-//import './style.css';
 import '../stylesheets/components/UserEdit.css';
 
 class UserEdit extends Component {
     constructor(props) {
         super(props);
         this.state = this.props.user;
+    }
+    componentDidMount() {
+        // if user is not logged in and therefore user info is null, redirect to home
+        // redirect to login page in the future
+        if (!this.state) {
+            this.props.history.push('/');
+        }
     }
     shouldComponentUpdate(nextProps, nextState) {
         // React isn't catching the changes to state somehow... 
@@ -35,6 +41,10 @@ class UserEdit extends Component {
         this.props.history.push('/user/'+user._id);
     }
     render() {
+        let skillset = 'Enter data, separating values by commas.';
+        if (typeof this.state.skillset === 'object') {
+            skillset = this.state.skillset.toString();
+        }
         return (
             <div className="container">
                 <div className="row">
@@ -70,7 +80,7 @@ class UserEdit extends Component {
                                     <tr>
                                         <td className='table-col-1'>Skillset: </td>
                                         <td className='table-col-2'>
-                                            <input type='text' name='skillset' value={this.state.skillset.toString()} onChange={this.handleChange}/><br/>            
+                                            <input type='text' name='skillset' value={skillset} onChange={this.handleChange}/><br/>            
                                         </td>
                                     </tr>
                                 </table>
