@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import './style.css';
 import '../stylesheets/components/UserInfo.css';
 
 class UserInfo extends Component {
@@ -14,7 +13,7 @@ class UserInfo extends Component {
         })
     }
     handleClick = (e) => {
-        this.props.history.push('/edit/user/'+this.state._id);
+        this.props.history.push('/editUser');
     }
     renderInfo = () => {
         if (this.state._id) {

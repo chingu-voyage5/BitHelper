@@ -8,6 +8,7 @@ class Header extends Component {
 
     }
     render () {
+      console.log('Header', this.props);
       return (
         <header>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,18 +31,17 @@ class Header extends Component {
   }
 
   const Auth = (props) =>  {
-
-    if (props.user.displayName) {
+    console.log('Auth', props);
+    if (props.user) {
       return (
           <div className='login'>
               <p>Welcome <a className='link' href={'/user/'+props.user._id} >{props.user.displayName}</a>
               <span> | </span><a onClick={props.logoutUser} href="">Log Out</a></p>
           </div>
       );
-      } else {
+    } else {
       return <div className='login'><a href="/auth/github">Log In</a></div>;
     }
-
   }
 
   export default Header;

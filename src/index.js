@@ -26,7 +26,7 @@ class App extends Component {
     let url = window.location.origin;
     this.state = {
       projects: [],
-      user: {}
+      user: null
     }
 
     // get projects
@@ -39,12 +39,13 @@ class App extends Component {
       url = process.env.REACT_APP_APPURL;
     });
     // if userId is stored in cookie get user
-    if(document.cookie) {
-      // get user id from cookies
-      const userId = Cookies.get("userId");
+    const userId = Cookies.get("userId");
+    if(userId) {
+      console.log('cookie userId', userId);
 
       axios.get(url + '/api/users/' + userId)
       .then(res => {
+        console.log('get user info from cookie', res.data);
         this.setState({user: res.data})
       })
     }
@@ -63,13 +64,13 @@ class App extends Component {
   }
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
-
       Cookies.remove("userId")
       this.setState({user: null})
     })
 
   }
   render() {
+    console.log('index', this.state.user);
     return(
     <Router>
       <div>
@@ -88,7 +89,7 @@ class App extends Component {
            return <UserInfo {...routeProps} {...{user: this.state.user}} />
           }
          }/>
-         <Route path="/edit/user/:id" render={(routeProps)=> {
+         <Route path="/editUser" render={(routeProps)=> {
            return <UserEdit {...routeProps} {...{
               user: this.state.user,
               onUserPost: this.postUser
