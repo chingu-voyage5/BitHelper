@@ -1,10 +1,13 @@
 .btn {
   background-color: #FE3D3E;
-  border-color: #FE3D3E; }
+  border-color: #FE3D3E;
+  color: white; }
 
+.btn:active,
 .btn:hover {
   background-color: #fe7070;
-  border-color: #fe7070; }
+  border-color: #fe7070;
+  color: white; }
 
 body {
   background: #FAFAFA; }

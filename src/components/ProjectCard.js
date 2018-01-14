@@ -14,7 +14,7 @@ class ProjectCard extends Component {
       if (this.props.projects.length > 0) {
         return this.props.projects.map((item,i) => {
             return (
-            <div className="col-md card"
+            <div className="col-md-4 card"
                 onClick={() => this.props.history.push('/project/' + item._id)}
                 key={i}
                 id={item._id}>

@@ -20,9 +20,12 @@ $breakpoint-large: 60em; // 960px
 .btn {
     background-color: $primary;
     border-color: $primary;
+    color: white;
 }
 
+.btn:active,
 .btn:hover {
     background-color: lighten( $primary, 10%);
     border-color: lighten( $primary, 10%);
+    color: white;
 }

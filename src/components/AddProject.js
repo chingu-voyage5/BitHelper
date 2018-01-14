@@ -133,11 +133,11 @@ class AddProject extends Component {
                   />
                 </div>
 
-                <button type="submit" >Submit</button>
+                <button className="btn" type="submit" onClick={() => this.props.history.push('/')}>Submit</button>
 
                 </fieldset>
                 </form>
-                <button id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
+                <button className="btn" id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
               </div>
             </div>
           </div>

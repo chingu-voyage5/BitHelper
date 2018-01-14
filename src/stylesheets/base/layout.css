@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Work+Sans:300,400,700");
 .btn {
   background-color: #FE3D3E;
-  border-color: #FE3D3E; }
+  border-color: #FE3D3E;
+  color: white; }
 
+.btn:active,
 .btn:hover {
   background-color: #fe7070;
-  border-color: #fe7070; }
+  border-color: #fe7070;
+  color: white; }
 
 * {
   color: #707070;
