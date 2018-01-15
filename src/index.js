@@ -15,7 +15,9 @@ import ProjectCard from './components/ProjectCard.js';
 import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
 import UserEdit from './components/UserEdit.js';
-import AddProject from './components/AddProject.js'
+import AddProject from './components/AddProject.js';
+import Button from './components/Button.js';
+
 
 require('dotenv').load();
 

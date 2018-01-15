@@ -68,11 +68,11 @@ class AddProject extends Component {
                 <fieldset>
 
 
-                <legend>add-project</legend>
+                <legend>Add a project </legend>
 
 
                 <div class="form-group">
-                  <label class="control-label" for="title">Title</label>
+                  <label class="control-label" for="title"><strong>Title</strong></label>
                   <input
                     name="title"
                     type="text"
@@ -85,7 +85,8 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="description">
+                      <strong> Description</strong></label>
                     <textarea
                       class="form-control"
                       name="description"
@@ -97,7 +98,7 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                    <label class="control-label" for="status">Project Status</label>
+                    <label class="control-label" for="status"><strong>Project Status</strong></label>
                     <textarea
                       class="form-control"
                       name="status"
@@ -109,7 +110,9 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                    <label class="control-label" for="repoUrl">Github repo</label>
+                    <label class="control-label" for="repoUrl">
+                      <strong>
+                      Github repo</strong></label>
                     <input
                       name="repoUrl"
                       value={this.state.repoUrl}
@@ -122,7 +125,7 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="img">Img</label>
+                  <label class="col-md-4 control-label" for="img"><strong>Image </strong></label>
                   <input
                     name="img"
                     type="text"

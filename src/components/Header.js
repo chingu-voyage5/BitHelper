@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 // import '../stylesheets/components/Header.css'; 
 import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
+
 
 class Header extends Component {
     constructor(props) {
@@ -44,8 +46,7 @@ class Header extends Component {
       return (
                   <ul className="nav">
                   <li class="nav-item nav-link"> 
-
-                  <a className="nav-link btn" id="add-project" onClick={this.handleClick}>Add a Project</a>
+                  <Button label="Add a Project" id="add-project"/>
                   </li>
                   <li class="nav-item nav-link">
                   <p> Welcome <a href={'/user/'+props.user._id} > {props.user.displayName}</a>
