@@ -21,7 +21,9 @@ class AddProject extends Component {
         this.state = {
           title: "",
           owner: "",
+          category: "",
           description: "",
+          stack: "",
           status: "",
           repoUrl: "",
           img: []
@@ -51,9 +53,12 @@ class AddProject extends Component {
 
     }
     onFormSubmit(e) {
-      e.preventDefault()
-      console.log(this.props)
-      this.props.createPoll(this.state)
+      e.preventDefault();
+      if (this.state.title.length > 0) {
+        this.props.createPoll(this.state)
+      } else {
+        alert('Please at least enter a title!');
+      }
     }
     render() {
       if (!this.props.user) {
@@ -64,81 +69,100 @@ class AddProject extends Component {
             <div className="row">
               <div className="col">
                 <div className="card">
-                <form onSubmit={this.onFormSubmit}>
-                <fieldset>
+                  <form onSubmit={this.onFormSubmit}>
+                  <fieldset>
 
 
-                <legend>add-project</legend>
+                  <legend>add-project</legend>
 
 
-                <div class="form-group">
-                  <label class="control-label" for="title">Title</label>
-                  <input
-                    name="title"
-                    type="text"
-                    placeholder="project title"
-                    class="form-control input-md"
-                    value={this.state.title}
-                    onChange={this.onInputChange} required="" />
-
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="description">Description</label>
-                    <textarea
-                      class="form-control"
-                      name="description"
-                      value={this.state.description}
-                      placeholder="Project description"
-                      onChange={this.onInputChange}
-                    />
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="status">Project Status</label>
-                    <textarea
-                      class="form-control"
-                      name="status"
-                      value={this.state.status}
-                      placeholder="Current state of the project, reason project needs help"
-                      onChange={this.onInputChange}
-                      required="" />
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="repoUrl">Github repo</label>
+                  <div class="form-group">
+                    <label class="control-label" for="title">Title</label>
                     <input
-                      name="repoUrl"
-                      value={this.state.repoUrl}
-                      type="search"
-                      placeholder="link to github repo"
+                      name="title"
+                      type="text"
+                      placeholder="Project title"
+                      class="form-control input-md"
+                      value={this.state.title}
+                      onChange={this.onInputChange} required="" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label" for="category">Category</label>
+                    <input
+                      name="category"
+                      type="text"
+                      placeholder="category"
+                      class="form-control input-md"
+                      value={this.state.category}
+                      onChange={this.onInputChange} required="" />
+                  </div>
+
+                  <div class="form-group">
+                      <label class="control-label" for="description">Description</label>
+                      <textarea
+                        class="form-control"
+                        name="description"
+                        value={this.state.description}
+                        placeholder="Project description"
+                        onChange={this.onInputChange}
+                      />
+                  </div>
+
+
+                  <div class="form-group">
+                      <label class="control-label" for="status">Project Status</label>
+                      <textarea
+                        class="form-control"
+                        name="status"
+                        value={this.state.status}
+                        placeholder="Current state of the project, reason project needs help"
+                        onChange={this.onInputChange}
+                        required="" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label" for="stack">Stack</label>
+                    <input
+                      name="stack"
+                      type="text"
+                      placeholder="Languages, frameworks, libraries... separate by comma"
+                      class="form-control input-md"
+                      value={this.state.stack}
+                      onChange={this.onInputChange} required="" />
+                  </div>
+
+                  <div class="form-group">
+                      <label class="control-label" for="repoUrl">Github repo</label>
+                      <input
+                        name="repoUrl"
+                        value={this.state.repoUrl}
+                        type="search"
+                        placeholder="link to github repo"
+                        class="form-control input-md"
+                        onChange={this.onInputChange}
+                        required="" />
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="col-md-4 control-label" for="img">Img</label>
+                    <input
+                      name="img"
+                      type="text"
+                      value={this.state.img}
+                      placeholder="Links to project screenshots, mockups "
                       class="form-control input-md"
                       onChange={this.onInputChange}
-                      required="" />
-                </div>
+                    />
+                  </div>
 
+                  <button className='btn btn-primary' type="submit" >Submit</button>
 
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="img">Img</label>
-                  <input
-                    name="img"
-                    type="text"
-                    value={this.state.img}
-                    placeholder="Links to project screenshots, mockups "
-                    class="form-control input-md"
-                    onChange={this.onInputChange}
-                  />
-                </div>
-
-                <button type="submit" >Submit</button>
-
-                </fieldset>
-                </form>
-                <button id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
+                  </fieldset>
+                  </form>
               </div>
+              <button className='btn btn-primary' onClick={() => this.props.history.push('/')}>Back to Home</button>
             </div>
           </div>
         </div>
