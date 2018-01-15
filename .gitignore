@@ -1,5 +1,5 @@
 node_modules/
 .env
 src/**/*.css
-build/*
+build/* 
 npm-debug.log

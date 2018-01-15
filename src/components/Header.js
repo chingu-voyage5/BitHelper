@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import '../stylesheets/components/Header.css';
-
-// import './style.css';
+// import '../stylesheets/components/Header.css'; 
+import '../stylesheets/main.css'; // for dev
 
 class Header extends Component {
     constructor(props) {
@@ -36,14 +35,17 @@ class Header extends Component {
     }
   }
 
+
+  // This component should be splitted in two: Auth and CreateProject. 
   const Auth = (props) =>  {
     console.log('Auth', props);
+
     if (props.user) {
       return (
                   <ul className="nav">
                   <li class="nav-item nav-link"> 
-                  <button className="btn" id="add-project" onClick={this.handleClick}>Add a Project</button>
 
+                  <a className="nav-link btn" id="add-project" onClick={this.handleClick}>Add a Project</a>
                   </li>
                   <li class="nav-item nav-link">
                   <p> Welcome <a href={'/user/'+props.user._id} > {props.user.displayName}</a>
@@ -59,9 +61,7 @@ class Header extends Component {
         <a href="/auth/github"><button className="btn">Login</button></a>
         </li>
           </ul>
-      )
-      
-      
+      ) 
       
       
     }

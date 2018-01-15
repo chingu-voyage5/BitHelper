@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../stylesheets/components/addProject.css';
-//import './style.css';
+// import '../stylesheets/components/addProject.css';
+import '../stylesheets/main.css'; // for dev
 
 // const ProjectsSchema = new Schema({
 //     id: String,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import '../stylesheets/components/ProjectInfo.css';
+// import '../stylesheets/components/ProjectInfo.css';
+import '../stylesheets/main.css'; // for dev
 
 export default (props) => {
 
