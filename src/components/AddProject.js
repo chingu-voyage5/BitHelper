@@ -3,14 +3,17 @@ import axios from 'axios';
 // import '../stylesheets/components/addProject.css';
 import '../stylesheets/main.css'; // for dev
 
+
 // const ProjectsSchema = new Schema({
-//     id: String,
-//     title: String,        //title of the project
-//     owner: String,        //username of the post creator
-//     description: String,  //project description
-//     status: String,       //status of project, why it's stuck
-//     repoUrl: String,      //GitHub repo URL
-//     img: [String]         //image URLs of screenshots
+//   id: String, 
+//   title: String,        //title of the project
+//   owner: String,        //username of the post creator
+//   category: String,     //category of the project
+//   description: String,  //project description
+//   stack: [String],      //array of technologies used in the project
+//   status: String,       //status of project, why it's stuck
+//   repoUrl: String,      //GitHub repo URL
+//   img: [String]         //image URLs of screenshots
 // });
 
 
@@ -63,20 +66,16 @@ class AddProject extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="card">
+                <div className="material-card">
+                <h1>Add a project </h1>
                 <form onSubmit={this.onFormSubmit}>
                 <fieldset>
-
-
-                <legend>Add a project </legend>
-
-
                 <div class="form-group">
-                  <label class="control-label" for="title"><strong>Title</strong></label>
+                  <label class="control-label" for="title">Project title</label>
                   <input
                     name="title"
                     type="text"
-                    placeholder="project title"
+                    placeholder="e.g. the Ninja project"
                     class="form-control input-md"
                     value={this.state.title}
                     onChange={this.onInputChange} required="" />
@@ -86,10 +85,10 @@ class AddProject extends Component {
 
                 <div class="form-group">
                     <label class="control-label" for="description">
-                      <strong> Description</strong></label>
+                      Description</label>
                     <textarea
                       class="form-control"
-                      name="description"
+                      name="e.g. This is the coolest project ever"
                       value={this.state.description}
                       placeholder="Project description"
                       onChange={this.onInputChange}
@@ -103,7 +102,7 @@ class AddProject extends Component {
                       class="form-control"
                       name="status"
                       value={this.state.status}
-                      placeholder="Current state of the project, reason project needs help"
+                      placeholder="E.g. Explain what is the current state of the project, why you need help and what roles you might need"
                       onChange={this.onInputChange}
                       required="" />
                 </div>
@@ -111,13 +110,12 @@ class AddProject extends Component {
 
                 <div class="form-group">
                     <label class="control-label" for="repoUrl">
-                      <strong>
-                      Github repo</strong></label>
+                      Code repository</label>
                     <input
                       name="repoUrl"
                       value={this.state.repoUrl}
                       type="search"
-                      placeholder="link to github repo"
+                      placeholder="http://github.com/username/github-repo"
                       class="form-control input-md"
                       onChange={this.onInputChange}
                       required="" />
@@ -125,12 +123,12 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="img"><strong>Image </strong></label>
+                  <label class="col-md-4 control-label" for="img">Image</label>
                   <input
                     name="img"
                     type="text"
                     value={this.state.img}
-                    placeholder="Links to project screenshots, mockups "
+                    placeholder="e.g. http://via.placeholder.com/400x300"
                     class="form-control input-md"
                     onChange={this.onInputChange}
                   />
