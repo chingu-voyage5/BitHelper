@@ -1,0 +1,8 @@
+@import "../base/helpers.scss";
+body {
+    background: $almost-white;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+}

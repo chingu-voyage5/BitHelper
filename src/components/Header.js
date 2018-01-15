@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import '../stylesheets/components/Header.css';
+
 // import './style.css';
 
 class Header extends Component {
@@ -7,22 +10,33 @@ class Header extends Component {
         super(props)
 
     }
+    handleClick = (e) => {
+      switch (e.target.id) {
+        case "add-project":
+          this.props.history.push('/addProject');
+          break;
+        default:
+          this.props.history.push('/');
+      }
+    }
     render () {
       console.log('Header', this.props);
       return (
         <header>
           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <a className="navbar-brand" href="/">Bears-20 App</a>
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <Auth className="nav-link" user={this.props.user} logoutUser={this.props.logoutUser}/>
-                  </li>
-
-                </ul>
+            <a className="navbar-brand" onClick={this.handleClick}>Bears-20 App</a>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <Auth className="nav-link" user={this.props.user} logoutUser={this.props.logoutUser}/>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" id="add-project" onClick={this.handleClick}>Add a Project</a>
+                </li>
+              </ul>
             </div>
           </nav>         
         </header>
@@ -44,4 +58,4 @@ class Header extends Component {
     }
   }
 
-  export default Header;
+  export default withRouter(Header);

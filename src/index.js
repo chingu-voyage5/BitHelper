@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
@@ -14,6 +15,7 @@ import ProjectCard from './components/ProjectCard.js';
 import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
 import UserEdit from './components/UserEdit.js';
+import AddProject from './components/AddProject.js'
 
 require('dotenv').load();
 
@@ -23,11 +25,19 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    let url = window.location.origin;
     this.state = {
       projects: [],
-      user: null
+      user: null,
+      isLoggedIn: false
     }
+
+    this.logoutUser = this.logoutUser.bind(this);
+    this.createPoll = this.createPoll.bind(this);
+  }
+
+  componentDidMount() {
+    let url = window.location.origin;
+
 
     // get projects
     axios.get(url + '/api/projects')
@@ -38,19 +48,27 @@ class App extends Component {
       console.error('local server not running. using heroku deployment of the server instead.');
       url = process.env.REACT_APP_APPURL;
     });
+
+    axios.get(url + '/auth')
+    .then(res => {
+      this.setState({
+        user: res.data,
+        isLoggedIn: true
+      });
+    })
     // if userId is stored in cookie get user
-    const userId = Cookies.get("userId");
+    /*const userId = Cookies.get("userId");
     if(userId) {
       console.log('cookie userId', userId);
 
       axios.get(url + '/api/users/' + userId)
       .then(res => {
-        console.log('get user info from cookie', res.data);
-        this.setState({user: res.data})
+        this.setState({
+          user: res.data,
+          isLoggedIn: true
+        })
       })
-    }
-
-    this.logoutUser = this.logoutUser.bind(this)
+    }*/
   }
   postUser = (data) => {
     console.log('post user', data);
@@ -62,10 +80,24 @@ class App extends Component {
       console.error('error posting user update');
     });
   }
+  createPoll = (data) => {
+    console.log('create poll', data);
+    axios.post(window.location.origin + '/api/projects', data)
+    .then(res => {
+      console.log('poll created');
+    })
+    .catch(err => {
+      console.error('error posting new poll');
+    });
+  }
   logoutUser() { // logout user
     axios.get('/auth/logout').then(()=> {
+
       Cookies.remove("userId")
-      this.setState({user: null})
+      this.setState({
+        user: null,
+        isLoggedIn: false
+      })
     })
 
   }
@@ -74,28 +106,38 @@ class App extends Component {
     return(
     <Router>
       <div>
-         <Header user={this.state.user} logoutUser={this.logoutUser}/>
-          <Route exact
-            path="/"
-            render={(routeProps)=> {
-            return <ProjectCard {...routeProps} {...this.state}  />
+        <Header user={this.state.user} logoutUser={this.logoutUser}/>
+        <Route exact
+          path="/"
+          render={(routeProps)=> {
+          return <ProjectCard {...routeProps} {...this.state}  />
+        }
+        }/>
+        <Route path="/project/:id" render={(routeProps)=> {
+          return <ProjectInfo {...routeProps} {...this.state} />
+        }
+        }/>
+        <Route path="/user/:id" render={(routeProps)=> {
+          return <UserInfo {...routeProps} {...{user: this.state.user}} />
+        }
+        }/>
+        <Route path="/editUser" render={(routeProps)=> {
+          return <UserEdit {...routeProps} {...{
+            user: this.state.user,
+            onUserPost: this.postUser
+          }} />
+        }
+        }/>
+        <Route path="/addproject" render={(routeProps)=> {
+              return <AddProject
+                {...routeProps}
+                {...{
+                  user: this.state.user,
+                  createPoll: this.createPoll
+                }} />
           }
-         }/>
-         <Route path="/project/:id" render={(routeProps)=> {
-           return <ProjectInfo {...routeProps} {...this.state} />
-          }
-         }/>
-         <Route path="/user/:id" render={(routeProps)=> {
-           return <UserInfo {...routeProps} {...{user: this.state.user}} />
-          }
-         }/>
-         <Route path="/editUser" render={(routeProps)=> {
-           return <UserEdit {...routeProps} {...{
-              user: this.state.user,
-              onUserPost: this.postUser
-            }} />
-          }
-         }/>
+        }/>
+
       </div>
      </Router>
    )
@@ -103,5 +145,34 @@ class App extends Component {
 
 }
 
-  ReactDOM.render(<App
-  />, document.getElementById('root'));
+// wrapper function for protected routes
+const AuthenticatedUser = (prop) =>  {
+    console.log('AuthenticatedUser', prop);
+    /*if (user) {
+      // return protected routes
+      return <div>{children}</div>
+    } else {
+      console.log('user not logged in')
+      // todo: should redirect to a login page
+      return null
+    }*/
+}
+
+ReactDOM.render(<App
+/>, document.getElementById('root'));
+
+/*
+
+// Wrapper component that only renders routes when user islogged in
+         <AuthenticatedUser isLoggedin={this.state.user}>
+           <Route path="/addproject" render={(routeProps)=> {
+                return <AddProject
+                  {...routeProps}
+                  {...{
+                    user: this.state.user,
+                    createPoll: this.createPoll
+                  }} />
+            }
+          }/>
+        </AuthenticatedUser>
+*/
