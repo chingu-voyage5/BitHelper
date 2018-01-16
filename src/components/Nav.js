@@ -6,7 +6,7 @@ import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
 
 
-class Header extends Component {
+class Nav extends Component {
     constructor(props) {
         super(props)
 
@@ -68,4 +68,4 @@ class Header extends Component {
     }
   }
 
-  export default withRouter(Header);
+  export default withRouter(Nav);
