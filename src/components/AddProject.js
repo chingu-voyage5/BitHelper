@@ -138,7 +138,7 @@ class AddProject extends Component {
 
                 </fieldset>
                 </form>
-                <Button />
+                <Button label="Back to home" />
               </div>
             </div>
           </div>
