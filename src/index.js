@@ -8,14 +8,17 @@ import {
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
-import "./stylesheets/main.css"
+import "./stylesheets/main.css";
 // import './style.css';
-import Header from './components/Header.js';
+import Nav from './components/Nav.js';
 import ProjectCard from './components/ProjectCard.js';
 import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
 import UserEdit from './components/UserEdit.js';
-import AddProject from './components/AddProject.js'
+import AddProject from './components/AddProject.js';
+import Footer from './components/Footer.js';
+import Button from './components/Button.js';
+
 
 require('dotenv').load();
 
@@ -106,7 +109,7 @@ class App extends Component {
     return(
     <Router>
       <div>
-        <Header user={this.state.user} logoutUser={this.logoutUser}/>
+        <Nav user={this.state.user} logoutUser={this.logoutUser}/>
         <Route exact
           path="/"
           render={(routeProps)=> {
@@ -137,7 +140,8 @@ class App extends Component {
                 }} />
           }
         }/>
-
+      
+      <Footer />
       </div>
      </Router>
    )

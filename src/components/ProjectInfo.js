@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import '../stylesheets/components/ProjectInfo.css';
+// import '../stylesheets/components/ProjectInfo.css';
+import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
 
 export default (props) => {
 
@@ -14,12 +16,11 @@ export default (props) => {
     <li>{item}</li>
   );
 
-
   return (
      <div className="container">
-     <div className="row">
+     <div className="row ">
        <div className="col">
-         <div className="project-info">
+         <div className="material-card">
            <div className="project-meta row">
             <p className="project-category col">{currentProject[0].category}</p>
             <p className="project-owner col text-md-right">{currentProject[0].owner}</p>
@@ -41,7 +42,7 @@ export default (props) => {
             </div>
             </div>     
          </div>
-         <button className="btn btn-primary" id='backToList' onClick={() => props.history.push('/')}>All projects</button>
+         <Button label="All projects" />
 
        </div>
      </div>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../stylesheets/components/UserInfo.css';
+// import '../stylesheets/components/UserInfo.css';
+import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
+
 
 class UserInfo extends Component {
     constructor(props) {
