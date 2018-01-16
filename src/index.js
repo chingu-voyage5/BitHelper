@@ -16,6 +16,7 @@ import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
 import UserEdit from './components/UserEdit.js';
 import AddProject from './components/AddProject.js';
+import Footer from './components/Footer.js';
 import Button from './components/Button.js';
 
 
@@ -139,7 +140,8 @@ class App extends Component {
                 }} />
           }
         }/>
-
+      
+      <Footer />
       </div>
      </Router>
    )
