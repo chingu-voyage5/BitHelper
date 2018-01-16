@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import '../stylesheets/components/addProject.css';
 import '../stylesheets/main.css'; // for dev
-
+import Button from './Button.js';
 
 // const ProjectsSchema = new Schema({
 //   id: String, 
@@ -138,7 +138,7 @@ class AddProject extends Component {
 
                 </fieldset>
                 </form>
-                <button className="btn" id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
+                <Button />
               </div>
             </div>
           </div>

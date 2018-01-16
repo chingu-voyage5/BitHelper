@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import '../stylesheets/components/ProjectCard.css';
 import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
+
 
 class ProjectCard extends Component {
     constructor(props) {
@@ -23,7 +25,7 @@ class ProjectCard extends Component {
                 <p className="card-category">{item.category}</p>
                 <h4 className="card-title">{item.title}</h4>
                 <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <button className="btn btn-primary">More</button>
+                <Button label="More" />
                 </div>
               </div>)
         })

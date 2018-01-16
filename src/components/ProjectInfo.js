@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 // import '../stylesheets/components/ProjectInfo.css';
 import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
 
 export default (props) => {
 
@@ -14,7 +15,6 @@ export default (props) => {
   const stackList = stack.map((item) =>
     <li>{item}</li>
   );
-
 
   return (
      <div className="container">
@@ -42,7 +42,7 @@ export default (props) => {
             </div>
             </div>     
          </div>
-         <button className="btn btn-primary" id='backToList' onClick={() => props.history.push('/')}>All projects</button>
+         <Button label="All projects" />
 
        </div>
      </div>
