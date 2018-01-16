@@ -5,6 +5,7 @@
     "dependencies": {
         "axios": "^0.17.1",
         "body-parser": "^1.18.2",
+        "bootstrap": "^4.0.0-beta.3",
         "cookie.js": "^3.0.0",
         "dotenv": "^4.0.0",
         "express": "^4.16.2",
@@ -26,6 +27,7 @@
     },
     "scripts": {
         "start": "react-scripts start && npm run watch-css",
+        "first-server": "npm run build-css && react-scripts build && nodemon server.js",
         "start-server": "rm src/**/*.css && npm run build-css && react-scripts build && nodemon server.js",
         "build": "react-scripts build",
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

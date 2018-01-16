@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../stylesheets/components/addProject.css';
-//import './style.css';
+// import '../stylesheets/components/addProject.css';
+import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
 
 // const ProjectsSchema = new Schema({
-//     id: String,
-//     title: String,        //title of the project
-//     owner: String,        //username of the post creator
-//     description: String,  //project description
-//     status: String,       //status of project, why it's stuck
-//     repoUrl: String,      //GitHub repo URL
-//     img: [String]         //image URLs of screenshots
+//   id: String, 
+//   title: String,        //title of the project
+//   owner: String,        //username of the post creator
+//   category: String,     //category of the project
+//   description: String,  //project description
+//   stack: [String],      //array of technologies used in the project
+//   status: String,       //status of project, why it's stuck
+//   repoUrl: String,      //GitHub repo URL
+//   img: [String]         //image URLs of screenshots
 // });
 
 
@@ -63,20 +66,16 @@ class AddProject extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <div className="card">
+                <div className="material-card">
+                <h1>Add a project </h1>
                 <form onSubmit={this.onFormSubmit}>
                 <fieldset>
-
-
-                <legend>add-project</legend>
-
-
                 <div class="form-group">
-                  <label class="control-label" for="title">Title</label>
+                  <label class="control-label" for="title">Project title</label>
                   <input
                     name="title"
                     type="text"
-                    placeholder="project title"
+                    placeholder="e.g. the Ninja project"
                     class="form-control input-md"
                     value={this.state.title}
                     onChange={this.onInputChange} required="" />
@@ -85,10 +84,11 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                    <label class="control-label" for="description">Description</label>
+                    <label class="control-label" for="description">
+                      Description</label>
                     <textarea
                       class="form-control"
-                      name="description"
+                      name="e.g. This is the coolest project ever"
                       value={this.state.description}
                       placeholder="Project description"
                       onChange={this.onInputChange}
@@ -97,24 +97,25 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                    <label class="control-label" for="status">Project Status</label>
+                    <label class="control-label" for="status"><strong>Project Status</strong></label>
                     <textarea
                       class="form-control"
                       name="status"
                       value={this.state.status}
-                      placeholder="Current state of the project, reason project needs help"
+                      placeholder="E.g. Explain what is the current state of the project, why you need help and what roles you might need"
                       onChange={this.onInputChange}
                       required="" />
                 </div>
 
 
                 <div class="form-group">
-                    <label class="control-label" for="repoUrl">Github repo</label>
+                    <label class="control-label" for="repoUrl">
+                      Code repository</label>
                     <input
                       name="repoUrl"
                       value={this.state.repoUrl}
                       type="search"
-                      placeholder="link to github repo"
+                      placeholder="http://github.com/username/github-repo"
                       class="form-control input-md"
                       onChange={this.onInputChange}
                       required="" />
@@ -122,22 +123,22 @@ class AddProject extends Component {
 
 
                 <div class="form-group">
-                  <label class="col-md-4 control-label" for="img">Img</label>
+                  <label class="col-md-4 control-label" for="img">Image</label>
                   <input
                     name="img"
                     type="text"
                     value={this.state.img}
-                    placeholder="Links to project screenshots, mockups "
+                    placeholder="e.g. http://via.placeholder.com/400x300"
                     class="form-control input-md"
                     onChange={this.onInputChange}
                   />
                 </div>
 
-                <button type="submit" >Submit</button>
+                <button className="btn" type="submit" onClick={() => this.props.history.push('/')}>Submit</button>
 
                 </fieldset>
                 </form>
-                <button id='backToList' onClick={() => this.props.history.push('/')}>Back to Main</button>
+                <Button label="Back to home" />
               </div>
             </div>
           </div>
