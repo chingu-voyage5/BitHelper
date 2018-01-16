@@ -24,7 +24,7 @@ class ProjectCard extends Component {
                 <div class="card-body">
                 <p className="card-category">{item.category}</p>
                 <h4 className="card-title">{item.title}</h4>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p className="card-text">{item.description}</p>
                 <Button label="More" />
                 </div>
               </div>)
