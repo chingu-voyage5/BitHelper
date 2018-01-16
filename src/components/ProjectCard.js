@@ -17,7 +17,7 @@ class ProjectCard extends Component {
       if (this.props.projects.length > 0) {
         return this.props.projects.map((item,i) => {
             return (
-            <div className="col-md-4 card"
+            <div className="col-md-3 card"
                 onClick={() => this.props.history.push('/project/' + item._id)}
                 key={i}
                 id={item._id}>
@@ -38,7 +38,7 @@ class ProjectCard extends Component {
 
          return (
             <div className="container">
-                <div className="row">
+                <div className="row justify-content-center">
                     <div className="col-12">
                 <h1 className="text-center">Projects</h1>
                 </div>

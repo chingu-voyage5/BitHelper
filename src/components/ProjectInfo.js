@@ -18,7 +18,7 @@ export default (props) => {
 
   return (
      <div className="container">
-     <div className="row">
+     <div className="row ">
        <div className="col">
          <div className="material-card">
            <div className="project-meta row">

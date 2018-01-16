@@ -21,7 +21,7 @@ class Nav extends Component {
       }
     }
     render () {
-      console.log('Header', this.props);
+      console.log('Nav', this.props);
       return (
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a className="navbar-brand" onClick={this.handleClick}>Bears-20 App</a>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/UserEdit.css';
 import '../stylesheets/main.css'; // for dev
+import Button from './Button.js';
+
 
 class UserEdit extends Component {
     constructor(props) {

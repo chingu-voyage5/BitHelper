@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
-import "./stylesheets/main.css"com
+import "./stylesheets/main.css";
 // import './style.css';
 import Nav from './components/Nav.js';
 import ProjectCard from './components/ProjectCard.js';
@@ -108,7 +108,7 @@ class App extends Component {
     return(
     <Router>
       <div>
-        <Header user={this.state.user} logoutUser={this.logoutUser}/>
+        <Nav user={this.state.user} logoutUser={this.logoutUser}/>
         <Route exact
           path="/"
           render={(routeProps)=> {
