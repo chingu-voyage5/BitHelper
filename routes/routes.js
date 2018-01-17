@@ -70,10 +70,10 @@ module.exports = function(router) {
        }
      });
     })
-
     //delete method for removing a project from our database
     .delete(function(req, res) {
      //selects the project by its ID, then removes it.
+     console.log('delete requested', req.params.project_id);
      Project.remove({ _id: req.params.project_id }, function(err, project) {
        if (err) { res.send(err); }
        res.json({ message: 'Project has been deleted' })

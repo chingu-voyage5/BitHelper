@@ -10,14 +10,14 @@ import Cookies from 'cookie.js'
 import axios from 'axios';
 import "./stylesheets/main.css";
 // import './style.css';
-import Nav from './components/Nav.js';
-import ProjectCard from './components/ProjectCard.js';
-import ProjectInfo from './components/ProjectInfo.js';
-import UserInfo from './components/UserInfo.js';
-import UserEdit from './components/UserEdit.js';
-import AddProject from './components/AddProject.js';
-import Footer from './components/Footer.js';
-import Button from './components/Button.js';
+import Nav from './components/Nav';
+import ProjectCard from './components/ProjectCard';
+import ProjectInfo from './components/ProjectInfo';
+import ProjectEdit from './components/ProjectEdit';
+import UserInfo from './components/UserInfo';
+import UserEdit from './components/UserEdit';
+import Footer from './components/Footer';
+import Button from './components/Button';
 
 
 require('dotenv').load();
@@ -33,15 +33,10 @@ class App extends Component {
       user: null,
       isLoggedIn: false
     }
-
-    this.logoutUser = this.logoutUser.bind(this);
-    this.createPoll = this.createPoll.bind(this);
   }
 
   componentDidMount() {
     let url = window.location.origin;
-
-
     // get projects
     axios.get(url + '/api/projects')
     .then(res => {
@@ -80,20 +75,40 @@ class App extends Component {
       console.log('update user success');
     })
     .catch(err => {
-      console.error('error posting user update');
+      console.error('error posting user update', err);
     });
   }
-  createPoll = (data) => {
-    console.log('create poll', data);
+  newProject = (data) => {
+    console.log('create project', data);
     axios.post(window.location.origin + '/api/projects', data)
     .then(res => {
-      console.log('poll created');
+      console.log('project created');
     })
     .catch(err => {
-      console.error('error posting new poll');
+      console.error('error posting new project', err);
     });
   }
-  logoutUser() { // logout user
+  updateProject = (data) => {
+    console.log('update project', data);
+    axios.put(window.location.origin + '/api/projects/' + data._id, data)
+    .then(res => {
+      console.log('update project success');
+    })
+    .catch(err => {
+      console.error('update project error', err);
+    });
+  }
+  deleteProject = (data) => {
+    console.log('delete project', data.title);
+    axios.delete(window.location.origin + '/api/projects/' + data._id)
+    .then(res => {
+      console.log('delete project success');
+    })
+    .catch(err => {
+      console.error('delete project error', err);
+    });
+  }
+  logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
 
       Cookies.remove("userId")
@@ -117,7 +132,13 @@ class App extends Component {
         }
         }/>
         <Route path="/project/view/:id" render={(routeProps)=> {
-          return <ProjectInfo {...routeProps} {...this.state} />
+          return <ProjectInfo 
+            {...routeProps} 
+            {...{
+              projects: this.state.projects,
+              user: this.state.user,
+              deleteProject: this.deleteProject
+            }} />
         }
         }/>
         <Route path="/user/view/:id" render={(routeProps)=> {
@@ -132,11 +153,24 @@ class App extends Component {
           }
         }/>
         <Route path="/project/add/" render={(routeProps)=> {
-              return <AddProject
+              return <ProjectEdit
                 {...routeProps}
                 {...{
+                  title: 'Create New Project',
+                  edit: false,
                   user: this.state.user,
-                  createPoll: this.createPoll
+                  handleSubmit: this.newProject
+                }} />
+          }
+        }/>
+        <Route path="/project/edit/:id" render={(routeProps)=> {
+              return <ProjectEdit
+                {...routeProps}
+                {...{
+                  title: 'Edit a Project',
+                  edit: true,
+                  user: this.state.user,
+                  handleSubmit: this.updateProject
                 }} />
           }
         }/>

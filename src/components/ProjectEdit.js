@@ -17,7 +17,7 @@ import Input from './Input'
 //   img: [String]         //image URLs of screenshots
 // });
 
-class AddProject extends Component {
+class ProjectEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,17 +35,30 @@ class AddProject extends Component {
       // if user is not logged in and therefore user info is null, redirect to home
       // redirect to login page in the future
       if (!this.props.user) {
-          setTimeout(() => {
-              this.props.history.push('/');
-          }, 3000);
+        setTimeout(() => {
+            this.props.history.push('/');
+        }, 3000);
+      } else if (this.props.edit) {
+        // if editing a project, retrieve project data based on URL
+        this.getProjectData();
       } else {
+        // if creating a new project, set owner based on props
+        // NOTE I've changed the owner info to user ID, because displayname can be changed
+        // and therefore cannot be used to identify the user.
         this.setState({
-          owner: this.props.user.displayName
+          owner: this.props.user._id
         });
       }
     }
     shouldComponentUpdate() {
       return true;
+    }
+    getProjectData = () => {
+        const projectId = window.location.pathname.replace('/project/edit/','');
+        axios.get('/api/projects/'+projectId)
+        .then(res => {
+            this.setState(res.data);
+        });
     }
     onInputChange = (name, value) => {
       const newValue = {};
@@ -58,11 +71,14 @@ class AddProject extends Component {
     }
     onFormSubmit = (e) => {
       e.preventDefault();
-      this.props.createPoll(this.state);
+      this.props.handleSubmit(this.state);
       this.props.history.push('/');
     }
     onFormReset = () => {
-      this.setState({
+      if (this.props.edit) {
+        this.getProjectData();
+      } else {
+        this.setState({
           title: "",
           owner: "",
           category: "",
@@ -72,6 +88,7 @@ class AddProject extends Component {
           repoUrl: "",
           img: []
         });
+      }
     }
     render() {
       if (!this.props.user) {
@@ -134,7 +151,7 @@ class AddProject extends Component {
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                  <h1>Add a project </h1>
+                  <h1>{this.props.title}</h1>
                   <form onSubmit={this.onFormSubmit}>
                     <fieldset>
                       {inputFields.map(item => {
@@ -157,4 +174,4 @@ class AddProject extends Component {
     }
 }
 
-export default AddProject;
+export default ProjectEdit;
