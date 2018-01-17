@@ -2,16 +2,7 @@ import React, { Component } from 'react';
 import '../stylesheets/main.css'; // for dev
 
 class Input extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null
-    }
-  }
   onChange = (e) => {
-    this.setState({
-      value: e.target.value
-    });
     this.props.onChange(e.target.name, e.target.value);
   }
   render(){
@@ -27,13 +18,12 @@ class Input extends Component {
               type={data.type ? data.type : 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value ? data.value : this.state.value}
+              value={data.value}
               onChange={this.onChange}
               required={data.required} 
             />
           </div>
         );
-        break;
       default: 
         return (
           <div className="form-group">
@@ -44,7 +34,7 @@ class Input extends Component {
               type={data.type ? data.type : 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value ? data.value : this.state.value}
+              value={data.value}
               onChange={this.onChange}
               required={data.required ? data.required : false} 
             />

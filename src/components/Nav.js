@@ -45,10 +45,10 @@ class Nav extends Component {
       return (
                   <ul className="navbar-nav mr-auto">
                   <li className="nav-item nav-link"> 
-                  <Button label="Add a Project" id="add-project"/>
+                  <Button label="Add a Project" id="add-project" redirect='/project/add'/>
                   </li>
                   <li className="nav-item nav-link">
-                  <p> Welcome <a href={'/user/'+props.user._id} > {props.user.displayName}</a>
+                  <p> Welcome <a href={'/user/view/'+props.user._id} > {props.user.displayName}</a>
              |<a onClick={props.logoutUser} href="">Log Out</a> </p>
                   </li>
                   </ul>

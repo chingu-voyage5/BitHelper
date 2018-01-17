@@ -9,7 +9,7 @@ class Button extends Component {
   }
   handleClick = (e) => {
     let redirect = this.props.redirect ? this.props.redirect : '/';
-    this.props.hisotry.push(redirect);
+    this.props.history.push(redirect);
     
     //switch (e.target.innerText) {
         //case "Add a Project":

@@ -17,7 +17,6 @@ import Input from './Input'
 //   img: [String]         //image URLs of screenshots
 // });
 
-
 class AddProject extends Component {
     constructor(props) {
         super(props);
@@ -45,15 +44,34 @@ class AddProject extends Component {
         });
       }
     }
+    shouldComponentUpdate() {
+      return true;
+    }
     onInputChange = (name, value) => {
       const newValue = {};
-      newValue[name] = value;
+      if (name === 'img') {
+        newValue[name] = value.split(',');
+      } else {
+        newValue[name] = value;
+      }
       this.setState(...this.state, newValue);
     }
     onFormSubmit = (e) => {
       e.preventDefault();
       this.props.createPoll(this.state);
       this.props.history.push('/');
+    }
+    onFormReset = () => {
+      this.setState({
+          title: "",
+          owner: "",
+          category: "",
+          description: "",
+          stack: "",
+          status: "",
+          repoUrl: "",
+          img: []
+        });
     }
     render() {
       if (!this.props.user) {
@@ -64,19 +82,22 @@ class AddProject extends Component {
             label: 'Project Title',
             name: 'title',
             placeholder: 'e.g. the Ninja project',
+            value: this.state.title,
             required: true
           },
           {
             label: 'Category',
-            name: 'title',
+            name: 'category',
             type: 'text',
-            placeholder: 'e.g. Social, Games, Productivity, etc.'
+            placeholder: 'e.g. Social, Games, Productivity, etc.',
+            value: this.state.category
           },
           {
             label: 'Description',
             tag: 'textarea',
             name: 'description',
             placeholder: 'e.g. This is the coolest project ever',
+            value: this.state.description,
             required: true
           },
           {
@@ -84,24 +105,28 @@ class AddProject extends Component {
             tag: 'textarea',
             name: 'status',
             placeholder: 'e.g. Explain what is the current state of the project, why you need help and what roles you might need',
+            value: this.state.status,
             required: true
           },
           {
             label: 'Stack',
             name: 'stack',
             type: 'text',
-            placeholder: 'Languages, frameworks, libraries... separate by comma'
+            placeholder: 'Languages, frameworks, libraries... separate by comma',
+            value: this.state.stack
           },
           {
             label: 'Code Repository',
             name: 'repoUrl',
             placeholder: 'http://github.com/username/github-repo',
+            value: this.state.repoUrl,
             required: true
           },
           {
-            label: 'Image',
+            label: 'Screenshots URL',
             name: 'img',
-            placeholder: 'e.g. http://via.placeholder.com/400x300'
+            placeholder: 'e.g. http://via.placeholder.com/400x300',
+            value: this.state.img
           }
         ];
         return (
@@ -115,9 +140,9 @@ class AddProject extends Component {
                       {inputFields.map(item => {
                         return <Input onChange={this.onInputChange} data={item}/>;
                       })}
-                      <div className='btn-container'>
+                      <div className='d-flex justify-content-around'>
                         <input type='submit' className='btn' value='Submit' />
-                        <input type='reset' className='btn' value='Reset' />'
+                        <input type='reset' className='btn' value='Reset' onClick={this.onFormReset} />
                       </div>
                     </fieldset>
                   </form>
