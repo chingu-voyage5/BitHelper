@@ -2,9 +2,6 @@ const Project = require('../model/projects');
 const User = require('../model/users');
 
 module.exports = function(router) {
-
-    console.log('router');
-
     // Go to /api to just check if API is working
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
