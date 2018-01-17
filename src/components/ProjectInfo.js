@@ -6,13 +6,11 @@ import Button from './Button.js';
 
 export default (props) => {
 
-
   const currentProject = props.projects.filter((project) => {
     return project._id === props.match.params.id
   });
 
-  const stack = currentProject[0].stack;
-  const stackList = stack.map((item) =>
+  const stackList = currentProject[0].stack.map((item) =>
     <li>{item}</li>
   );
 

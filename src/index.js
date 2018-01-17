@@ -116,22 +116,22 @@ class App extends Component {
           return <ProjectCard {...routeProps} {...this.state}  />
         }
         }/>
-        <Route path="/project/:id" render={(routeProps)=> {
+        <Route path="/project/view/:id" render={(routeProps)=> {
           return <ProjectInfo {...routeProps} {...this.state} />
         }
         }/>
-        <Route path="/user/:id" render={(routeProps)=> {
+        <Route path="/user/view/:id" render={(routeProps)=> {
           return <UserInfo {...routeProps} {...{user: this.state.user}} />
         }
         }/>
-        <Route path="/editUser" render={(routeProps)=> {
-          return <UserEdit {...routeProps} {...{
-            user: this.state.user,
-            onUserPost: this.postUser
-          }} />
-        }
+        <Route path="/user/edit/" render={(routeProps)=> {
+            return <UserEdit {...routeProps} {...{
+              user: this.state.user,
+              onUserPost: this.postUser
+            }} />
+          }
         }/>
-        <Route path="/addproject" render={(routeProps)=> {
+        <Route path="/project/add/" render={(routeProps)=> {
               return <AddProject
                 {...routeProps}
                 {...{

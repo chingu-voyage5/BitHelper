@@ -8,18 +8,18 @@ import Button from './Button.js';
 class UserInfo extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
-        const userId = window.location.pathname.replace('/user/','');
+        this.state = null;
+    }
+    componentDidMount() {
+        // Get user ID from URL path, and retrieve user data from server
+        const userId = window.location.pathname.replace('/user/view/','');
         axios.get('/api/users/'+userId)
         .then(res => {
             this.setState(res.data);
         })
     }
-    handleClick = (e) => {
-        this.props.history.push('/editUser');
-    }
     renderInfo = () => {
-        if (this.state._id) {
+        if (this.state) {
             return (
                 <div className='user-info'>
                     <div className='user-info-meta row'>
@@ -49,7 +49,9 @@ class UserInfo extends Component {
                             <p>My Projects</p>
                         </div>
                     </div>
-                    <div className='btn-row'>{this.renderBtn()}</div>
+                    <div className='d-flex justify-content-around'>
+                        {this.renderBtn()}
+                    </div>
                 </div>
             );
         }
@@ -59,8 +61,8 @@ class UserInfo extends Component {
         
     }
     renderBtn = () => {
-        if (this.props.user._id === this.state._id) {
-            return <button className='btn btn-primary' onClick={this.handleClick}>Edit Profile</button>;
+        if (this.props.user && this.props.user._id === this.state._id) {
+            return <Button label='Edit Profile' redirect='/user/edit/' />;
         }
     }
     render() {
@@ -69,7 +71,7 @@ class UserInfo extends Component {
                 <div className='row'>
                     <div className='col'>
                         {this.renderInfo()}
-                        <button className='btn btn-primary' onClick={() => this.props.history.push('/')}>Back to Main</button>
+                        <Button label='Back to main' />
                     </div>
                 </div>
             </div>

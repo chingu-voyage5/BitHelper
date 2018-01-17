@@ -3,6 +3,7 @@ import axios from 'axios';
 // import '../stylesheets/components/addProject.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
+import Input from './Input'
 
 // const ProjectsSchema = new Schema({
 //   id: String, 
@@ -16,22 +17,19 @@ import Button from './Button.js';
 //   img: [String]         //image URLs of screenshots
 // });
 
-
 class AddProject extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
           title: "",
           owner: "",
+          category: "",
           description: "",
+          stack: "",
           status: "",
           repoUrl: "",
           img: []
-        }
-
-        this.onInputChange = this.onInputChange.bind(this);
-        this.onFormSubmit = this.onFormSubmit.bind(this)
+        };
     }
     componentDidMount() {
       // if user is not logged in and therefore user info is null, redirect to home
@@ -46,100 +44,110 @@ class AddProject extends Component {
         });
       }
     }
-    onInputChange(event) {
-      const newValue = {}
-      newValue[event.target.name] = event.target.value;
-
-      this.setState(...this.state, newValue);
-
+    shouldComponentUpdate() {
+      return true;
     }
-    onFormSubmit(e) {
-      e.preventDefault()
-      console.log(this.props)
-      this.props.createPoll(this.state)
+    onInputChange = (name, value) => {
+      const newValue = {};
+      if (name === 'img') {
+        newValue[name] = value.split(',');
+      } else {
+        newValue[name] = value;
+      }
+      this.setState(...this.state, newValue);
+    }
+    onFormSubmit = (e) => {
+      e.preventDefault();
+      this.props.createPoll(this.state);
+      this.props.history.push('/');
+    }
+    onFormReset = () => {
+      this.setState({
+          title: "",
+          owner: "",
+          category: "",
+          description: "",
+          stack: "",
+          status: "",
+          repoUrl: "",
+          img: []
+        });
     }
     render() {
       if (!this.props.user) {
           return <h3>ERROR: Not logged in. Redirecting...</h3>;
       } else {
-         return (
+        let inputFields = [
+          {
+            label: 'Project Title',
+            name: 'title',
+            placeholder: 'e.g. the Ninja project',
+            value: this.state.title,
+            required: true
+          },
+          {
+            label: 'Category',
+            name: 'category',
+            type: 'text',
+            placeholder: 'e.g. Social, Games, Productivity, etc.',
+            value: this.state.category
+          },
+          {
+            label: 'Description',
+            tag: 'textarea',
+            name: 'description',
+            placeholder: 'e.g. This is the coolest project ever',
+            value: this.state.description,
+            required: true
+          },
+          {
+            label: 'Project Status',
+            tag: 'textarea',
+            name: 'status',
+            placeholder: 'e.g. Explain what is the current state of the project, why you need help and what roles you might need',
+            value: this.state.status,
+            required: true
+          },
+          {
+            label: 'Stack',
+            name: 'stack',
+            type: 'text',
+            placeholder: 'Languages, frameworks, libraries... separate by comma',
+            value: this.state.stack
+          },
+          {
+            label: 'Code Repository',
+            name: 'repoUrl',
+            placeholder: 'http://github.com/username/github-repo',
+            value: this.state.repoUrl,
+            required: true
+          },
+          {
+            label: 'Screenshots URL',
+            name: 'img',
+            placeholder: 'e.g. http://via.placeholder.com/400x300',
+            value: this.state.img
+          }
+        ];
+        return (
           <div className="container">
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                <h1>Add a project </h1>
-                <form onSubmit={this.onFormSubmit}>
-                <fieldset>
-                <div class="form-group">
-                  <label class="control-label" for="title">Project title</label>
-                  <input
-                    name="title"
-                    type="text"
-                    placeholder="e.g. the Ninja project"
-                    class="form-control input-md"
-                    value={this.state.title}
-                    onChange={this.onInputChange} required="" />
-
+                  <h1>Add a project </h1>
+                  <form onSubmit={this.onFormSubmit}>
+                    <fieldset>
+                      {inputFields.map(item => {
+                        return <Input onChange={this.onInputChange} data={item}/>;
+                      })}
+                      <div className='d-flex justify-content-around'>
+                        <input type='submit' className='btn' value='Submit' />
+                        <input type='reset' className='btn' value='Reset' onClick={this.onFormReset} />
+                      </div>
+                    </fieldset>
+                  </form>
                 </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="description">
-                      Description</label>
-                    <textarea
-                      class="form-control"
-                      name="e.g. This is the coolest project ever"
-                      value={this.state.description}
-                      placeholder="Project description"
-                      onChange={this.onInputChange}
-                    />
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="status"><strong>Project Status</strong></label>
-                    <textarea
-                      class="form-control"
-                      name="status"
-                      value={this.state.status}
-                      placeholder="E.g. Explain what is the current state of the project, why you need help and what roles you might need"
-                      onChange={this.onInputChange}
-                      required="" />
-                </div>
-
-
-                <div class="form-group">
-                    <label class="control-label" for="repoUrl">
-                      Code repository</label>
-                    <input
-                      name="repoUrl"
-                      value={this.state.repoUrl}
-                      type="search"
-                      placeholder="http://github.com/username/github-repo"
-                      class="form-control input-md"
-                      onChange={this.onInputChange}
-                      required="" />
-                </div>
-
-
-                <div class="form-group">
-                  <label class="col-md-4 control-label" for="img">Image</label>
-                  <input
-                    name="img"
-                    type="text"
-                    value={this.state.img}
-                    placeholder="e.g. http://via.placeholder.com/400x300"
-                    class="form-control input-md"
-                    onChange={this.onInputChange}
-                  />
-                </div>
-
-                <button className="btn" type="submit" onClick={() => this.props.history.push('/')}>Submit</button>
-
-                </fieldset>
-                </form>
-                <Button label="Back to home" />
-              </div>
+              <Button label="Back to home" />
             </div>
           </div>
         </div>
