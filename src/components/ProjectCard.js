@@ -6,14 +6,7 @@ import Button from './Button.js';
 
 
 class ProjectCard extends Component {
-    constructor(props) {
-        super(props);
-  
-        this.projects = props.projects
-    }
-
     setProjects() {
-
       if (this.props.projects.length > 0) {
         return this.props.projects.map((item,i) => {
             return (
@@ -35,8 +28,7 @@ class ProjectCard extends Component {
       }
     }
     render() {
-        console.log('render project card', this.props);
-         return (
+        return (
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-12">

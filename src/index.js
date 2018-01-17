@@ -34,45 +34,35 @@ class App extends Component {
       isLoggedIn: false
     }
   }
-
   componentDidMount() {
-    let url = window.location.origin;
+    this.fetchProjects();
+    this.getUser();
+  }
+  fetchProjects = () => {
     // get projects
-    axios.get(url + '/api/projects')
+    axios.get(window.location.origin + '/api/projects')
     .then(res => {
       this.setState({projects: res.data})
     })
     .catch(err => {
-      console.error('local server not running. using heroku deployment of the server instead.');
-      url = process.env.REACT_APP_APPURL;
-    });
-
-    axios.get(url + '/auth')
+      console.error('fetch project', err);
+    });  
+  }
+  getUser = () => {
+    axios.get(window.location.origin + '/auth')
     .then(res => {
       this.setState({
         user: res.data,
         isLoggedIn: true
       });
     })
-    // if userId is stored in cookie get user
-    /*const userId = Cookies.get("userId");
-    if(userId) {
-      console.log('cookie userId', userId);
-
-      axios.get(url + '/api/users/' + userId)
-      .then(res => {
-        this.setState({
-          user: res.data,
-          isLoggedIn: true
-        })
-      })
-    }*/
   }
   postUser = (data) => {
     console.log('post user', data);
     axios.put(window.location.origin + '/api/users/' + data._id, data)
     .then(res => {
       console.log('update user success');
+      this.fetchProjects();
     })
     .catch(err => {
       console.error('error posting user update', err);
@@ -83,6 +73,7 @@ class App extends Component {
     axios.post(window.location.origin + '/api/projects', data)
     .then(res => {
       console.log('project created');
+      this.fetchProjects();
     })
     .catch(err => {
       console.error('error posting new project', err);
@@ -93,6 +84,7 @@ class App extends Component {
     axios.put(window.location.origin + '/api/projects/' + data._id, data)
     .then(res => {
       console.log('update project success');
+      this.fetchProjects();
     })
     .catch(err => {
       console.error('update project error', err);
@@ -103,6 +95,7 @@ class App extends Component {
     axios.delete(window.location.origin + '/api/projects/' + data._id)
     .then(res => {
       console.log('delete project success');
+      this.fetchProjects();
     })
     .catch(err => {
       console.error('delete project error', err);
@@ -110,17 +103,14 @@ class App extends Component {
   }
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
-
       Cookies.remove("userId")
       this.setState({
         user: null,
         isLoggedIn: false
       })
     })
-
   }
   render() {
-    console.log('index', this.state.user);
     return(
     <Router>
       <div>
