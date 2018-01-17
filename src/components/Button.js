@@ -8,13 +8,17 @@ class Button extends Component {
     super(props);
   }
   handleClick = (e) => {
-    switch (e.target.innerText) {
-      case "Add a Project":
-        this.props.history.push('/addProject');
-        break;
-      default:
-        this.props.history.push('/');
-    }
+    let redirect = this.props.redirect ? this.props.redirect : '/';
+    this.props.hisotry.push(redirect);
+    
+    //switch (e.target.innerText) {
+        //case "Add a Project":
+          //this.props.history.push('/addProject');
+          //break;
+        //default:
+          //this.props.history.push('/');
+      //}  
+    //}
   }
   render(){
     return(

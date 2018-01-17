@@ -27,6 +27,7 @@ class Input extends Component {
               type={data.type ? data.type : 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
+              value={data.value ? data.value : this.state.value}
               onChange={this.onChange}
               required={data.required} 
             />
@@ -43,6 +44,7 @@ class Input extends Component {
               type={data.type ? data.type : 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
+              value={data.value ? data.value : this.state.value}
               onChange={this.onChange}
               required={data.required ? data.required : false} 
             />

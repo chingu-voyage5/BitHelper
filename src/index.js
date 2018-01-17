@@ -15,6 +15,7 @@ import ProjectCard from './components/ProjectCard.js';
 import ProjectInfo from './components/ProjectInfo.js';
 import UserInfo from './components/UserInfo.js';
 import UserEdit from './components/UserEdit.js';
+import UserEditNew from './components/UserEditNew.js';
 import AddProject from './components/AddProject.js';
 import Footer from './components/Footer.js';
 import Button from './components/Button.js';
@@ -125,7 +126,7 @@ class App extends Component {
         }
         }/>
         <Route path="/editUser" render={(routeProps)=> {
-          return <UserEdit {...routeProps} {...{
+          return <UserEditNew {...routeProps} {...{
             user: this.state.user,
             onUserPost: this.postUser
           }} />
