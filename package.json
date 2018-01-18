@@ -34,6 +34,6 @@
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
         "test": "react-scripts test --env=jsdom",
         "eject": "react-scripts eject",
-        "postinstall": "npm run build-css"
+        "postinstall": "npm run build-css && react-scripts build"
     }
 }
