@@ -22,6 +22,17 @@ module.exports = function(router) {
       return project;
     }
 
+    const setUserObj = (input, user) => {
+      user.username = input.username;
+      user.displayName = input.displayName;
+      user.avatar = input.avatar;
+      user.skillset = input.skillset;
+      user.email = input.email;
+      user.projects = input.projects;
+
+      return user;
+    }
+
     router.route('/projects')
     // retrieve all projects from the database
     .get(function(req, res) {
@@ -35,10 +46,27 @@ module.exports = function(router) {
     .post(function(req, res) {
       let project = new Project();
       project = setProjectObj(req.body, project);
-      // save to database
-      project.save(function(err) {
-        if (err) { res.send(err); }
-        res.json({ message: 'Project successfully added!' });
+
+      // add project ID to owner's data
+      User.findById(project.owner, function(err, user) {
+        console.log('Add project to owner data', project);
+        if (err) { console.log(err) }
+        if (user) {
+          // save project to database
+          project.save(function(err) {
+            if (err) { res.send(err); }
+            res.json({ message: 'Project successfully added!' });
+          });
+          //save user with new project ID added
+          user.projects.push(project._id)
+          console.log('new user profile', user);          
+          user.save(function(err) {
+            if (err) { console.log(err) }
+            res.send('Project ID successfully added to owner profile');
+          });
+        } else {
+            res.send('Error: Owner profile not found.')
+        }
       });
     });
 
@@ -90,13 +118,7 @@ module.exports = function(router) {
     })
     // post new users to the database
     .post(function(req, res) {
-      let user = new User();
-      // body parser lets us use the req.body
-      user.username = req.body.username;
-      user.displayName = req.body.displayName;
-      user.avatar = req.body.avatar;
-      user.skillset = req.body.skillset;
-      user.email = req.body.email;
+      let user = setUserObj(req.body, new User())
       // save to database
       user.save(function(err) {
         if (err) { res.send(err); }
@@ -119,11 +141,7 @@ module.exports = function(router) {
       console.log(user);
       if (err) { res.send(err); }
       if (user) {
-        user.username = req.body.username;
-        user.displayName = req.body.displayName;
-        user.avatar = req.body.avatar;
-        user.skillset = req.body.skillset;
-        user.email = req.body.email;
+        user = setUserObj(req.body, user);
         //save user
         user.save(function(err) {
           if (err) { res.send(err); }

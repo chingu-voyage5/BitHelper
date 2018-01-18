@@ -53,15 +53,16 @@ class UserEditNew extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        let user = {};
-        user._id = this.props.user._id;
-        user.username = this.state.username;
-        user.displayName = this.state.displayName;
-        user.avatar = this.state.avatar;
-        user.skillset = this.state.skillset;
-        user.email = this.state.email;
-        this.props.onUserPost(user);
-        this.props.history.push('/user/'+user._id);
+        this.props.onUserPost({
+            _id: this.props.user._id, 
+            username: this.state.username,
+            displayName: this.state.displayName,
+            avatar: this.state.avatar,
+            skillset: this.state.skillset,
+            email: this.state.email,
+            projects: this.props.user.projects
+        });
+        this.props.history.push('/user/'+this.props.user._id);
     }
     render() {
         if (!this.state) {
