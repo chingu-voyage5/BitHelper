@@ -54,15 +54,14 @@ module.exports = function(router) {
         if (user) {
           // save project to database
           project.save(function(err) {
-            if (err) { res.send(err); }
-            res.json({ message: 'Project successfully added!' });
+            if (err) {'Error: Project could not be saved.'}
           });
           //save user with new project ID added
           user.projects.push(project._id)
           console.log('new user profile', user);          
           user.save(function(err) {
             if (err) { console.log(err) }
-            res.send('Project ID successfully added to owner profile');
+            res.send('Project successfully added.');
           });
         } else {
             res.send('Error: Owner profile not found.')

@@ -21,7 +21,7 @@ class Nav extends Component {
       }
     }
     render () {
-      console.log('Nav', this.props);
+      //console.log('Nav', this.props);
       return (
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a className="navbar-brand" onClick={this.handleClick}>Bears-20 App</a>
@@ -39,7 +39,7 @@ class Nav extends Component {
 
   // This component should be splitted in two: Auth and CreateProject. 
   const Auth = (props) =>  {
-    console.log('Auth', props);
+    //console.log('Auth', props);
 
     if (props.user) {
       return (

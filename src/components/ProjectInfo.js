@@ -9,48 +9,49 @@ class ProjectInfo extends Component {
         super(props);
         this.state = {
             project: null,
-            ownerName: null
+            owner: null
         }
     }
     componentDidMount() {
-        const currentProject = this.props.projects.filter((project) => {
-            return project._id === this.props.match.params.id
+        const projectId = this.props.match.params.id;
+        axios.get('/api/projects/'+projectId)
+        .then(res => {
+            console.log('project info', res.data);
+            this.setState({
+                project: res.data
+            });
+            this.getOwnerInfo(res.data.owner);
         });
-
-        const ownerId = currentProject[0].owner;
-        console.log('get user', '/api/users/' + ownerId);
+    }
+    getOwnerInfo = (ownerId) => {
         axios.get('/api/users/' + ownerId)
         .then(res => {
             console.log('owner info', res.data);
-            let ownerName = res.data.displayName ? 
-                res.data.displayName : currentProject[0].owner;
             this.setState({
-                project: currentProject[0],
-                ownerName: ownerName
+                owner: res.data
             })
         })
         .catch(err => {
-            console.error(err);
-            // Set project info even if owner name couldn't be retrieved
-            this.setState({
-                project: currentProject[0],
-                ownerName: currentProject[0].owner
-            });    
+            console.error(err); 
         })
     }
     handleDelete = () => {
         this.props.deleteProject(this.state.project);
     }
     render() {
-        if (!this.state.project) {
+        let project = this.state.project;
+        let owner = this.state.owner;
+        let user = this.props.user;
+
+        if (!project) {
             return <h3>Loading...</h3>;
         }
         
         let buttons = null;
-        if (this.props.user && this.props.user._id === this.state.project.owner) {
+        if (user && user._id === owner._id) {
             buttons = (
                 <div className='d-flex justify-content-around'>
-                    <Button label='Edit' redirect={'/project/edit/'+this.state.project._id}/>
+                    <Button label='Edit' redirect={'/project/edit/'+project._id}/>
                     <Button label='Delete' onClick={this.handleDelete}/>
                 </div>
             );
@@ -68,12 +69,13 @@ class ProjectInfo extends Component {
                 <div className="col">
                     <div className="material-card">
                         <div className="project-meta row">
-                            <p className="project-category col">{this.state.project.category}</p>
-                            <p className="project-owner col text-md-right">{this.state.ownerName}</p>
+                            <p className="project-category col">{project.category}</p>
+                            <p className="project-owner col text-md-right">
+                                {owner ? (owner.displayName) : ('No Owner Info')}</p>
                             <hr/>
                         </div>
-                        <h1>{this.state.project.title}</h1>
-                        <p>{this.state.project.description}</p>
+                        <h1>{project.title}</h1>
+                        <p>{project.description}</p>
                         <div className="row">
                             <div className="project-attachments col-md-6">
                                 <h2>Attachments</h2>
@@ -81,9 +83,9 @@ class ProjectInfo extends Component {
                             </div>
                             <div className="project-tech col-md-4">
                                 <h3>Github repo</h3>
-                                <a href="{currentProject[0].repoUrl}">{this.state.project.repoUrl}</a>
+                                <a href={project.repoUrl}>{project.repoUrl}</a>
                                 <h3>Stack</h3>
-                                <ul>{this.state.project.stack.map((item) => {
+                                <ul>{project.stack.map((item) => {
                                     return <li>{item}</li>; })}
                                 </ul>      
                             </div>

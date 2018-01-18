@@ -19,10 +19,7 @@ import UserEdit from './components/UserEdit';
 import Footer from './components/Footer';
 import Button from './components/Button';
 
-
 require('dotenv').load();
-
-
 
 class App extends Component {
   constructor(props) {
@@ -51,6 +48,7 @@ class App extends Component {
   getUser = () => {
     axios.get(window.location.origin + '/auth')
     .then(res => {
+      console.log('got user, username is', res.data.username);
       this.setState({
         user: res.data,
         isLoggedIn: true
@@ -111,15 +109,20 @@ class App extends Component {
     })
   }
   render() {
+    console.log('index render', this.state);
     return(
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
         <Route exact
           path="/"
-          render={(routeProps)=> {
-          return <ProjectCard {...routeProps} {...this.state}  />
-        }
+          render={(routeProps)=> (
+            ( this.state.user && !this.state.user.username ) ?
+            ( <Redirect to={{
+                pathname: '/user/edit/'
+              }}/> ) :
+            ( <ProjectCard {...routeProps} {...this.state} /> )
+          )
         }/>
         <Route path="/project/view/:id" render={(routeProps)=> {
           return <ProjectInfo 
@@ -170,37 +173,7 @@ class App extends Component {
      </Router>
    )
  }
-
-}
-
-// wrapper function for protected routes
-const AuthenticatedUser = (prop) =>  {
-    console.log('AuthenticatedUser', prop);
-    /*if (user) {
-      // return protected routes
-      return <div>{children}</div>
-    } else {
-      console.log('user not logged in')
-      // todo: should redirect to a login page
-      return null
-    }*/
 }
 
 ReactDOM.render(<App
 />, document.getElementById('root'));
-
-/*
-
-// Wrapper component that only renders routes when user islogged in
-         <AuthenticatedUser isLoggedin={this.state.user}>
-           <Route path="/addproject" render={(routeProps)=> {
-                return <AddProject
-                  {...routeProps}
-                  {...{
-                    user: this.state.user,
-                    createPoll: this.createPoll
-                  }} />
-            }
-          }/>
-        </AuthenticatedUser>
-*/
