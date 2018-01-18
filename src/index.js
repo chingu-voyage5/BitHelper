@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Redirect
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
@@ -16,28 +15,57 @@ import ProjectInfo from './components/ProjectInfo';
 import ProjectEdit from './components/ProjectEdit';
 import UserInfo from './components/UserInfo';
 import UserEdit from './components/UserEdit';
+import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
-import Button from './components/Button';
 
 require('dotenv').load();
 
 class App extends Component {
+
   constructor(props) {
-    super(props)
+    super(props);
+    
+    const url = ( process.env.REACT_APP_APPURL ) ? 
+      ( process.env.REACT_APP_APPURL ) : 
+      ( window.location.origin );
+      
+    console.log('api url', url);
 
     this.state = {
+      apiUrl: url,
       projects: [],
       user: null,
       isLoggedIn: false
     }
   }
   componentDidMount() {
-    this.fetchProjects();
-    this.getUser();
+    this.allProjects();
+    //this.setUser();
   }
-  fetchProjects = () => {
+  fakeAuth = (e) => {
+    if (e.target.value === 'login') {
+      this.setState({
+        user: {
+        "_id":"5a6055120f25ffaa290471fd",
+        "displayName":"Shohei",
+        "email":"shohei51@gmail.com",
+        "username":"shibatas",
+        "avatar":"https://avatars1.githubusercontent.com/u/26139392?v=4",
+        "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
+        "skillset":[]
+        },
+        isLoggedIn: true
+      })
+    } else {
+      this.setState({
+        user: null,
+        isLoggedIn: false
+      })
+    }
+  }
+  allProjects = () => {
     // get projects
-    axios.get(window.location.origin + '/api/projects')
+    axios.get(this.state.apiUrl + '/api/projects')
     .then(res => {
       this.setState({projects: res.data})
     })
@@ -45,19 +73,36 @@ class App extends Component {
       console.error('fetch project', err);
     });  
   }
-  getUser = () => {
-    axios.get(window.location.origin + '/auth')
+  getOneProject = (projectId, next) => {
+    // if projects are not yet loaded, 
+    if (!this.state.projects) { 
+      next(null);
+      return;
+    }
+    const project = this.state.projects.find(item => {
+        return item._id === projectId;
+    });
+    
+    next(project);
+  }
+  setUser = () => {
+    axios.get(this.state.apiUrl + '/auth')
     .then(res => {
-      console.log('got user, username is', res.data.username);
       this.setState({
         user: res.data,
         isLoggedIn: true
       });
     })
   }
+  getOneUser = (id, next) => {
+    axios.get(this.state.apiUrl + '/api/users/' + id)
+    .then(res => {
+      next(res.data);
+    });
+  }
   postUser = (data) => {
     console.log('post user', data);
-    axios.put(window.location.origin + '/api/users/' + data._id, data)
+    axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
     .then(res => {
       console.log('update user success');
       this.fetchProjects();
@@ -68,7 +113,7 @@ class App extends Component {
   }
   newProject = (data) => {
     console.log('create project', data);
-    axios.post(window.location.origin + '/api/projects', data)
+    axios.post(this.state.apiUrl + '/api/projects', data)
     .then(res => {
       console.log('project created');
       this.fetchProjects();
@@ -79,10 +124,10 @@ class App extends Component {
   }
   updateProject = (data) => {
     console.log('update project', data);
-    axios.put(window.location.origin + '/api/projects/' + data._id, data)
+    axios.put(this.state.apiUrl + '/api/projects/' + data._id, data)
     .then(res => {
       console.log('update project success');
-      this.fetchProjects();
+      this.allProjects();
     })
     .catch(err => {
       console.error('update project error', err);
@@ -90,7 +135,7 @@ class App extends Component {
   }
   deleteProject = (data) => {
     console.log('delete project', data.title);
-    axios.delete(window.location.origin + '/api/projects/' + data._id)
+    axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
     .then(res => {
       console.log('delete project success');
       this.fetchProjects();
@@ -109,7 +154,6 @@ class App extends Component {
     })
   }
   render() {
-    console.log('index render', this.state);
     return(
     <Router>
       <div>
@@ -130,12 +174,20 @@ class App extends Component {
             {...{
               projects: this.state.projects,
               user: this.state.user,
-              deleteProject: this.deleteProject
+              deleteProject: this.deleteProject,
+              getOneProject: this.getOneProject,
+              getOneUser: this.getOneUser
             }} />
         }
         }/>
         <Route path="/user/view/:id" render={(routeProps)=> {
-          return <UserInfo {...routeProps} {...{user: this.state.user}} />
+          return <UserInfo 
+            {...routeProps} 
+            {...{
+              user: this.state.user,
+              projects: this.state.projects,
+              getOneUser: this.getOneUser
+            }} />
         }
         }/>
         <Route path="/user/edit/" render={(routeProps)=> {
@@ -163,11 +215,25 @@ class App extends Component {
                   title: 'Edit a Project',
                   edit: true,
                   user: this.state.user,
-                  handleSubmit: this.updateProject
+                  handleSubmit: this.updateProject,
+                  getOneProject: this.getOneProject
                 }} />
           }
         }/>
-      
+        <Route path="/contact/:projectId" render={(routeProps)=> {
+              return <ContactForm 
+                {...routeProps} 
+                {...{
+                    user: this.state.user,
+                    handleSubmit: this.sendMessage,
+                    getOneProject: this.getOneProject,
+                    getOneUser: this.getOneUser
+              }}/>
+        }}/>
+      <div>
+        <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
+        <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
+      </div>
       <Footer />
       </div>
      </Router>

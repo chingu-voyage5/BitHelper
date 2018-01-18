@@ -11,7 +11,7 @@ class Input extends Component {
       case ('textarea'):
         return (
           <div className="form-group">
-            <label className="control-label" for={data.name}>{data.label}</label>
+            <label className="control-label" htmlFor={data.name}>{data.label}</label>
             <textarea
               id={data.name}
               name={data.name}
@@ -27,7 +27,7 @@ class Input extends Component {
       default: 
         return (
           <div className="form-group">
-            <label className="control-label" for={data.name}>{data.label}</label>
+            <label className="control-label" htmlFor={data.name}>{data.label}</label>
             <input
               id={data.name}
               name={data.name}

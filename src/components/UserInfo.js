@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // import '../stylesheets/components/UserInfo.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
@@ -17,34 +16,29 @@ class UserInfo extends Component {
     componentDidMount() {
         // Get user ID from URL path, and retrieve user data from server
         const userId = window.location.pathname.replace('/user/view/','');
-        axios.get('/api/users/'+userId)
-        .then(res => {
+        const loggedInUser = this.props.user;
+        this.props.getOneUser(userId, res => {
             let isOwner = false;
-            if (this.props.user) {
-                console.log('isOwner', this.props.user._id, res.data._id);
-                isOwner = (this.props.user._id === res.data._id);
+            if (loggedInUser) {
+                console.log('isOwner', loggedInUser._id, res._id);
+                isOwner = (this.props.user._id === res._id);
             }
             this.setState({
-                user: res.data,
+                user: res,
                 isOwner: isOwner
             });
             // get project title for each of user-owned projects
-            this.getProjectsList(res.data.projects);
+            this.getProjectsList(res.projects);
         })
     }
     getProjectsList(list) {
-        list.forEach(projectId => {
-            axios.get('/api/projects/'+projectId)
-            .then(res => {
-                let projectArr = {
-                    title: res.data.title,
-                    id: projectId
-                }
-                this.setState({
-                    projects: [...this.state.projects, projectArr]
-                });
-            });
-        })
+        let ownedProjects = this.props.projects.filter(item => {
+            return list.includes(item._id)
+        });
+        console.log('projects owned', ownedProjects);
+        this.setState({
+            projects: ownedProjects
+        });
     }
     handleClick = (e) => {
         this.props.history.push('/projects/view/' + e.target.id);
@@ -78,7 +72,7 @@ class UserInfo extends Component {
                                 {(projects.length > 0) ? (
                                     projects.map(item => {
                                         return (
-                                            <li>
+                                            <li key={item}>
                                                 <a id={item.id} onClick={this.handleClick}>
                                                     {item.title}
                                                 </a>
@@ -91,7 +85,7 @@ class UserInfo extends Component {
                             </ul>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-around'>
+                    <div className='d-flex justify-content-around btn-section'>
                         {this.renderBtn}
                     </div>
                 </div>
@@ -110,7 +104,7 @@ class UserInfo extends Component {
     render() {
         let user = this.state.user;
         let projects = this.state.projects;
-        console.log('Rendering UserInfo', this.state);
+        console.log('Rendering UserInfo', this.state, this.props);
         return (
             <div className='container'>
                 <div className='row'>
