@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // import '../stylesheets/components/ProjectCard.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
 
 
 class ProjectCard extends Component {
-    constructor(props) {
-        super(props);
-  
-        this.projects = props.projects
-    }
-
     setProjects() {
-
       if (this.props.projects.length > 0) {
         return this.props.projects.map((item,i) => {
             return (
@@ -21,7 +13,7 @@ class ProjectCard extends Component {
                 onClick={() => this.props.history.push('/project/view/' + item._id)}
                 key={i}
                 id={item._id}>
-                <div class="card-body">
+                <div className="card-body">
                 <p className="card-category">{item.category}</p>
                 <h4 className="card-title">{item.title}</h4>
                 <p className="card-text">{item.description}</p>
@@ -35,8 +27,7 @@ class ProjectCard extends Component {
       }
     }
     render() {
-        console.log('render project card', this.props);
-         return (
+        return (
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-12">

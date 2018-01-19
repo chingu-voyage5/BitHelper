@@ -3,6 +3,10 @@ body {
     background: $almost-white;
 }
 
+.row {
+    margin: 10px 0;
+}
+
 .user-info {
     background-color: white;
     margin: 20px;
@@ -17,4 +21,11 @@ body {
 
 td {
     vertical-align: top;
+    width: 150px;
+}
+
+.avatar {
+    width: 100px;
+    margin: 0 20px;
+    border-radius: 3px;
 }

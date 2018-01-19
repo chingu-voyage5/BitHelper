@@ -19,6 +19,9 @@
 .container {
   padding: 20px 0; }
 
+.btn-section {
+  margin-top: 50px; }
+
 * {
   color: #707070;
   font-family: "Work Sans", sans-serif;
