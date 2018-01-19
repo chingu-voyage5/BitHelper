@@ -95,12 +95,14 @@ class ProjectInfo extends Component {
                                 </div>
                                 
                             </div>  
-                            <div className="row">
-                                <div className="project-attachments justify-content-center">
-                                    {project.img.map(imgUrl => {
-                                        return <img key={imgUrl} src={imgUrl} className="img-fluid screenshots" alt="Project" />
-                                    })}
-                                </div>
+                            <div className="row d-flex justify-content-center">
+                                {project.img.map(imgUrl => {
+                                    return (
+                                        <div>
+                                            <img key={imgUrl} src={imgUrl} className="img-fluid screenshots" width='300px' alt="Project" />
+                                        </div>
+                                    );
+                                })}
                             </div>
                             {buttons}
                         </div>

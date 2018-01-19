@@ -62,7 +62,7 @@ class UserEditNew extends Component {
             email: this.state.email,
             projects: this.props.user.projects
         });
-        this.props.history.push('/user/'+this.props.user._id);
+        this.props.history.push('/user/view/'+this.props.user._id);
     }
     render() {
         if (!this.state) {

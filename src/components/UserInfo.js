@@ -54,7 +54,10 @@ class UserInfo extends Component {
                     <div className='user-info-meta row'>
                         <p>User Profile</p>
                     </div>
-                    <h1>{user.displayName}</h1>
+                    <div className='row'>
+                        <div><img key={user.avatar} src={user.avatar} className="img-fluid avatar" alt="User Avatar" /></div>
+                        <div><h1>{user.displayName}</h1></div>
+                    </div>
                     <div className='row'>
                         <div className='col'>
                             <table>
