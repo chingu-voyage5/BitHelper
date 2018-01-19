@@ -21,7 +21,6 @@ import Footer from './components/Footer';
 require('dotenv').load();
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     
@@ -255,5 +254,5 @@ class App extends Component {
  }
 }
 
-ReactDOM.render(<App
+ReactDOM.render(<App 
 />, document.getElementById('root'));
