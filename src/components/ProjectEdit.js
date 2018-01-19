@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // import '../stylesheets/components/addProject.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
@@ -25,7 +24,7 @@ class ProjectEdit extends Component {
           owner: "",
           category: "",
           description: "",
-          stack: "",
+          stack: [],
           status: "",
           repoUrl: "",
           img: []
@@ -54,15 +53,14 @@ class ProjectEdit extends Component {
       return true;
     }
     getProjectData = () => {
-        const projectId = window.location.pathname.replace('/project/edit/','');
-        axios.get('/api/projects/'+projectId)
-        .then(res => {
-            this.setState(res.data);
+        const projectId = this.props.match.params.id;
+        this.props.getOneProject(projectId, res => {
+            this.setState(res);
         });
     }
     onInputChange = (name, value) => {
       const newValue = {};
-      if (name === 'img') {
+      if (name === 'img' || name === 'stack') {
         newValue[name] = value.split(',');
       } else {
         newValue[name] = value;
@@ -157,7 +155,7 @@ class ProjectEdit extends Component {
                       {inputFields.map(item => {
                         return <Input onChange={this.onInputChange} data={item}/>;
                       })}
-                      <div className='d-flex justify-content-around'>
+                      <div className='d-flex justify-content-around btn-section'>
                         <input type='submit' className='btn' value='Submit' />
                         <input type='reset' className='btn' value='Reset' onClick={this.onFormReset} />
                       </div>

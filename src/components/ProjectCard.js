@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 // import '../stylesheets/components/ProjectCard.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
@@ -14,7 +13,7 @@ class ProjectCard extends Component {
                 onClick={() => this.props.history.push('/project/view/' + item._id)}
                 key={i}
                 id={item._id}>
-                <div class="card-body">
+                <div className="card-body">
                 <p className="card-category">{item.category}</p>
                 <h4 className="card-title">{item.title}</h4>
                 <p className="card-text">{item.description}</p>

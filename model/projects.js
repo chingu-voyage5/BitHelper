@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
 const ProjectsSchema = new Schema({
     id: String, 
     title: String,        //title of the project
-    owner: String,        //username of the post creator
+    owner: String,        //ID of the post creator
     category: String,     //category of the project
     description: String,  //project description
     stack: [String],      //array of technologies used in the project
