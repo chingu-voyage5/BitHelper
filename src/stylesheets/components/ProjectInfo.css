@@ -31,3 +31,7 @@ body {
 .project-category,
 .project-owner {
   color: #9E9E9E; }
+
+.screenshots {
+  max-width: 300px;
+  margin: 20px; }

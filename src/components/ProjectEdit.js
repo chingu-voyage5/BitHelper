@@ -24,7 +24,7 @@ class ProjectEdit extends Component {
           owner: "",
           category: "",
           description: "",
-          stack: "",
+          stack: [],
           status: "",
           repoUrl: "",
           img: []
@@ -60,7 +60,7 @@ class ProjectEdit extends Component {
     }
     onInputChange = (name, value) => {
       const newValue = {};
-      if (name === 'img') {
+      if (name === 'img' || name === 'stack') {
         newValue[name] = value.split(',');
       } else {
         newValue[name] = value;

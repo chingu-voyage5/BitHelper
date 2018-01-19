@@ -39,23 +39,14 @@ class App extends Component {
     }
   }
   componentDidMount() {
+    console.log('did mount index');
     this.allProjects();
-    //this.setUser();
+    this.setUser();
+    //this.fakeSetUser();
   }
   fakeAuth = (e) => {
     if (e.target.value === 'login') {
-      this.setState({
-        user: {
-        "_id":"5a6055120f25ffaa290471fd",
-        "displayName":"Shohei",
-        "email":"shohei51@gmail.com",
-        "username":"shibatas",
-        "avatar":"https://avatars1.githubusercontent.com/u/26139392?v=4",
-        "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
-        "skillset":[]
-        },
-        isLoggedIn: true
-      })
+      this.fakeSetUser();
     } else {
       this.setState({
         user: null,
@@ -63,8 +54,23 @@ class App extends Component {
       })
     }
   }
+  fakeSetUser = () => {
+    this.setState({
+        user: {
+        "_id":"5a6055120f25ffaa290471fd",
+        "displayName":"Shohei",
+        "email":"shohei51@gmail.com",
+        "username":"shibatas",
+        "avatar":"https://avatars1.githubusercontent.com/u/26139392?v=4",
+        "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
+        "skillset":['a', 'b', 'c']
+        },
+        isLoggedIn: true
+    })
+  }
   allProjects = () => {
     // get projects
+    console.log('get all projects');
     axios.get(this.state.apiUrl + '/api/projects')
     .then(res => {
       this.setState({projects: res.data})
@@ -74,16 +80,23 @@ class App extends Component {
     });  
   }
   getOneProject = (projectId, next) => {
-    // if projects are not yet loaded, 
-    if (!this.state.projects) { 
-      next(null);
-      return;
+    if (this.state.projects.length > 0) { 
+      console.log('get project from state');
+      const project = this.state.projects.find(item => {
+          return item._id === projectId;
+      });
+      next(project);
+    } else {
+      console.log('get project from api');
+      axios.get(this.state.apiUrl + '/api/projects/' + projectId)
+      .then(res => {
+        console.log('get one project api response', res);
+        next(res.data);
+      })
+      .catch(err => {
+        if (err) throw err;
+      });
     }
-    const project = this.state.projects.find(item => {
-        return item._id === projectId;
-    });
-    
-    next(project);
   }
   setUser = () => {
     axios.get(this.state.apiUrl + '/auth')
@@ -105,7 +118,7 @@ class App extends Component {
     axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
     .then(res => {
       console.log('update user success');
-      this.fetchProjects();
+      this.allProjects();
     })
     .catch(err => {
       console.error('error posting user update', err);
@@ -116,7 +129,7 @@ class App extends Component {
     axios.post(this.state.apiUrl + '/api/projects', data)
     .then(res => {
       console.log('project created');
-      this.fetchProjects();
+      this.allProjects();
     })
     .catch(err => {
       console.error('error posting new project', err);
@@ -138,7 +151,7 @@ class App extends Component {
     axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
     .then(res => {
       console.log('delete project success');
-      this.fetchProjects();
+      this.allProjects();
     })
     .catch(err => {
       console.error('delete project error', err);
@@ -175,6 +188,7 @@ class App extends Component {
               projects: this.state.projects,
               user: this.state.user,
               deleteProject: this.deleteProject,
+              allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser
             }} />
@@ -230,10 +244,10 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-      <div>
+      {/*<div>
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
-      </div>
+      </div>*/}
       <Footer />
       </div>
      </Router>

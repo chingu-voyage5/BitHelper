@@ -12,27 +12,26 @@ class ProjectInfo extends Component {
         }
     }
     componentDidMount() {
+        console.log('project info did mount');
         this.getProject();
     }
     getProject = () => {
         const projectId = this.props.match.params.id;
+        console.log('getting project', projectId);
         this.props.getOneProject(projectId, project => {
-            console.log('got project', project);
-            if (!project) { 
-                this.props.history.push('/') 
-                return;
+            console.log('setting project', project);
+            if (project) {
+                this.setState({
+                    project: project
+                });            
+                this.getOwner(project.owner);
             }
-            this.setState({
-                project: project
-            });            
-            this.getOwner(project.owner);
         });
     }
     getOwner = (ownerId) => {
-        console.log('get owner', ownerId)
-        this.props.getOneUser(ownerId, (profile) => {
-            console.log('owner is', profile);
-            let owner = (profile.displayName) ? (profile) : (null);
+        this.props.getOneUser(ownerId, profile => {
+            
+            let owner = (profile && profile.displayName) ? (profile) : (null);
             
             this.setState({
                 owner: owner
@@ -43,17 +42,17 @@ class ProjectInfo extends Component {
         this.props.deleteProject(this.state.project);
     }
     render() {
-        let project = this.state.project;
-        let owner = this.state.owner;
-        let user = this.props.user;
+        const project = this.state.project;
+        const owner = this.state.owner;
+        const user = this.props.user;
+        const isOwner = (user && owner && user._id === owner._id);
         
         if (!project) {
             return <h3>Loading...</h3>;
         }
         
         let buttons = null;
-        console.log('user and owner', user, owner);
-        if (user && owner && user._id === owner._id) {
+        if (isOwner) {
             buttons = (
                 <div className='d-flex justify-content-around btn-section'>
                     <Button label='Edit' redirect={'/project/edit/'+project._id}/>
@@ -63,45 +62,52 @@ class ProjectInfo extends Component {
         } else {
             buttons = (
                 <div className='d-flex justify-content-around btn-section'>
+                    {(owner) ? (<Button label='View Owner Profile' redirect={'/user/view/'+owner._id} />) : (null)}
                     <Button label='Contact Project Owner' redirect={'/contact/'+project._id} />
                 </div>
             );
         }
         return (
-        <div className="container">
-            <div className="row ">
-                <div className="col">
-                    <div className="material-card">
-                        <div className="project-meta row">
-                            <p className="project-category col">{project.category}</p>
-                            <p className="project-owner col text-md-right">
-                                {owner ? (owner.displayName) : ('No Owner Info')}</p>
-                            <hr/>
+            <div className="container">
+                <div className="row ">
+                    <div className="col">
+                        <div className="material-card">
+                            <div className="project-meta row">
+                                <p className="project-category col">{project.category}</p>
+                                <p className="project-owner col text-md-right">
+                                    {owner ? (owner.displayName) : ('No Owner Info')}</p>
+                                <hr/>
+                            </div>
+                            <h1>{project.title}</h1>
+                            <p>{project.description}</p>
+                            <div className="row justify-content-between">
+                                <div className="project-tech col-md-8">
+                                    <h3>Status</h3>
+                                    <p>{project.status}</p>
+                                </div>
+                                <div className="project-tech col-md-4">
+                                    <h3>Stack</h3>
+                                    <ul>{project.stack.map((item) => {
+                                        return <li key={item} >{item}</li>; })}
+                                    </ul>      
+                                    <h3>Github repo</h3>
+                                    <a href={project.repoUrl}>{project.repoUrl}</a>
+                                </div>
+                                
+                            </div>  
+                            <div className="row">
+                                <div className="project-attachments justify-content-center">
+                                    {project.img.map(imgUrl => {
+                                        return <img key={imgUrl} src={imgUrl} className="img-fluid screenshots" alt="Project" />
+                                    })}
+                                </div>
+                            </div>
+                            {buttons}
                         </div>
-                        <h1>{project.title}</h1>
-                        <p>{project.description}</p>
-                        <div className="row">
-                            <div className="project-attachments col-md-6">
-                                <h2>Attachments</h2>
-                                {project.img.map(imgUrl => {
-                                    return <img key={imgUrl} src={imgUrl} className="img-fluid" alt="Project" width='300px' />
-                                })}
-                            </div>
-                            <div className="project-tech col-md-4">
-                                <h3>Github repo</h3>
-                                <a href={project.repoUrl}>{project.repoUrl}</a>
-                                <h3>Stack</h3>
-                                <ul>{project.stack.map((item) => {
-                                    return <li key={item} >{item}</li>; })}
-                                </ul>      
-                            </div>
-                        </div>  
-                        {buttons}
+                    <Button label="Back to main" />
                     </div>
-                <Button label="Back to main" />
                 </div>
             </div>
-        </div>
         );        
     }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 // import '../stylesheets/components/UserEdit.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button';
@@ -10,10 +11,8 @@ class ContactForm extends Component {
         this.state = {
             contact: null,
             project: null,
-            message: {
-                subject: '',
-                body: ''
-            }
+            subject: '',
+            body: ''
         }    
     }
     componentDidMount() {
@@ -30,12 +29,11 @@ class ContactForm extends Component {
             if (project) {
                 this.setState({
                     project: project,
-                    message: {
-                        subject: 'RE: ' + project.title
-                    }
+                    subject: 'RE: ' + project.title
                 });
                 this.setContact(project.owner);
             } else {
+                console.log('setProject could not find project');
                 this.props.history.push('/');
             }
         })
@@ -47,6 +45,7 @@ class ContactForm extends Component {
                     contact: contact
                 })
             } else {
+                console.log('setContact could not find contact');
                 this.props.history.push('/');
             }
         })
@@ -54,21 +53,37 @@ class ContactForm extends Component {
     handleChange = (name, value) => {
         let obj = {};
         obj[name] = value;            
-        this.setState({
-            message: obj
-        });
+        this.setState(obj);
     }
     handleReset = () => {
         this.setState({
-            message: {
-                subject: '',
-                body: ''
-            }
+            subject: '',
+            body: ''
         });
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        alert(this.state.message.body);
+        if (!this.props.user) {
+            console.log('user not logged in');
+            alert('Please login first!');
+            this.props.history.push('/');
+        } else {
+            console.log('state',this.state);
+            const url = 'https://formspree.io/' + this.props.user.email;
+            const body = {
+                name: this.props.user.username,
+                _replyto: this.props.user.email,
+                subject: this.state.subject,
+                message: this.state.body
+            };
+            console.log('message ready to be sent', url, body);
+            axios.post(url, body)
+            .then(res => {
+                console.log('message submitted', res);
+                alert('Message successfully sent!');
+            })
+            .catch(err => { if (err) throw err; });
+        }
     }
     render() {
         const contact = this.state.contact;
@@ -80,7 +95,7 @@ class ContactForm extends Component {
                   label: 'Subject',
                   name: 'subject',
                   placeholder: 'Enter your subject here',
-                  value: this.state.message.subject,
+                  value: this.state.subject,
                   required: true
                 },
                 {
@@ -88,7 +103,7 @@ class ContactForm extends Component {
                   label: 'Message',
                   name: 'body',
                   placeholder: 'Enter your message here',
-                  value: this.state.message.body,
+                  value: this.state.body,
                   required: true
                 }
               ];
