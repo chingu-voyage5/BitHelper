@@ -63,7 +63,7 @@ class ProjectInfo extends Component {
             buttons = (
                 <div className='d-flex justify-content-around btn-section'>
                     {(owner) ? (<Button label='View Owner Profile' redirect={'/user/view/'+owner._id} />) : (null)}
-                    <Button label='Contact Project Owner' redirect={'/contact/'+project._id} />
+                    <Button label='Contact Project Owner' redirect={'/contact/'+project.owner+'/'+project._id} />
                 </div>
             );
         }

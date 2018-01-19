@@ -234,7 +234,7 @@ class App extends Component {
                 }} />
           }
         }/>
-        <Route path="/contact/:projectId" render={(routeProps)=> {
+        <Route path="/contact/:userId/:projectId?" render={(routeProps)=> {
               return <ContactForm 
                 {...routeProps} 
                 {...{

@@ -16,13 +16,15 @@ class ContactForm extends Component {
         }    
     }
     componentDidMount() {
-        this.setProject();
+        const params = this.props.match.params;
+        console.log('Contact form did mount', params);
+        this.setContact(params.userId);
+        this.setProject(params.projectId);
     }
     shouldComponentUpdate() {
         return true;
     }
-    setProject = () => {
-        const projectId = this.props.match.params.projectId;
+    setProject = (projectId) => {
         console.log('setProject', projectId, this.props);
         this.props.getOneProject(projectId, project => {
             console.log('project found', project);
@@ -34,13 +36,13 @@ class ContactForm extends Component {
                 this.setContact(project.owner);
             } else {
                 console.log('setProject could not find project');
-                this.props.history.push('/');
             }
         })
     }
     setContact = (contactId) => {
         this.props.getOneUser(contactId, contact => {
             if (contact) {
+                console.log('setContact contact info found', contact);
                 this.setState({
                     contact: contact
                 })
@@ -88,9 +90,7 @@ class ContactForm extends Component {
     render() {
         const contact = this.state.contact;
         const project = this.state.project;
-        
-        if (contact && project) {
-            const inputFields = [
+        const inputFields = [
                 {
                   label: 'Subject',
                   name: 'subject',
@@ -106,14 +106,19 @@ class ContactForm extends Component {
                   value: this.state.body,
                   required: true
                 }
-              ];
+        ];
+        
+        if (contact) {
             return (
                 <div className="container">
                     <div className="row">
                         <div className="col">
                             <div className='material-card' >
                                 <h1>Contact Form</h1>
-                                <p>You want to know more about the project <b>{project.title}</b>? Great!</p>
+                                {(project) ? 
+                                    (<p>You want to know more about the project <b>{project.title}</b>? Great!</p>) : 
+                                    (null)
+                                }
                                 <p>Fill out the form below to get in touch with <b>{contact.displayName}</b></p>
                                 <form onSubmit={this.handleSubmit}>
                                     <fieldset>

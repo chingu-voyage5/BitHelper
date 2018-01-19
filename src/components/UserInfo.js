@@ -93,7 +93,10 @@ class UserInfo extends Component {
                         </div>
                     </div>
                     <div className='d-flex justify-content-around btn-section'>
-                        {this.renderBtn()}
+                        {(this.props.user && user._id === this.props.user._id) ? 
+                            (<Button label='Edit Profile' redirect='/user/edit/' />) : 
+                            (<Button label={'Contact ' + user.displayName} redirect={'/contact/'+user._id} />)
+                        }
                     </div>
                 </div>
             );
@@ -102,11 +105,6 @@ class UserInfo extends Component {
             return <p>loading...</p>;
         }
         
-    }
-    renderBtn = () => {
-        if (this.props.user && this.props.user._id === this.props.user._id) {
-            return <Button label='Edit Profile' redirect='/user/edit/' />;
-        }
     }
     render() {
         let user = this.state.user;
