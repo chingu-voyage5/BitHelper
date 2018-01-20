@@ -22,6 +22,9 @@
 .btn-section {
   margin-top: 50px; }
 
+.logo {
+  width: 100px; }
+
 * {
   color: #707070;
   font-family: "Work Sans", sans-serif;
