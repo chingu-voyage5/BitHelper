@@ -11,7 +11,7 @@ body {
     width: 130px;
 }
 
-.nav-link:hover {
+.navbar-brand:hover {
     cursor: pointer;
 }
 
@@ -32,33 +32,12 @@ body {
     cursor: pointer;
 }
 
-.nav-dropdown {
-    display: block;
-    position: absolute;
-    top: -500px;
-    right: 20px;
-    width: 150px;
-    padding: none;
-    text-align: center;
-    background-color: $light-grey;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.active {
-    top: 70px;
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
 .nav-dropdown-item {
     background-color: white;
     margin: 0;
     padding: 10px 0;
     font-weight: bold;
-    overflow: hidden;
+    text-align: center;
 }
 
 .nav-dropdown-item:hover {

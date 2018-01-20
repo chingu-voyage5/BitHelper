@@ -40,8 +40,8 @@ class App extends Component {
   componentDidMount() {
     console.log('did mount index');
     this.allProjects();
-    this.setUser();
-    //this.fakeSetUser();
+    //this.setUser();
+    this.fakeSetUser();
   }
   fakeAuth = (e) => {
     if (e.target.value === 'login') {
@@ -243,10 +243,10 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-      {/*<div>
+      {<div>
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
-      </div>*/}
+      </div>}
       <Footer />
       </div>
      </Router>
