@@ -26,7 +26,7 @@
         "nodemon": "^1.12.5"
     },
     "scripts": {
-        "start": "react-scripts start && npm run watch-css",
+        "start": "npm run build-css && react-scripts start && npm run watch-css",
         "first-server": "npm run build-css && react-scripts build && nodemon server.js",
         "start-server": "rm src/**/*.css && npm run build-css && react-scripts build && nodemon server.js",
         "build": "react-scripts build",
