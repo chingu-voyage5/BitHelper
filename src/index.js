@@ -21,7 +21,6 @@ import Footer from './components/Footer';
 require('dotenv').load();
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     
@@ -61,7 +60,7 @@ class App extends Component {
         "displayName":"Shohei",
         "email":"shohei51@gmail.com",
         "username":"shibatas",
-        "avatar":"https://avatars1.githubusercontent.com/u/26139392?v=4",
+        "avatar": 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
         "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
         "skillset":['a', 'b', 'c']
         },
@@ -101,6 +100,10 @@ class App extends Component {
   setUser = () => {
     axios.get(this.state.apiUrl + '/auth')
     .then(res => {
+      if (!res.data.avatar) {
+        console.log('no avatar found. setting default image.')
+        res.data.avatar = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
+      }
       this.setState({
         user: res.data,
         isLoggedIn: true
@@ -255,5 +258,5 @@ class App extends Component {
  }
 }
 
-ReactDOM.render(<App
+ReactDOM.render(<App 
 />, document.getElementById('root'));
