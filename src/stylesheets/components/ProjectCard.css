@@ -1,7 +1,8 @@
 .btn {
   background-color: #FE3D3E;
   border-color: #FE3D3E;
-  color: white; }
+  color: white;
+  margin: 5px; }
 
 .btn:active,
 .btn:hover {
@@ -22,7 +23,7 @@
   margin-top: 50px; }
 
 .logo {
-  width: 100px; }
+  width: 150px; }
 
 .card {
   margin: 10px;

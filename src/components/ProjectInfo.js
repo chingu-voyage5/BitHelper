@@ -54,14 +54,14 @@ class ProjectInfo extends Component {
         let buttons = null;
         if (isOwner) {
             buttons = (
-                <div className='d-flex justify-content-around btn-section'>
+                <div className='row d-flex justify-content-around btn-section'>
                     <Button label='Edit' redirect={'/project/edit/'+project._id}/>
                     <Button label='Delete' onClick={this.handleDelete}/>
                 </div>
             );
         } else {
             buttons = (
-                <div className='d-flex justify-content-around btn-section'>
+                <div className='row d-flex justify-content-around btn-section'>
                     {(owner) ? (<Button label='View Owner Profile' redirect={'/user/view/'+owner._id} />) : (null)}
                     <Button label='Contact Project Owner' redirect={'/contact/'+project.owner+'/'+project._id} />
                 </div>
