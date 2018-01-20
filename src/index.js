@@ -40,8 +40,8 @@ class App extends Component {
   componentDidMount() {
     console.log('did mount index');
     this.allProjects();
-    //this.setUser();
-    this.fakeSetUser();
+    this.setUser();
+    //this.fakeSetUser();
   }
   fakeAuth = (e) => {
     if (e.target.value === 'login') {
@@ -60,7 +60,7 @@ class App extends Component {
         "displayName":"Shohei",
         "email":"shohei51@gmail.com",
         "username":"shibatas",
-        "avatar":"https://avatars1.githubusercontent.com/u/26139392?v=4",
+        "avatar": 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
         "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
         "skillset":['a', 'b', 'c']
         },
@@ -100,6 +100,10 @@ class App extends Component {
   setUser = () => {
     axios.get(this.state.apiUrl + '/auth')
     .then(res => {
+      if (!res.data.avatar) {
+        console.log('no avatar found. setting default image.')
+        res.data.avatar = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
+      }
       this.setState({
         user: res.data,
         isLoggedIn: true
@@ -243,10 +247,10 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-      {<div>
+      {/*<div>
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
-      </div>}
+      </div>*/}
       <Footer />
       </div>
      </Router>
