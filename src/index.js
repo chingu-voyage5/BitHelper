@@ -10,6 +10,7 @@ import axios from 'axios';
 import "./stylesheets/main.css";
 // import './style.css';
 import Nav from './components/Nav';
+import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 import ProjectInfo from './components/ProjectInfo';
 import ProjectEdit from './components/ProjectEdit';
@@ -170,10 +171,12 @@ class App extends Component {
     })
   }
   render() {
+    console.log(this.state.user);
     return(
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
+        <Header />
         <Route exact
           path="/"
           render={(routeProps)=> (

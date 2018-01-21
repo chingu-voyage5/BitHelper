@@ -31,7 +31,7 @@ class Nav extends Component {
         case "logout":
           this.props.logoutUser();
           break;
-        case "brand":
+        case "navbar-brand":
           this.props.history.push('/');
         default:
       }

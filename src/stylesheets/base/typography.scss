@@ -3,7 +3,7 @@ h1,
 h2,
 h3,
 h4 {
-    font-weight: 700;
+    font-weight: $font-weight-heavy;
     line-height: 1.2;
     margin: 1.2em 0 0.5em;
     color: #707070;
@@ -40,7 +40,7 @@ a:hover,
 a:active,
 a:focus {
     text-decoration: none;
-    font-weight: 400;
+    font-weight: $font-weight-regular;
     color: $primary;
 }
 
@@ -57,18 +57,8 @@ blockquote {
 // .accent {
 //     color: $accent;
 // }
-.larger-heading {
-    font-size: 3.157em;
-    margin-top: 0;
-    @media only screen and (max-width: 500px) {
-        font-size: 3em;
-    }
-}
-
-.lighter-heading {
-    color: $light-grey;
-    font-weight: 300;
-    margin: -10px 0;
+.display-3 {
+    font-weight: 700;
 }
 
 .control-label {
