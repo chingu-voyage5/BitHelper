@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectCard.css';
 import '../stylesheets/main.css'; // for dev
+import Dotdotdot from 'react-dotdotdot';
 import Button from './Button.js';
 import Loader from "./Loader.js";
 
@@ -18,7 +19,10 @@ class ProjectCard extends Component {
                 <div className="card-body">
                 <p className="card-category">{item.category}</p>
                 <h4 className="card-title">{item.title}</h4>
-                <p className="card-text">{item.description}</p>
+                    <Dotdotdot clamp={4}>
+                    <p className="card-text">
+                        {item.description}</p>
+                    </Dotdotdot>
                 <Button label="More" />
                 </div>
               </div>)
@@ -32,9 +36,9 @@ class ProjectCard extends Component {
         return (
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className="col-12">
+                    {/* <div className="col-12">
                 <h1 className="text-center">Projects</h1>
-                </div>
+                </div> */}
                     {this.setProjects()}
                 </div>
             </div>

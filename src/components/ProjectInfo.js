@@ -76,7 +76,7 @@ class ProjectInfo extends Component {
                             <div className="project-meta row">
                                 <p className="project-category col">{project.category}</p>
                                 <p className="project-owner col text-md-right">
-                                    {owner ? (owner.displayName) : ('No Owner Info')}</p>
+                                    {owner ? (owner.displayName) : ('')}</p>
                                 <hr/>
                             </div>
                             <h1>{project.title}</h1>
