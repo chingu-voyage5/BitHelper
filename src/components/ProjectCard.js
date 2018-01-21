@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectCard.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
+import Loader from "./Loader.js";
+
 
 
 class ProjectCard extends Component {
@@ -23,7 +25,7 @@ class ProjectCard extends Component {
         })
 
       } else {
-        return <div>loading...</div>
+        return <Loader />
       }
     }
     render() {

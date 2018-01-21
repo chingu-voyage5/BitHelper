@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectInfo.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
+import Loader from "./Loader.js";
 
 class ProjectInfo extends Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class ProjectInfo extends Component {
         const isOwner = (user && owner && user._id === owner._id);
         
         if (!project) {
-            return <h3>Loading...</h3>;
+            return <Loader />
         }
         
         let buttons = null;

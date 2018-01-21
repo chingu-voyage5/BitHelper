@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button';
 import Input from './Input';
+import Loader from "./Loader.js";
 
 class ContactForm extends Component {
     constructor(props) {
@@ -139,7 +140,7 @@ class ContactForm extends Component {
                 </div>
             );            
         } else {
-            return <h3>Loading...</h3>
+            return <Loader />
         }
         
     }
