@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import '../stylesheets/components/UserInfo.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
-
+import Loader from "./Loader.js";
 
 class UserInfo extends Component {
     constructor(props) {
@@ -102,7 +102,7 @@ class UserInfo extends Component {
             );
         }
         else {
-            return <p>loading...</p>;
+            return <Loader />
         }
         
     }

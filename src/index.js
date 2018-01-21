@@ -10,12 +10,14 @@ import axios from 'axios';
 import "./stylesheets/main.css";
 // import './style.css';
 import Nav from './components/Nav';
+import Header from './components/Header';
 import ProjectCard from './components/ProjectCard';
 import ProjectInfo from './components/ProjectInfo';
 import ProjectEdit from './components/ProjectEdit';
 import UserInfo from './components/UserInfo';
 import UserEdit from './components/UserEdit';
 import ContactForm from './components/ContactForm';
+import About from "./components/About";
 import Footer from './components/Footer';
 
 require('dotenv').load();
@@ -170,10 +172,12 @@ class App extends Component {
     })
   }
   render() {
+    console.log(this.state.user);
     return(
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
+        <Header user={this.state.user} />
         <Route exact
           path="/"
           render={(routeProps)=> (
@@ -251,6 +255,7 @@ class App extends Component {
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
       </div>*/}
+      <About user={this.state.user} />
       <Footer />
       </div>
      </Router>

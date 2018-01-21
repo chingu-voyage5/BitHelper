@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectInfo.css';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
+import Loader from "./Loader.js";
 
 class ProjectInfo extends Component {
     constructor(props) {
@@ -48,20 +49,20 @@ class ProjectInfo extends Component {
         const isOwner = (user && owner && user._id === owner._id);
         
         if (!project) {
-            return <h3>Loading...</h3>;
+            return <Loader />
         }
         
         let buttons = null;
         if (isOwner) {
             buttons = (
-                <div className='d-flex justify-content-around btn-section'>
+                <div className='row d-flex justify-content-around btn-section'>
                     <Button label='Edit' redirect={'/project/edit/'+project._id}/>
                     <Button label='Delete' onClick={this.handleDelete}/>
                 </div>
             );
         } else {
             buttons = (
-                <div className='d-flex justify-content-around btn-section'>
+                <div className='row d-flex justify-content-around btn-section'>
                     {(owner) ? (<Button label='View Owner Profile' redirect={'/user/view/'+owner._id} />) : (null)}
                     <Button label='Contact Project Owner' redirect={'/contact/'+project.owner+'/'+project._id} />
                 </div>
@@ -75,7 +76,7 @@ class ProjectInfo extends Component {
                             <div className="project-meta row">
                                 <p className="project-category col">{project.category}</p>
                                 <p className="project-owner col text-md-right">
-                                    {owner ? (owner.displayName) : ('No Owner Info')}</p>
+                                    {owner ? (owner.displayName) : ('')}</p>
                                 <hr/>
                             </div>
                             <h1>{project.title}</h1>

@@ -3,10 +3,11 @@ h1,
 h2,
 h3,
 h4 {
-    font-weight: 700;
+    font-weight: $font-weight-heavy;
     line-height: 1.2;
     margin: 1.2em 0 0.5em;
     color: #707070;
+    word-wrap: break-word;
 }
 
 h1 {
@@ -32,13 +33,14 @@ h4 {
 p {
     font-size: 1em;
     margin-bottom: 1.3em;
+    word-wrap: break-word;
 }
 
 a:hover,
 a:active,
 a:focus {
     text-decoration: none;
-    font-weight: 400;
+    font-weight: $font-weight-regular;
     color: $primary;
 }
 
@@ -55,18 +57,11 @@ blockquote {
 // .accent {
 //     color: $accent;
 // }
-.larger-heading {
-    font-size: 3.157em;
-    margin-top: 0;
-    @media only screen and (max-width: 500px) {
-        font-size: 3em;
-    }
-}
-
-.lighter-heading {
-    color: $light-grey;
-    font-weight: 300;
-    margin: -10px 0;
+.display-1,
+.display-2,
+.display-3,
+.display-4 {
+    font-weight: $font-weight-heavy;
 }
 
 .control-label {

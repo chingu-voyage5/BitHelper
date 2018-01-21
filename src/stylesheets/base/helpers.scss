@@ -4,7 +4,7 @@ sans-serif;
 $font-weight-light: 300;
 $font-weight-regular: 400;
 $font-weight-heavy: 700;
-$font-height: 1.7;
+$font-height: 1.4;
 // COLORS
 $primary: #FE3D3E;
 $dark-grey: #707070;
@@ -21,6 +21,7 @@ $breakpoint-large: 60em; // 960px
     background-color: $primary;
     border-color: $primary;
     color: white;
+    margin: 5px;
 }
 
 .btn:active,
@@ -43,4 +44,16 @@ $breakpoint-large: 60em; // 960px
 
 .btn-section {
     margin-top: 50px;
+}
+
+.logo {
+    width: 150px;
+}
+
+.loader {
+    width: 60px;
+}
+
+.white-text {
+    color: white;
 }

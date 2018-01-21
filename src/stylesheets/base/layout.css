@@ -2,7 +2,8 @@
 .btn {
   background-color: #FE3D3E;
   border-color: #FE3D3E;
-  color: white; }
+  color: white;
+  margin: 5px; }
 
 .btn:active,
 .btn:hover {
@@ -22,6 +23,15 @@
 .btn-section {
   margin-top: 50px; }
 
+.logo {
+  width: 150px; }
+
+.loader {
+  width: 60px; }
+
+.white-text {
+  color: white; }
+
 * {
   color: #707070;
   font-family: "Work Sans", sans-serif;
@@ -34,7 +44,7 @@ body {
   font-size: 18px;
   height: 100%;
   left: 0;
-  line-height: 1.7;
+  line-height: 1.4;
   margin: 0;
   padding: 0;
   top: 0;

@@ -1,3 +1,5 @@
+// BOOTSTRAP
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
 // VARIABLES AND MIXINS
 @import "base/helpers.scss";
 // LAYOUT
@@ -8,7 +10,9 @@
 @import "components/ProjectCard.scss";
 @import "components/ProjectInfo.scss";
 @import "components/Nav.scss";
+@import "components/Header.scss";
 @import "components/UserEdit.scss";
 @import "components/UserInfo.scss";
+@import "components/About.scss";
 @import "components/Footer.scss"; // MEDIA QUERIES
 @import "base/media.scss";

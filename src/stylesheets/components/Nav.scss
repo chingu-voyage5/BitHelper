@@ -20,6 +20,11 @@ body {
     color: white;
 }
 
+.navbar-dark .navbar-toggler {
+    border: none;
+    color: $primary;
+}
+
 .login {
     display: flex;
 }
@@ -36,7 +41,7 @@ body {
     background-color: white;
     margin: 0;
     padding: 10px 0;
-    font-weight: bold;
+    font-weight: $font-weight-light;
     text-align: center;
 }
 
