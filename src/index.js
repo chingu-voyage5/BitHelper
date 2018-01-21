@@ -176,7 +176,7 @@ class App extends Component {
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
-        <Header />
+        <Header user={this.state.user} />
         <Route exact
           path="/"
           render={(routeProps)=> (

@@ -42,7 +42,6 @@
 */
 
 // @media (min-width: 481px) and (max-width: 767px) {
-//     //CSS
 // }
 
 /* 
@@ -53,5 +52,8 @@
 @media (min-width: 320px) and (max-width: 480px) {
     .logo {
         width: 130px;
+    }
+    .display-3 {
+        font-size: 3.3rem;
     }
 }
