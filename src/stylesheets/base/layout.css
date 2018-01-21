@@ -26,6 +26,12 @@
 .logo {
   width: 150px; }
 
+.loader {
+  width: 60px; }
+
+.white-text {
+  color: white; }
+
 * {
   color: #707070;
   font-family: "Work Sans", sans-serif;

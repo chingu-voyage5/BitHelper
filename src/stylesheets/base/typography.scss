@@ -57,8 +57,11 @@ blockquote {
 // .accent {
 //     color: $accent;
 // }
-.display-3 {
-    font-weight: 700;
+.display-1,
+.display-2,
+.display-3,
+.display-4 {
+    font-weight: $font-weight-heavy;
 }
 
 .control-label {

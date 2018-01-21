@@ -17,6 +17,7 @@ import ProjectEdit from './components/ProjectEdit';
 import UserInfo from './components/UserInfo';
 import UserEdit from './components/UserEdit';
 import ContactForm from './components/ContactForm';
+import About from "./components/About";
 import Footer from './components/Footer';
 
 require('dotenv').load();
@@ -254,6 +255,7 @@ class App extends Component {
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
       </div>*/}
+      <About user={this.state.user} />
       <Footer />
       </div>
      </Router>
