@@ -34,7 +34,7 @@ class ProjectCard extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <div className="container projects">
                 <div className="row justify-content-center">
                     {/* <div className="col-12">
                 <h1 className="text-center">Projects</h1>
