@@ -43,9 +43,6 @@ class ProjectCard extends Component {
                 
                 <div className="container">
                     <div className="row justify-content-center">
-                        {/* <div className="col-12">
-                    <h1 className="text-center">Projects</h1>
-                    </div> */}
                         {this.setProjects()}
                     </div>
                 </div>
@@ -53,13 +50,13 @@ class ProjectCard extends Component {
         } else {
             // With limit prop, this is the full list view
             return <div className="container project-cards-full">
-                    <div className="text-center"><h3>All Projects</h3></div>
                     <div className="row justify-content-center">
-                        {/* <div className="col-12">
-                    <h1 className="text-center">Projects</h1>
-                    </div> */}
                         {this.setProjects()}
                     </div>
+                    <div className="text-center">
+                    <Button label="All projects" onClick={this.props.toggleHeader} redirect="/project/view/"/>
+                    </div>
+
                 </div>;
         }
     }

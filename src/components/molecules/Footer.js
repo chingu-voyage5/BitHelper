@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../stylesheets/main.css'; 
-import heart from "../images/heart.svg"
+import heart from "../../images/heart.svg"
 
 const Footer = (props) => {
   return(
