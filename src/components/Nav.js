@@ -17,7 +17,7 @@ class Nav extends Component {
       }
     }
     componentDidMount() {
-      document.addEventListener("mousedown", (e) => {this.handleClick(e)});
+      //document.addEventListener("mousedown", (e) => {this.handleClick(e)});
     }
     handleClick = (e) => {
       console.log('handleClick', e.target.id);
@@ -29,10 +29,12 @@ class Nav extends Component {
           this.props.history.push('/user/view/' + this.props.user._id);
           break;
         case "logout":
+          this.props.history.push('/');
           this.props.logoutUser();
           break;
         case "navbar-brand":
           this.props.history.push('/');
+          break;
         default:
       }
     }
@@ -41,7 +43,7 @@ class Nav extends Component {
       return (
         <div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a className="navbar-brand" onClick={this.handleClick}> <img className="logo" src={logo} alt="BitHelper" /></a>
+            <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}> <img id="navbar-brand" className="logo" src={logo} alt="BitHelper" /></a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -74,7 +76,7 @@ class Nav extends Component {
                       <ul className="dropdown-menu dropdown-menu-right">
                         {this.state.items.map(item => {
                           return (
-                            <li key={item} className="nav-dropdown-item" id={item.toLowerCase()}>
+                            <li key={item} className="nav-dropdown-item" id={item.toLowerCase()} onClick={this.handleClick}>
                               <span id={item.toLowerCase()}>{item}</span>
                             </li>
                           );
