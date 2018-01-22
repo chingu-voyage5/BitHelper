@@ -1,3 +1,4 @@
+// import libraries
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -7,18 +8,21 @@ import {
 } from 'react-router-dom';
 import Cookies from 'cookie.js'
 import axios from 'axios';
+
+// import stylesheet
 import "./stylesheets/main.css";
-// import './style.css';
-import Nav from './components/Nav';
-import Header from './components/Header';
-import ProjectCard from './components/ProjectCard';
-import ProjectInfo from './components/ProjectInfo';
-import ProjectEdit from './components/ProjectEdit';
-import UserInfo from './components/UserInfo';
-import UserEdit from './components/UserEdit';
-import ContactForm from './components/ContactForm';
-import About from "./components/About";
-import Footer from './components/Footer';
+
+// import components
+import Nav from './components/molecules/Nav';
+import Header from './components/molecules/Header';
+import ProjectCard from './components/molecules/ProjectCard';
+import ProjectInfo from './components/molecules/ProjectInfo';
+import ProjectEdit from './components/molecules/ProjectEdit';
+import UserInfo from './components/molecules/UserInfo';
+import UserEdit from './components/molecules/UserEdit';
+import ContactForm from './components/molecules/ContactForm';
+import About from "./components/organisms/About";
+import Footer from './components/molecules/Footer';
 
 require('dotenv').load();
 
@@ -194,7 +198,7 @@ class App extends Component {
                   {...{
                     projects: this.state.projects,
                     user: this.state.user,
-                    limit: 3  
+                    limit: 6  
                   }} 
                 />
                 <About user={this.state.user} />

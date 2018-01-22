@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectCard.css';
-import '../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css'; // for dev
 import Dotdotdot from 'react-dotdotdot';
-import Button from './Button.js';
-import Loader from "./Loader.js";
+import Button from '../atoms/Button';
+import Loader from "../atoms/Loader";
+
 
 
 
@@ -39,12 +40,8 @@ class ProjectCard extends Component {
         if (this.props.limit && !this.props.user) {
             // With limit prop, this is the project cards view on the landing page
             return (    
-                
                 <div className="container">
                     <div className="row justify-content-center">
-                        {/* <div className="col-12">
-                    <h1 className="text-center">Projects</h1>
-                    </div> */}
                         {this.setProjects()}
                     </div>
                 </div>
@@ -52,13 +49,13 @@ class ProjectCard extends Component {
         } else {
             // With limit prop, this is the full list view
             return <div className="container project-cards-full">
-                    <div className="text-center"><h3>All Projects</h3></div>
                     <div className="row justify-content-center">
-                        {/* <div className="col-12">
-                    <h1 className="text-center">Projects</h1>
-                    </div> */}
                         {this.setProjects()}
                     </div>
+                    <div className="text-center">
+                    <Button label="All projects" onClick={this.props.toggleHeader} redirect="/project/view/"/>
+                    </div>
+
                 </div>;
         }
     }

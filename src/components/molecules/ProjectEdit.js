@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/addProject.css';
-import '../stylesheets/main.css'; // for dev
-import Button from './Button.js';
-import Input from './Input'
+import '../../stylesheets/main.css'; // for dev
+import Button from '../atoms/Button.js';
+import Input from '../atoms/Input'
 
 // const ProjectsSchema = new Schema({
 //   id: String, 

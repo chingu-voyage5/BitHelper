@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 // import '../stylesheets/components/Header.css'; 
-import '../stylesheets/main.css'; // for dev
-import Button from './Button.js';
-import logo from "../images/logo.svg"
+import '../../stylesheets/main.css';  // for dev
+import Button from '../atoms/Button';
+import logo from "../../images/logo.svg"
 
 class Nav extends Component {
     constructor(props) {
