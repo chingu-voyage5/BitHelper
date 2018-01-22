@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/UserInfo.css';
-import '../stylesheets/main.css'; // for dev
-import Button from './Button.js';
-import Loader from "./Loader.js";
-import defaultAvatar from "../images/default-avatar.png";
+import '../../stylesheets/main.css'; // for dev
+import Button from '../atoms/Button.js';
+import Loader from "../atoms/Loader.js";
+import defaultAvatar from "../../images/default-avatar.png";
 
 class UserInfo extends Component {
     constructor(props) {

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectCard.css';
-import '../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css'; // for dev
 import Dotdotdot from 'react-dotdotdot';
-import Button from './Button.js';
-import Loader from "./Loader.js";
+import Button from '../atoms/Button';
+import Loader from "../atoms/Loader";
+
 
 class ProjectCard extends Component {
-    setProjects(limit) {
+    setProjects() {
     if (this.props.projects.length > 0) {
-        const projects = this.props.projects.slice(0, limit);
+        const projects = this.props.projects.slice(0, this.props.limit);
         return projects.map((item,i) => {
             return (
             <div className="col-md-3 card"
@@ -33,26 +34,23 @@ class ProjectCard extends Component {
       }
     }
     render() {
-        if (this.props.limit && !this.props.user) {
-            // With limit prop, this is the project cards view on the landing page
-            return (    
-                <div className="container">
-                    <div className="row justify-content-center">
-                        {this.setProjects(this.props.limit)}
-                    </div>
+        const partial = Boolean(this.props.limit);
+        return (
+            <div className={(partial) ? 
+                ("container") : 
+                ("container project-cards-full")}
+            >
+                <div className="row justify-content-center">
+                    {this.setProjects()}
                 </div>
-            );
-        } else {
-            // With limit prop, this is the full list view
-            return (
-                <div className="container project-cards-full">
-                    <div className="text-center"><h3>All Projects</h3></div>
-                    <div className="row justify-content-center">
-                        {this.setProjects()}
-                    </div>
+                <div className="text-center">
+                    {(partial) ? 
+                        (<Button label="All projects" redirect="/project/view/"/>) :
+                        (<Button label="Back to main" redirect="/" />)
+                    }
                 </div>
-            );
-        }
+            </div>
+        );
     }
 }
 

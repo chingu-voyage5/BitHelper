@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 // import '../stylesheets/components/UserEdit.css';
-import '../stylesheets/main.css'; // for dev
-import Button from './Button';
-import Input from './Input';
-import Loader from "./Loader.js";
+import '../../stylesheets/main.css'; // for dev
+import Button from '../atoms/Button';
+import Input from '../atoms/Input';
+import Loader from "../atoms/Loader.js";
 
 class ContactForm extends Component {
     constructor(props) {
