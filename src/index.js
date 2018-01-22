@@ -48,6 +48,8 @@ class App extends Component {
     if (e.target.value === 'login') {
       this.fakeSetUser();
     } else {
+      Cookies.set('redirect', '/');
+      console.log(Cookies.get('redirect'));
       this.setState({
         user: null
       })
@@ -160,7 +162,7 @@ class App extends Component {
   }
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
-      Cookies.remove("userId")
+      Cookies.remove("userId");
       this.setState({
         user: null
       })
@@ -193,10 +195,7 @@ class App extends Component {
             )
           )
         }/>
-        <Route path="/project/view/" render={(routeProps)=> (
-          <ProjectCard {...routeProps} {...this.state} /> )
-        }/>
-        <Route path="/project/view/:id" render={(routeProps)=> {
+        <Route path="/project/view/:id?" render={(routeProps)=> {
           return <ProjectInfo 
             {...routeProps} 
             {...{

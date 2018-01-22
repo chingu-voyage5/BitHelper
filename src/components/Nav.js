@@ -29,6 +29,7 @@ class Nav extends Component {
           this.props.history.push('/user/view/' + this.props.user._id);
           break;
         case "logout":
+          this.props.history.push('/');
           this.props.logoutUser();
           break;
         case "navbar-brand":
