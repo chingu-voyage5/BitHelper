@@ -13,19 +13,16 @@ class ProjectInfo extends Component {
         }
     }
     componentDidMount() {
-        console.log('project info did mount');
         const id = this.props.match.params.id;
         this.getProject(id);
     }
     componentWillReceiveProps(nextProps) {
-        console.log('project info will receive props', nextProps);
         const id = nextProps.match.params.id;
         if (id) {
             this.getProject(id);
         }
     }
     getProject = (projectId) => {
-        console.log('getting project', projectId);
         if (projectId) {
             this.props.getOneProject(projectId, project => {
                 console.log('setting project', project);
@@ -39,10 +36,8 @@ class ProjectInfo extends Component {
         }
     }
     getOwner = (ownerId) => {
-        this.props.getOneUser(ownerId, profile => {
-            
+        this.props.getOneUser(ownerId, profile => {            
             let owner = (profile && profile.displayName) ? (profile) : (null);
-            
             this.setState({
                 owner: owner
             })

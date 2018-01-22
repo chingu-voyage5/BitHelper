@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
 import Loader from "./Loader.js";
+import defaultAvatar from "../images/default-avatar.png";
 
 class UserInfo extends Component {
     constructor(props) {
@@ -13,11 +14,9 @@ class UserInfo extends Component {
         };
     }
     componentDidMount() {
-        console.log('UserInfo Did Mount', this.props);
         this.getUserInfo();
     }
     componentWillReceiveProps(nextProps) {
-        console.log('UserInfo will receive props', nextProps);
         if (this.state.user) {
             this.getOwnedProjects(nextProps.projects, this.state.user);
         }
@@ -33,12 +32,10 @@ class UserInfo extends Component {
         });
     }
     getOwnedProjects = (allProjects, owner) => {
-        console.log('Update owned projects', allProjects);
         if (allProjects.length > 0) {
             let ownedProjects = allProjects.filter(item => {
                 return owner.projects.includes(item._id);
             });
-            console.log('Will set owned projects', ownedProjects);
             this.setState({
                 projects: ownedProjects
             });
@@ -55,7 +52,16 @@ class UserInfo extends Component {
                         <p>User Profile</p>
                     </div>
                     <div className='row'>
-                        <div><img key={user.avatar} src={user.avatar} className="img-fluid avatar" alt="User Avatar" /></div>
+                        <div>
+                            <img 
+                                key={user.avatar} 
+                                src={user.avatar} 
+                                onError={(e) => {
+                                    e.target.src = defaultAvatar;
+                                }} 
+                                className="img-fluid avatar" 
+                                alt="User Avatar" />
+                            </div>
                         <div><h1>{user.displayName}</h1></div>
                     </div>
                     <div className='row'>

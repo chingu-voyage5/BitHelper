@@ -3,7 +3,8 @@ import { withRouter } from 'react-router-dom';
 // import '../stylesheets/components/Header.css'; 
 import '../stylesheets/main.css'; // for dev
 import Button from './Button.js';
-import logo from "../images/logo.svg"
+import logo from "../images/logo.svg";
+import defaultAvatar from "../images/default-avatar.png";
 
 class Nav extends Component {
     constructor(props) {
@@ -16,11 +17,7 @@ class Nav extends Component {
         ]
       }
     }
-    componentDidMount() {
-      //document.addEventListener("mousedown", (e) => {this.handleClick(e)});
-    }
     handleClick = (e) => {
-      console.log('handleClick', e.target.id);
       switch (e.target.id) {
         case "add-project":
           this.props.history.push('/project/add/');
@@ -69,7 +66,11 @@ class Nav extends Component {
                         id="avatar" 
                         className="nav-avatar-img dropdown-toggle" 
                         data-toggle="dropdown"
-                        src={this.props.user.avatar} 
+                        src={this.props.user.avatar}
+                        onError={(e) => {
+                          console.log('no avatar', e.target.src);
+                          e.target.src = defaultAvatar;
+                        }} 
                         width='40px' 
                         height='40px'
                       />
