@@ -20,7 +20,7 @@ class ProjectInfo extends Component {
     componentWillReceiveProps(nextProps) {
         console.log('project info will receive props', nextProps);
         const id = nextProps.match.params.id;
-        if (id); {
+        if (id) {
             this.getProject(id);
         }
     }

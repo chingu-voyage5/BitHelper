@@ -41,8 +41,8 @@ class App extends Component {
   componentDidMount() {
     console.log('did mount index');
     this.allProjects();
-    //this.setUser();
-    this.fakeSetUser();
+    this.setUser();
+    //this.fakeSetUser();
   }
   fakeAuth = (e) => {
     if (e.target.value === 'login') {
@@ -52,7 +52,8 @@ class App extends Component {
       console.log(Cookies.get('redirect'));
       this.setState({
         user: null
-      })
+      });
+      window.location = "/";
     }
   }
   fakeSetUser = () => {
@@ -99,12 +100,10 @@ class App extends Component {
     }
   }
   setUser = () => {
+    console.log('set user');
     axios.get(this.state.apiUrl + '/auth')
     .then(res => {
-      if (!res.data.avatar) {
-        console.log('no avatar found. setting default image.')
-        res.data.avatar = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
-      }
+      console.log('set user res', res.data);
       this.setState({
         user: res.data
       });
@@ -165,8 +164,9 @@ class App extends Component {
       Cookies.remove("userId");
       this.setState({
         user: null
-      })
-    })
+      });
+      window.location = '/';
+    });
   }
   toggleHeader = () => {
     this.setState({
@@ -258,10 +258,10 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-      {<div>
+      {/*<div>
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
-      </div>}
+      </div>*/}
       <Footer />
       </div>
      </Router>

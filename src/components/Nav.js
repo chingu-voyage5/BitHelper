@@ -34,6 +34,7 @@ class Nav extends Component {
           break;
         case "navbar-brand":
           this.props.history.push('/');
+          break;
         default:
       }
     }
@@ -75,7 +76,7 @@ class Nav extends Component {
                       <ul className="dropdown-menu dropdown-menu-right">
                         {this.state.items.map(item => {
                           return (
-                            <li key={item} className="nav-dropdown-item" id={item.toLowerCase()}>
+                            <li key={item} className="nav-dropdown-item" id={item.toLowerCase()} onClick={this.handleClick}>
                               <span id={item.toLowerCase()}>{item}</span>
                             </li>
                           );
