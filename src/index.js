@@ -198,7 +198,7 @@ class App extends Component {
                   {...{
                     projects: this.state.projects,
                     user: this.state.user,
-                    limit: 3  
+                    limit: 6  
                   }} 
                 />
                 <About user={this.state.user} />

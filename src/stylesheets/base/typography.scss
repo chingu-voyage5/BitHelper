@@ -36,12 +36,15 @@ p {
     word-wrap: break-word;
 }
 
+a {
+    color: $primary;
+}
+
 a:hover,
 a:active,
 a:focus {
     text-decoration: none;
-    font-weight: $font-weight-regular;
-    color: $primary;
+    color: lighten($primary, 10);
 }
 
 code {

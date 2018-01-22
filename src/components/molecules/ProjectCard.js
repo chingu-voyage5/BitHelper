@@ -40,7 +40,6 @@ class ProjectCard extends Component {
         if (this.props.limit && !this.props.user) {
             // With limit prop, this is the project cards view on the landing page
             return (    
-                
                 <div className="container">
                     <div className="row justify-content-center">
                         {this.setProjects()}
