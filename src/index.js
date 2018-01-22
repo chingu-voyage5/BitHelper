@@ -36,14 +36,14 @@ class App extends Component {
       apiUrl: url,
       projects: [],
       user: null,
-      isLoggedIn: false
+      header: true
     }
   }
   componentDidMount() {
     console.log('did mount index');
     this.allProjects();
-    this.setUser();
-    //this.fakeSetUser();
+    //this.setUser();
+    this.fakeSetUser();
   }
   fakeAuth = (e) => {
     if (e.target.value === 'login') {
@@ -51,7 +51,7 @@ class App extends Component {
     } else {
       this.setState({
         user: null,
-        isLoggedIn: false
+        header: true
       })
     }
   }
@@ -66,7 +66,7 @@ class App extends Component {
         "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
         "skillset":['a', 'b', 'c']
         },
-        isLoggedIn: true
+        header: false
     })
   }
   allProjects = () => {
@@ -108,7 +108,7 @@ class App extends Component {
       }
       this.setState({
         user: res.data,
-        isLoggedIn: true
+        header: false
       });
     })
   }
@@ -171,13 +171,20 @@ class App extends Component {
       })
     })
   }
+  toggleHeader = () => {
+    this.setState({
+      header: !this.state.header
+    })
+  }
   render() {
     console.log(this.state.user);
     return(
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
-        <Header user={this.state.user} />
+        {(this.state.header) ? 
+          (<Header user={this.state.user} toggleHeader={this.toggleHeader}/>) :
+          (null)}
         <Route exact
           path="/"
           render={(routeProps)=> (
@@ -188,7 +195,10 @@ class App extends Component {
             ( <ProjectCard {...routeProps} {...this.state} /> )
           )
         }/>
-        <Route path="/project/view/:id" render={(routeProps)=> {
+        <Route path="/project/view/all/" render={(routeProps)=> (
+          <ProjectCard {...routeProps} {...this.state} /> )
+        }/>
+        <Route path="/project/view/one/:id" render={(routeProps)=> {
           return <ProjectInfo 
             {...routeProps} 
             {...{
@@ -251,11 +261,13 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-      {/*<div>
+      {<div>
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
-      </div>*/}
-      <About user={this.state.user} />
+      </div>}
+      {(this.state.header) ? 
+        (<About user={this.state.user} />) :
+        (null)}
       <Footer />
       </div>
      </Router>

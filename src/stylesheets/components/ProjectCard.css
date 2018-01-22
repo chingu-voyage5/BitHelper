@@ -31,6 +31,9 @@
 .white-text {
   color: white; }
 
+.projects {
+  min-height: 100vh; }
+
 .card {
   margin: 10px;
   border: none;
