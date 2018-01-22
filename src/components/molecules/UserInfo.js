@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/UserInfo.css';
-import '../stylesheets/main.css'; // for dev
-import Button from './Button.js';
-import Loader from "./Loader.js";
+import '../../stylesheets/main.css'; // for dev
+import Button from '../atoms/Button.js';
+import Loader from "../atoms/Loader.js";
 
 class UserInfo extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css'; 
 import heart from "../images/heart.svg"
 
 const Footer = (props) => {

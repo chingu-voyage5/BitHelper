@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 // import '../stylesheets/components/ProjectCard.css';
-import '../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css'; // for dev
 import Dotdotdot from 'react-dotdotdot';
-import Button from './Button.js';
-import Loader from "./Loader.js";
+import Button from '../atoms/Button';
+import Loader from "../atoms/Loader";
+
 
 
 
