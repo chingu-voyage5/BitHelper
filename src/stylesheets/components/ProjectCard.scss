@@ -1,11 +1,12 @@
 @import "../base/helpers.scss";
-.projects {
+.project-cards-full {
     min-height: 100vh;
 }
 
 .card {
     // position: relative;
     // top: -90px;
+    width: 285px;
     margin: 10px;
     border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

@@ -24,7 +24,7 @@ class About extends Component{
                <div className="col-md-6 text-center">
                     <img className="about-icon" src={target} alt=""/>
                     <h2 className="white-text mt-0">Find team mates</h2>
-                    <p className="white-text">Need a little bit of help with your app? You've come to the right place! Find new team mates and finish your projects fast</p>
+                    <p className="white-text">Need a little bit of help with your app? You've come to the right place! Find new teammates and finish your projects fast</p>
                </div>
             </div>
             <div className="row join">

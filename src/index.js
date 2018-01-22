@@ -189,7 +189,14 @@ class App extends Component {
             ( 
               <div>
                 <Header user={this.state.user} toggleHeader={this.toggleHeader}/>
-                <ProjectCard {...routeProps} {...this.state} />
+                <ProjectCard 
+                  {...routeProps} 
+                  {...{
+                    projects: this.state.projects,
+                    user: this.state.user,
+                    limit: 3  
+                  }} 
+                />
                 <About user={this.state.user} />
               </div>
             )
