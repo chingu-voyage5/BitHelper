@@ -13,7 +13,7 @@ class ProjectCard extends Component {
         return this.props.projects.map((item,i) => {
             return (
             <div className="col-md-3 card"
-                onClick={() => this.props.history.push('/project/view/one/' + item._id)}
+                onClick={() => this.props.history.push('/project/view/' + item._id)}
                 key={i}
                 id={item._id}>
                 <div className="card-body">

@@ -10,12 +10,16 @@ class Header extends Component{
       <div>
       {(!this.props.user) ?
         (
-            <div className="header jumbotron text-center">
-
-            <h1 className="header-heading display-3">Build more. Together.</h1>
-            <p className="header-lead lead">Discover interesting projects. Find new team mates. Finish your projects faster.</p>
-            <Button label="Find projects" onClick={this.props.toggleHeader} redirect="/project/view/all"/>
-
+          <div className="jumbotron jumbotron-fluid">
+            <div className="container">
+              <div className="header text-center">
+    
+                <h1 className="header-heading display-3">Build more. Together.</h1>
+                <p className="header-lead lead">Discover interesting projects. Find new team mates. Finish your projects faster.</p>
+                <Button label="Find projects" onClick={this.props.toggleHeader} redirect="/project/view/"/>
+    
+              </div>
+            </div>
           </div>
         ) : (
           null

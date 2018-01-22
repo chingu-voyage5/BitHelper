@@ -35,8 +35,7 @@ class App extends Component {
     this.state = {
       apiUrl: url,
       projects: [],
-      user: null,
-      header: true
+      user: null
     }
   }
   componentDidMount() {
@@ -50,8 +49,7 @@ class App extends Component {
       this.fakeSetUser();
     } else {
       this.setState({
-        user: null,
-        header: true
+        user: null
       })
     }
   }
@@ -65,8 +63,7 @@ class App extends Component {
         "avatar": 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png',
         "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
         "skillset":['a', 'b', 'c']
-        },
-        header: false
+        }
     })
   }
   allProjects = () => {
@@ -107,8 +104,7 @@ class App extends Component {
         res.data.avatar = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
       }
       this.setState({
-        user: res.data,
-        header: false
+        user: res.data
       });
     })
   }
@@ -166,8 +162,7 @@ class App extends Component {
     axios.get('/auth/logout').then(()=> {
       Cookies.remove("userId")
       this.setState({
-        user: null,
-        isLoggedIn: false
+        user: null
       })
     })
   }
@@ -182,9 +177,6 @@ class App extends Component {
     <Router>
       <div>
         <Nav user={this.state.user} logoutUser={this.logoutUser}/>
-        {(this.state.header) ? 
-          (<Header user={this.state.user} toggleHeader={this.toggleHeader}/>) :
-          (null)}
         <Route exact
           path="/"
           render={(routeProps)=> (
@@ -192,13 +184,19 @@ class App extends Component {
             ( <Redirect to={{
                 pathname: '/user/edit/'
               }}/> ) :
-            ( <ProjectCard {...routeProps} {...this.state} /> )
+            ( 
+              <div>
+                <Header user={this.state.user} toggleHeader={this.toggleHeader}/>
+                <ProjectCard {...routeProps} {...this.state} />
+                <About user={this.state.user} />
+              </div>
+            )
           )
         }/>
-        <Route path="/project/view/all/" render={(routeProps)=> (
+        <Route path="/project/view/" render={(routeProps)=> (
           <ProjectCard {...routeProps} {...this.state} /> )
         }/>
-        <Route path="/project/view/one/:id" render={(routeProps)=> {
+        <Route path="/project/view/:id" render={(routeProps)=> {
           return <ProjectInfo 
             {...routeProps} 
             {...{
@@ -265,9 +263,6 @@ class App extends Component {
         <button className='btn' onClick={this.fakeAuth} value='login'>Fake Login</button>
         <button className='btn' onClick={this.fakeAuth} value='logout'>Fake Logout</button>
       </div>}
-      {(this.state.header) ? 
-        (<About user={this.state.user} />) :
-        (null)}
       <Footer />
       </div>
      </Router>
