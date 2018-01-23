@@ -6,12 +6,9 @@ import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
 
 
-
-
 class ProjectCard extends Component {
     setProjects() {
     if (this.props.projects.length > 0) {
-        console.log('limit', this.props.limit)
         const projects = this.props.projects.slice(0, this.props.limit);
         return projects.map((item,i) => {
             return (
@@ -37,27 +34,23 @@ class ProjectCard extends Component {
       }
     }
     render() {
-        if (this.props.limit && !this.props.user) {
-            // With limit prop, this is the project cards view on the landing page
-            return (    
-                <div className="container">
-                    <div className="row justify-content-center">
-                        {this.setProjects()}
-                    </div>
+        const partial = Boolean(this.props.limit);
+        return (
+            <div className={(partial) ? 
+                ("container") : 
+                ("container project-cards-full")}
+            >
+                <div className="row justify-content-center">
+                    {this.setProjects()}
                 </div>
-            );
-        } else {
-            // With limit prop, this is the full list view
-            return <div className="container project-cards-full">
-                    <div className="row justify-content-center">
-                        {this.setProjects()}
-                    </div>
-                    <div className="text-center">
-                    <Button label="All projects" onClick={this.props.toggleHeader} redirect="/project/view/"/>
-                    </div>
-
-                </div>;
-        }
+                <div className="text-center">
+                    {(partial) ? 
+                        (<Button label="All projects" redirect="/project/view/"/>) :
+                        (<Button label="Back to main" redirect="/" />)
+                    }
+                </div>
+            </div>
+        );
     }
 }
 
