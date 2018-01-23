@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 const routes = require('./routes/routes.js');
+//const faker = require("faker"); // for dev only
 
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
@@ -67,7 +68,7 @@ passport.use(new GitHubStrategy({
                 githubId: profile.id,
                 displayName: profile._json.name,
                 email: profile._json.email,
-                userName: profile._json.login,
+                username: profile._json.login,
                 avatar: profile._json.avatar_url
 
             });
@@ -115,5 +116,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, function() {
- console.log(`api running on port ${port}`);
+ console.log(`API running on port ${port}`);
 });

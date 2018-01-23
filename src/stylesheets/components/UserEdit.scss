@@ -1,0 +1,16 @@
+@import "../base/helpers.scss";
+body {
+    background: $almost-white;
+}
+
+.user-edit {
+    background-color: white;
+    margin: 20px;
+    padding: 20px 30px 30px 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.user-edit-title {
+    text-transform: uppercase;
+    margin-top: 30px;
+}

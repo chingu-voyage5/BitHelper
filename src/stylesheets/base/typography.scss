@@ -1,0 +1,73 @@
+@import "./helpers.scss";
+h1,
+h2,
+h3,
+h4 {
+    font-weight: $font-weight-heavy;
+    line-height: 1.2;
+    margin: 1.2em 0 0.5em;
+    color: #707070;
+    word-wrap: break-word;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 2.441em;
+    @media screen and (min-width: 990px) {
+        margin-top: 1.42rem;
+    }
+}
+
+h2 {
+    font-size: 1.953em;
+}
+
+h3 {
+    font-size: 1.563em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+p {
+    font-size: 1em;
+    margin-bottom: 1.3em;
+    word-wrap: break-word;
+}
+
+a {
+    color: $primary;
+}
+
+a:hover,
+a:active,
+a:focus {
+    text-decoration: none;
+    color: lighten($primary, 10);
+}
+
+code {
+    font-family: monospace;
+    margin-bottom: 1.3em;
+}
+
+blockquote {
+    font-size: 1.32em;
+    font-style: italic;
+}
+
+// .accent {
+//     color: $accent;
+// }
+.display-1,
+.display-2,
+.display-3,
+.display-4 {
+    font-weight: $font-weight-heavy;
+}
+
+.control-label {
+    font-weight: $font-weight-heavy;
+    font-size: 1.25em;
+}

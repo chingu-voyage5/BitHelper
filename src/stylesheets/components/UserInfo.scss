@@ -1,0 +1,31 @@
+@import "../base/helpers.scss";
+body {
+    background: $almost-white;
+}
+
+.row {
+    margin: 10px 0;
+}
+
+.user-info {
+    background-color: white;
+    margin: 20px;
+    padding: 20px 30px 30px 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.user-info-meta {
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
+td {
+    vertical-align: top;
+    width: 150px;
+}
+
+.avatar {
+    width: 100px;
+    margin: 0 20px;
+    border-radius: 3px;
+}

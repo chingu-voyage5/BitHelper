@@ -1,0 +1,32 @@
+footer {
+    p {
+        color: white;
+        position: relative;
+        left: 10px;
+    }
+}
+
+.heart-icon {
+    fill: #ffffff;
+    width: 13px;
+}
+
+.github-logo {
+    width: 42px;
+    position: relative;
+    bottom: 10px;
+}
+
+.footer-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.footer-developers,
+.footer-copyrights {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

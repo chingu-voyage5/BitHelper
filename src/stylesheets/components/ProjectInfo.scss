@@ -1,0 +1,18 @@
+@import "../base/helpers.scss";
+body {
+    background: $almost-white;
+}
+
+.project-meta {
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
+.project-category,
+.project-owner {
+    color: $light-grey;
+}
+
+.screenshots {
+    margin: 20px;
+}

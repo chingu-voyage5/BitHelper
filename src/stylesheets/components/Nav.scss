@@ -1,0 +1,51 @@
+@import "../base/helpers.scss";
+body {
+    background: $almost-white;
+}
+
+.bg-dark {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.navbar-brand {
+    width: 130px;
+}
+
+.navbar-brand:hover {
+    cursor: pointer;
+}
+
+.navbar,
+.navbar p {
+    color: white;
+}
+
+.navbar-dark .navbar-toggler {
+    border: none;
+    color: $primary;
+}
+
+.login {
+    display: flex;
+}
+
+.nav-avatar-img {
+    border-radius: 50%;
+}
+
+.nav-avatar-img:hover {
+    cursor: pointer;
+}
+
+.nav-dropdown-item {
+    background-color: white;
+    margin: 0;
+    padding: 10px 0;
+    font-weight: $font-weight-light;
+    text-align: center;
+}
+
+.nav-dropdown-item:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}

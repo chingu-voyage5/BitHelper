@@ -2,15 +2,36 @@ const Project = require('../model/projects');
 const User = require('../model/users');
 
 module.exports = function(router) {
-
-    console.log('router');
-
     // Go to /api to just check if API is working
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
     });
 
     // PROJECT ROUTES
+
+    const setProjectObj = (input, project) => {
+      project.title = input.title;
+      project.owner = input.owner;
+      project.category = input.category;
+      project.description = input.description;
+      project.stack = input.stack;
+      project.status = input.status;
+      project.repoUrl = input.repoUrl;
+      project.img = input.img;
+
+      return project;
+    }
+
+    const setUserObj = (input, user) => {
+      user.username = input.username;
+      user.displayName = input.displayName;
+      user.avatar = input.avatar;
+      user.skillset = input.skillset;
+      user.email = input.email;
+      user.projects = input.projects;
+
+      return user;
+    }
 
     router.route('/projects')
     // retrieve all projects from the database
@@ -24,18 +45,27 @@ module.exports = function(router) {
     // post new projects to the database
     .post(function(req, res) {
       let project = new Project();
-      // body parser lets us use the req.body
-      project.title = req.body.title;
-      project.owner = req.body.owner;
-      project.description = req.body.description;
-      project.status = req.body.status;
-      project.repoUrl = req.body.repoUrl;
-      project.img = req.body.img;
+      project = setProjectObj(req.body, project);
 
-      // save to database
-      project.save(function(err) {
-        if (err) { res.send(err); }
-        res.json({ message: 'Project successfully added!' });
+      // add project ID to owner's data
+      User.findById(project.owner, function(err, user) {
+        console.log('Add project to owner data', project);
+        if (err) { console.log(err) }
+        if (user) {
+          // save project to database
+          project.save(function(err) {
+            if (err) {'Error: Project could not be saved.'}
+          });
+          //save user with new project ID added
+          user.projects.push(project._id)
+          console.log('new user profile', user);          
+          user.save(function(err) {
+            if (err) { console.log(err) }
+            res.send('Project successfully added.');
+          });
+        } else {
+            res.send('Error: Owner profile not found.')
+        }
       });
     });
 
@@ -53,12 +83,7 @@ module.exports = function(router) {
      Project.findById(req.params.project_id, function(err, project) {
        if (err) { res.send(err); }
        if (project) {
-        project.title = req.body.title;
-        project.owner = req.body.owner;
-        project.description = req.body.description;
-        project.status = req.body.status;
-        project.repoUrl = req.body.repoUrl;
-        project.img = req.body.img;
+        project = setProjectObj(req.body, project)
         //save project
         project.save(function(err) {
           if (err) { res.send(err); }
@@ -69,10 +94,10 @@ module.exports = function(router) {
        }
      });
     })
-
     //delete method for removing a project from our database
     .delete(function(req, res) {
      //selects the project by its ID, then removes it.
+     console.log('delete requested', req.params.project_id);
      Project.remove({ _id: req.params.project_id }, function(err, project) {
        if (err) { res.send(err); }
        res.json({ message: 'Project has been deleted' })
@@ -92,13 +117,7 @@ module.exports = function(router) {
     })
     // post new users to the database
     .post(function(req, res) {
-      let user = new User();
-      // body parser lets us use the req.body
-      user.username = req.body.username;
-      user.displayName = req.body.displayName;
-      user.avatar = req.body.avatar;
-      user.skillset = req.body.skillset;
-      user.email = req.body.email;
+      let user = setUserObj(req.body, new User())
       // save to database
       user.save(function(err) {
         if (err) { res.send(err); }
@@ -121,11 +140,7 @@ module.exports = function(router) {
       console.log(user);
       if (err) { res.send(err); }
       if (user) {
-        user.username = req.body.username;
-        user.displayName = req.body.displayName;
-        user.avatar = req.body.avatar;
-        user.skillset = req.body.skillset;
-        user.email = req.body.email;
+        user = setUserObj(req.body, user);
         //save user
         user.save(function(err) {
           if (err) { res.send(err); }

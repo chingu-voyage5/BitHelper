@@ -1,0 +1,59 @@
+// FONT VARIABLES
+$font-family: 'Work Sans',
+sans-serif;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-heavy: 700;
+$font-height: 1.4;
+// COLORS
+$primary: #FE3D3E;
+$dark-grey: #707070;
+$light-grey: #9E9E9E;
+$almost-white: #FAFAFA;
+// BREAKPOINTS
+$width: 96%;
+$gutter: 4%;
+$breakpoint-small: 33.75em; // 540px
+$breakpoint-med: 45em; // 720px
+$breakpoint-large: 60em; // 960px
+// COMPONENTS (Buttons, forms)
+.btn {
+    background-color: $primary;
+    border-color: $primary;
+    color: white;
+    margin: 5px;
+}
+
+.btn:active,
+.btn:hover {
+    background-color: lighten( $primary, 10%);
+    border-color: lighten( $primary, 10%);
+    color: white;
+}
+
+.material-card {
+    background-color: white;
+    margin: 20px;
+    padding: 20px 30px 30px 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.container {
+    padding: 20px 0;
+}
+
+.btn-section {
+    margin-top: 50px;
+}
+
+.logo {
+    width: 150px;
+}
+
+.loader {
+    width: 60px;
+}
+
+.white-text {
+    color: white;
+}
