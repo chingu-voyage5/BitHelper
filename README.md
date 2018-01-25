@@ -1,13 +1,10 @@
-# Bears-20 project
+# BitHelper
 
 ## Elevator Pitch
-Ever had a fantastic idea for a killer app, but never got to finish it? We're here to help you! Find new team mates or join exciting new projects to develop together
+Ever had a killer idea for an app, but never got to finish it? BitHelper is here to help you find new team mates to finish your apps or join exciting new projects to develop together!
 
 ## Brief
-Coming soon
-
-## Wireframes
-Coming soon
+BitHelper is a platform to help people complete their old and unfinished development projects. Users can browse through projects where help is needed or find new team mates to build their own ideas. Build more, faster and together!
 
 ## User stories 
 
@@ -18,7 +15,7 @@ Coming soon
 | view any user profiles (with limited access)                                                              | MVP     | :thumbsup: |
 | login with my email to access any of the help seeker/helper functionalities                               | MVP     | :thumbsup: |
 | as an authenticated user, I can create and view my profile with name, image, skillset and contact details | MVP     | :thumbsup: |
-| as an authenticated user, I contact help seeker through his/her contact details                           | MVP     | :red_circle: |
+| as an authenticated user, I contact help seeker through his/her contact details                           | MVP     | :thumbsup: |
 | I can login with my email                                                                                 | v2      | :red_circle: |
 | I can login with other methods: e.g. Google, Facebook                                                     | v2      | :red_circle: |
 | As a help seeker, I can reward helpers with points                                                        | v2      | :red_circle: |
