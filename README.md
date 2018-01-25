@@ -1,7 +1,7 @@
 # BitHelper
 
 ## Elevator Pitch
-Ever had a killer idea for an app, but never got to finish it? BitHelper is help you to find new team mates to finish your apps or join exciting new projects to develop together!
+Ever had a killer idea for an app, but never got to finish it? BitHelper is here to help you find new team mates to finish your apps or join exciting new projects to develop together!
 
 ## Brief
 Coming soon
