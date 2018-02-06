@@ -2,19 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const routes = require('./routes/routes.js');
+const routes = require('./config/routes.js');
 //const faker = require("faker"); // for dev only
 
 const passport = require('passport');
-const GitHubStrategy = require('passport-github').Strategy;
-const User = require('./model/users');
 const session = require('express-session')
 
 const app = express();
 const router = express.Router();
-const auth = require('./routes/auth')
+const auth = require('./config/auth')
 
 require('dotenv').load();
+
+require('./config/passport')(passport);
 
 const port = process.env.PORT || 3001;
 
@@ -47,54 +47,6 @@ app.use(function(req, res, next) {
 // Load api routes
 routes(router);
 
-// auth
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/auth/github/callback",
-    proxy: true
-  },
-  function(accessToken, refreshToken, profile, cb) {
-
-    User.findOne({
-        'githubId': profile.id
-    }, function(err, user) {
-        if (err) {
-            return cb(err);
-        }
-        //No user was found... so create a new user with values from github
-        if (!user) {
-            user = new User({
-                githubId: profile.id,
-                displayName: profile._json.name,
-                email: profile._json.email,
-                username: profile._json.login,
-                avatar: profile._json.avatar_url
-
-            });
-            user.save(function(err) {
-                if (err) console.log(err);
-                return cb(err, user);
-            });
-        } else {
-            //found user. Return
-            return cb(err, user);
-        }
-    });
-  }
-));
-
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
 // Initialize Passport and restore authentication state, if any, from the
 // session.
 
@@ -107,8 +59,6 @@ app.use(express.static(path.resolve('build')));
 // Defines api route root
 app.use('/api', router);
 app.use('/auth', auth);
-
-
 
 // If request doesn't match api request always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {
