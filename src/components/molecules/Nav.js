@@ -18,6 +18,7 @@ class Nav extends Component {
       }
     }
     handleClick = (e) => {
+      console.log('handleclick', e.target.id);
       switch (e.target.id) {
         case "add-project":
           this.props.history.push('/project/add/');
@@ -25,6 +26,11 @@ class Nav extends Component {
         case "profile":
           this.props.history.push('/user/view/' + this.props.user._id);
           break;
+        case "login":
+          document.cookie="redirect=" + window.location.pathname;
+          console.log('login clicked', window.location.pathname);
+          window.location = '/auth/github/'
+          break;  
         case "logout":
           this.props.history.push('/');
           this.props.logoutUser();
@@ -36,7 +42,7 @@ class Nav extends Component {
       }
     }
     render () {
-      //console.log('Nav', this.props);
+      console.log('Nav', this.props);
       return (
         <div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -85,7 +91,7 @@ class Nav extends Component {
                       </ul>
                     </li>
                     ) : (
-                    <li><a href="/auth/github"><button className="btn">Login</button></a></li>
+                    <li><button id="login" className="btn" onClick={this.handleClick} >Login</button></li>
                     )
                   } 
                 </ul>
@@ -103,7 +109,7 @@ class Nav extends Component {
                   </ul>
                 ) : (
                   <ul className="navbar-nav mr-auto">
-                    <li className="nav-dropdown-item" onClick={this.handleClick}><a href="/auth/github">Login</a></li>
+                    <li id="login" className="nav-dropdown-item" onClick={this.handleClick}>Login</li>
                   </ul>
                 )
               }
