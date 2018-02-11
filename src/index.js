@@ -1,4 +1,4 @@
-// import libraries
+// Import React and its components
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import {
@@ -6,13 +6,13 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import Cookies from 'cookie.js'
+import getCookie from './js/getCookie';
 import axios from 'axios';
 
-// import stylesheet
+// Import stylesheets
 import "./stylesheets/main.css";
 
-// import components
+// Import custom components
 import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
 import ProjectCard from './components/molecules/ProjectCard';
@@ -24,8 +24,10 @@ import ContactForm from './components/molecules/ContactForm';
 import About from "./components/organisms/About";
 import Footer from './components/molecules/Footer';
 
+// Loads environment variables with dotenv
 require('dotenv').load();
 
+// Declare App component 
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,7 @@ class App extends Component {
       ( process.env.REACT_APP_APPURL ) : 
       ( window.location.origin );
       
-    console.log('api url', url);
+    // console.log('api url', url);
 
     this.state = {
       apiUrl: url,
@@ -45,33 +47,16 @@ class App extends Component {
   componentDidMount() {
     this.allProjects();
     this.setUser();
+    // Get redirect cookie and redirect if exists
+    const redirect = getCookie('redirect');
+    if (redirect) {
+      // Reset redirect cookie before redirecting
+      document.cookie = 'redirect=';
+      window.location = redirect;
+    }
     //this.fakeSetUser();
   }
-  /*
-  fakeAuth = (e) => {
-    if (e.target.value === 'login') {
-      this.fakeSetUser();
-    } else {
-      this.setState({
-        user: null
-      });
-      window.location = "/";
-    }
-  }
-  fakeSetUser = () => {
-    this.setState({
-        user: {
-        "_id":"5a6055120f25ffaa290471fd",
-        "displayName":"Shohei",
-        "email":"shohei51@gmail.com",
-        "username":"shibatas",
-        "avatar": "",
-        "projects":["5a6057020f25ffaa290471fe","5a6057230f25ffaa290471ff"],
-        "skillset":['a', 'b', 'c']
-        }
-    })
-  }
-  */
+
   allProjects = () => {
     // get projects
     axios.get(this.state.apiUrl + '/api/projects')
@@ -152,7 +137,6 @@ class App extends Component {
   }
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
-      Cookies.remove("userId");
       this.setState({
         user: null
       });
