@@ -124,10 +124,10 @@ class UserEditNew extends Component {
                                         {inputFields.map(item => {
                                             return <Input data={item} onChange={this.handleChange} />
                                         })}
-                                        <div className='d-flex justify-content-around btn-section'>
-                                            <input type='submit' className='btn' value='Submit' />
-                                            <input type='reset' className='btn' value='Reset' onClick={this.handleReset}/>
-                                            <Button label='Cancel' redirect={'/user/view/'+this.props.user._id} />
+                                        <div className='row d-flex justify-content-around btn-section'>
+                                            <input type='submit' className='col btn' value='Submit' />
+                                            <input type='reset' className='col btn' value='Reset' onClick={this.handleReset}/>
+                                            <Button className='col' label='Cancel' redirect={'/user/view/'+this.props.user._id} />
                                         </div>
                                     </fieldset>
                                 </form>
