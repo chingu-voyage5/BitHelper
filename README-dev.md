@@ -37,19 +37,31 @@ Example requests:
 
 ## Code Structure
 
-**Backend**
-*`server.js`* -  Main backend script which initializes the server. It also takes care of connecting to database, loading api routes, etc.
+### Backend
+`server.js` -  Main backend script which initializes the server. It also takes care of connecting to database, loading api routes, etc.
 
-*`/config`* - This folder contains the api routes script as well as authentication-related scripts.
+`/config` - This folder contains the api routes script as well as authentication-related scripts.
 
-*`/model`* - This folder contains scripts, each containing a mongoose Schema which defines the template of database documents. 
+`/model` - This folder contains scripts, each containing a mongoose Schema which defines the template of database documents. 
 
-**Frontend**
-*`/build`* - The production build files, once you run `npm run build`, goes here. 
+### Frontend
+`/build` - The production build files, once you run `npm run build`, goes here. 
 
-*`/public`* - The development version of static files are here.
+`/public` - The development version of static files are here.
 
-*`/src`* - The javascript files for development version. `index.js` gets loaded first.
+`/src` - The javascript files for development version. `index.js` gets loaded first.
+`/src` contains the following subfolders: 
+
+`/components` - Components, divided according to [Atomic Design principles (atoms, molecules, organisms, pages)](https://codeburst.io/atomic-design-with-react-e7aea8152957)
+
+`/images` - As title, images
+
+`/js` - Non-React Javascript files
+
+`/stylesheets` - SCSS stylesheets, divided in base styles, common to all components (typography, media queries, layout) and component-specific styles.
+
+
+**Environment variables**
 
 Also, please create a *.env* file in the root directory, for each local copy of the repository. This file will contain the environment variables. They are the "secret" variables like keys, passwords, etc that should not be visible to the users, so it should not be uploaded to GitHub.
 
@@ -64,13 +76,15 @@ GITHUB_CLIENT_SECRET = <GitHub OAuth App Secret>
 
 ## Server Communication Scheme
 
-**API URL**  
+### API URL
 Heroku:  https://bithelper.herokuapp.com/api
 Local: http://localhost:3001/api (Port # depends on what you put in `.env`)
 
 If `REACT_APP_APIURL` exists, that URL will be used for all api calls instead of the local server. This is useful for when working on frontend. This allows you to use the create-react-app development environment with live-update.
 
-**Schema**
+### Schemas
+
+#### Project Schema
 ```
 Project
 {
@@ -86,6 +100,8 @@ Project
 }
 ```
 
+#### User Schema
+
 ```
 User
 {
@@ -99,7 +115,7 @@ User
 }
 ```
 
-**Routes**  
+### Routes 
 Get list of all Projects
 >request: GET to `/projects/`  
 >send: nothing  
@@ -108,7 +124,7 @@ Get list of all Projects
 Create new Project
 >request: POST to `/projects/`  
 >send: full Post object except id (id automattically assign)  
->receive: { message: String }
+>receive: `{ message: String }`
 
 Get Project by ID
 >request: GET to `/projects/:project_id`  
@@ -118,12 +134,12 @@ Get Project by ID
 Update Project
 >request: PUT to `/projects/:project_id`  
 >send: updated Project object  
->receive: { message: String }
+>receive: `{ message: String }`
 
 Delete Project
 >request: DELETE to `/projects/:project_id`  
 >send: nothing
->receive: { message: String }
+>receive: `{ message: String }`
 
 Retrieve all user data
 >request: GET to `/users/`  
@@ -133,7 +149,7 @@ Retrieve all user data
 Create new User
 >request: POST to `/users/`  
 >send: full User object except id (id automatically assign)  
->receive: { message: String }
+>receive: `{ message: String }`
 
 Get User profile by ID
 >request: GET to `/users/:user_id`  
@@ -143,9 +159,9 @@ Get User profile by ID
 Update User by ID
 >request: PUT to `/users/:user_id`  
 >send: full User object  
->receive: { message: String }
+>receive: `{ message: String }`
 
 Delete User by ID
 >request: Delete to `/users/:user_id`  
 >send: nothing
->receive: { message: String }
+>receive: `{ message: String }`
