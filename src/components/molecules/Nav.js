@@ -1,6 +1,11 @@
+/*----------------------
+    NAV COMPONENT:
+    if user is logged in, shows add project button and edit user options. 
+    Otherwise, shows option to log in.
+------------------------*/
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-// import '../stylesheets/components/Header.css'; 
 import '../../stylesheets/main.css';  // for dev
 import Button from '../atoms/Button';
 import logo from "../../images/logo.svg"
@@ -121,4 +126,3 @@ class Nav extends Component {
 
 export default withRouter(Nav);
 
-// navbar-toggler" data-toggle="collapse

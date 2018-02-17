@@ -1,5 +1,9 @@
+/*----------------------
+    USER INFO COMPONENT:
+    shows user info.
+------------------------*/
+
 import React, { Component } from 'react';
-// import '../stylesheets/components/UserInfo.css';
 import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button.js';
 import Loader from "../atoms/Loader.js";

@@ -1,3 +1,9 @@
+/*----------------------
+    ABOUT COMPONENT:
+    shows information about BitHelper rationale
+------------------------*/
+
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../stylesheets/main.css'; 

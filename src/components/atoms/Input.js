@@ -1,3 +1,9 @@
+/*----------------------
+    INPUT COMPONENT:
+    text area inputs to be used in forms
+------------------------*/
+
+
 import React, { Component } from 'react';
 import '../../stylesheets/main.css';  // for dev
 

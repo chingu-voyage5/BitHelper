@@ -1,5 +1,9 @@
+/*----------------------
+    PROJECT INFO COMPONENT:
+    shows details of project. Owners can also access edit and delete features
+------------------------*/
+
 import React, { Component } from 'react';
-// import '../stylesheets/components/ProjectInfo.css';
 import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button.js';
 import ProjectCard from './ProjectCard';
@@ -26,7 +30,7 @@ class ProjectInfo extends Component {
     getProject = (projectId) => {
         if (projectId) {
             this.props.getOneProject(projectId, project => {
-                // console.log('setting project', project);
+                console.log('setting project', project);
                 if (project) {
                     this.setState({
                         project: project

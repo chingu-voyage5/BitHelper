@@ -1,5 +1,9 @@
+/*----------------------
+    PROJECT CARD COMPONENT:
+    shows little card with basic project info
+------------------------*/
+
 import React, { Component } from 'react';
-// import '../stylesheets/components/ProjectCard.css';
 import '../../stylesheets/main.css'; // for dev
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';

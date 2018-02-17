@@ -1,7 +1,12 @@
+/*----------------------
+    CONTACT FORM COMPONENT:
+    shows contact form
+------------------------*/
+
+
 import React, { Component } from 'react';
 import axios from 'axios';
-// import '../stylesheets/components/UserEdit.css';
-import '../../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Loader from "../atoms/Loader.js";

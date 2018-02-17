@@ -1,3 +1,9 @@
+/*----------------------
+    USER EDIT COMPONENT:
+    users can edit their own profiles from here.
+------------------------*/
+
+
 import React, { Component } from 'react';
 // import '../stylesheets/components/UserEdit.css';
 import '../../stylesheets/main.css'; // for dev

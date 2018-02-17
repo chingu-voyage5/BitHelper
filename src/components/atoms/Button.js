@@ -1,7 +1,11 @@
+/*----------------------
+    BUTTON COMPONENT:
+    button that redirects somewhere when clicked
+------------------------*/
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-// import '../stylesheets/components/Header.css'; 
-import '../../stylesheets/main.css'; // for dev
+import '../../stylesheets/main.css'; 
 
 class Button extends Component {
   constructor(props){
