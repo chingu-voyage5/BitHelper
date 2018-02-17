@@ -52,7 +52,7 @@ module.exports = function(router) {
 
       // add project ID to owner's data
       User.findById(project.owner, function(err, user) {
-        console.log('Add project to owner data', project);
+        // console.log('Add project to owner data', project);
         if (err) { console.log(err) }
         if (user) {
           // save project to database
@@ -61,7 +61,7 @@ module.exports = function(router) {
           });
           //save user with new project ID added
           user.projects.push(project._id)
-          console.log('new user profile', user);          
+          // console.log('new user profile', user);          
           user.save(function(err) {
             if (err) { console.log(err) }
             res.send('Project successfully added.');

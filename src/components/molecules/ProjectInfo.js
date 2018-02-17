@@ -26,7 +26,7 @@ class ProjectInfo extends Component {
     getProject = (projectId) => {
         if (projectId) {
             this.props.getOneProject(projectId, project => {
-                console.log('setting project', project);
+                // console.log('setting project', project);
                 if (project) {
                     this.setState({
                         project: project
