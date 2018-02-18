@@ -23,5 +23,6 @@ BitHelper is a platform to help people complete their old and unfinished develop
 | I get a notification when someone comments on one of my "help wanted" projects or commits to help         | v2      | :red_circle: |
 | As an authenticated user, I can bookmark projects                                                         | v2      | :red_circle: |
 | All the projects where I helped are showed on my profile, along with my reward points                     | v2      | :red_circle: |
-| I can edit the projects I created                     | v2      | :red_circle: |
-
+| I can edit the projects I created                     | v2      |  :thumbsup: |
+| I can search through projects                   | v2      | :red_circle: |
+| I can tag my own projects with "Help wanted", "In progress" and "Completed project"             | v2      | :red_circle: |
