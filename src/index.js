@@ -6,7 +6,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
-import Cookies from 'cookie.js'
+import getCookie from './js/getCookie';
 import axios from 'axios';
 
 // import stylesheet
@@ -45,6 +45,13 @@ class App extends Component {
   componentDidMount() {
     this.allProjects();
     this.setUser();
+    // Get redirect cookie and redirect if exists
+    const redirect = getCookie('redirect');
+    if (redirect) {
+      // Reset redirect cookie before redirecting
+      document.cookie = 'redirect=';
+      window.location = redirect;
+    }
     //this.fakeSetUser();
   }
   /*
@@ -152,7 +159,6 @@ class App extends Component {
   }
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
-      Cookies.remove("userId");
       this.setState({
         user: null
       });

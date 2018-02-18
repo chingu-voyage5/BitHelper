@@ -2,13 +2,15 @@ const Project = require('../model/projects');
 const User = require('../model/users');
 
 module.exports = function(router) {
-    // Go to /api to just check if API is working
+
+    // This route is just for checking if '/api' route is working
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
     });
 
     // PROJECT ROUTES
 
+    // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
       project.owner = input.owner;
@@ -22,6 +24,7 @@ module.exports = function(router) {
       return project;
     }
 
+    // Function for setting properties of a User schema object
     const setUserObj = (input, user) => {
       user.username = input.username;
       user.displayName = input.displayName;
