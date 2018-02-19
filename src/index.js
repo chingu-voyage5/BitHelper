@@ -42,6 +42,7 @@ class App extends Component {
     this.state = {
       apiUrl: url,
       projects: [], 
+      filters: ['React Native', 'HTML'],
       user: null
     }
   }
@@ -197,6 +198,7 @@ class App extends Component {
                   {...{
                     projects: this.state.projects,
                     user: this.state.user,
+                    filters: this.state.filters,
                     limit: 6  
                   }} 
                 />
@@ -214,6 +216,7 @@ class App extends Component {
             {...{
               projects: this.state.projects,
               user: this.state.user,
+              filters: this.state.filters,
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
