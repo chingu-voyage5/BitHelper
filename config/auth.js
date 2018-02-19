@@ -1,11 +1,14 @@
+// This file contain all Express routing related to authentication
+// Remember that the root for this route is '/auth'
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-
+// To log-in with GitHub OAuth
 router.get('/github',
   passport.authenticate('github'));
 
+// User will arrive here after GitHub login
 router.get('/github/callback',
   passport.authenticate('github'),
   function(req, res) {
@@ -18,10 +21,12 @@ router.get('/github/callback',
     res.redirect('/');
 });
 
+// This route return the logged-in user's profile. 
 router.get('/', function(req, res) {
   res.json(req.user);
 });
 
+// This route is for logging the user out
 router.get('/logout', function(req, res){
   // logout session on server
   req.logout();

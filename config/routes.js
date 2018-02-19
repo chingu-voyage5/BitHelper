@@ -2,13 +2,15 @@ const Project = require('../model/projects');
 const User = require('../model/users');
 
 module.exports = function(router) {
-    // Go to /api to just check if API is working
+
+    // This route is just for checking if '/api' route is working
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
     });
 
     // PROJECT ROUTES
 
+    // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
       project.owner = input.owner;
@@ -22,6 +24,7 @@ module.exports = function(router) {
       return project;
     }
 
+    // Function for setting properties of a User schema object
     const setUserObj = (input, user) => {
       user.username = input.username;
       user.displayName = input.displayName;
@@ -49,7 +52,7 @@ module.exports = function(router) {
 
       // add project ID to owner's data
       User.findById(project.owner, function(err, user) {
-        console.log('Add project to owner data', project);
+        // console.log('Add project to owner data', project);
         if (err) { console.log(err) }
         if (user) {
           // save project to database
@@ -58,7 +61,7 @@ module.exports = function(router) {
           });
           //save user with new project ID added
           user.projects.push(project._id)
-          console.log('new user profile', user);          
+          // console.log('new user profile', user);          
           user.save(function(err) {
             if (err) { console.log(err) }
             res.send('Project successfully added.');

@@ -1,20 +1,12 @@
+/*----------------------
+    PROJECT EDIT COMPONENT:
+    owners can edit their own projects from here.
+------------------------*/
+
 import React, { Component } from 'react';
-// import '../stylesheets/components/addProject.css';
 import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button.js';
 import Input from '../atoms/Input'
-
-// const ProjectsSchema = new Schema({
-//   id: String, 
-//   title: String,        //title of the project
-//   owner: String,        //username of the post creator
-//   category: String,     //category of the project
-//   description: String,  //project description
-//   stack: [String],      //array of technologies used in the project
-//   status: String,       //status of project, why it's stuck
-//   repoUrl: String,      //GitHub repo URL
-//   img: [String]         //image URLs of screenshots
-// });
 
 class ProjectEdit extends Component {
     constructor(props) {

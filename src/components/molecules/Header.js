@@ -1,3 +1,9 @@
+/*----------------------
+    HEADER COMPONENT:
+    if user is logged in, shows header with picture and tagline
+------------------------*/
+
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../stylesheets/main.css';  // for dev
