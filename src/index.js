@@ -42,7 +42,7 @@ class App extends Component {
     this.state = {
       apiUrl: url,
       projects: [], 
-      filters: ['React Native', 'HTML'],
+      filters: null,
       user: null
     }
   }
@@ -169,6 +169,15 @@ class App extends Component {
       window.location = '/'; // and redirects to the homepage
     });
   }
+
+  // update filter
+  updateFilter = (val) => {
+    let newFilter = val.split(',');
+    console.log('new filter', newFilter);
+    this.setState({
+      filters: newFilter
+  });
+  }
   render() {
     return(
       
@@ -220,7 +229,8 @@ class App extends Component {
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
-              getOneUser: this.getOneUser
+              getOneUser: this.getOneUser,
+              onFilterInput: this.updateFilter
             }} />
         }
         }/>
