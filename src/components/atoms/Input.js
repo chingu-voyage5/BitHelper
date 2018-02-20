@@ -24,7 +24,7 @@ class Input extends Component {
               type={data.type || 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value}
+              value={data.value || ''}
               onChange={this.onChange}
               required={data.required} 
             />
@@ -40,7 +40,7 @@ class Input extends Component {
               type={data.type || 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value}
+              value={data.value || ''}
               onChange={this.onChange}
               required={data.required || false} 
             />
