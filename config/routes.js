@@ -172,7 +172,7 @@ module.exports = function(router) {
       return res.json({ message: "user does not exist" });
     }
 
-    const { _id: user_id ) = req.user;
+    const { _id: user_id } = req.user;
     const { project_id } = req.params;
 
     // Find existing project
