@@ -37,7 +37,7 @@ class Nav extends Component {
   
 
     handleClick = (e) => {
-      console.log('handleclick', e.target.id);
+      console.log('handleclick: ', e.target.id);
       switch (e.target.id) {
         case "add-project":
           this.props.history.push('/project/add/');
@@ -45,7 +45,7 @@ class Nav extends Component {
         case "profile":
           this.props.history.push('/user/view/' + this.props.user._id);
           break;
-        case "login":
+        case "github-login":
           document.cookie="redirect=" + window.location.pathname;
           console.log('login clicked', window.location.pathname);
           window.location = '/auth/github/'
@@ -62,85 +62,77 @@ class Nav extends Component {
     }
     render () {
       console.log('Nav', this.props);
-      return (
-        <div>
+      return <div>
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}> <img id="navbar-brand" className="logo" src={logo} alt="BitHelper" /></a>
+            <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}>
+              {" "}
+              <img id="navbar-brand" className="logo" src={logo} alt="BitHelper" />
+            </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon" />
             </button>
             <div className="collapse navbar-collapse justify-content-between">
-             <div>
-                {(this.props.user) ?
-                  (
-                    <ul className="navbar-nav mr-auto">
-                      <li className="nav-item"> 
-                        <Button label="Add a Project" id="add-project" redirect='/project/add'/>
-                      </li>
-                    </ul>
-                  ) : (
-                    null
-                  )
-                }
+              <div>
+                {this.props.user ? <ul className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                      <Button label="Add a Project" id="add-project" redirect="/project/add" />
+                    </li>
+                  </ul> : null}
               </div>
               <div>
                 <ul className="nav navbar-nav">
-                  {(this.props.user) ? (
-                    <li className="dropdown">
-                      <img 
-                        id="avatar" 
-                        className="nav-avatar-img dropdown-toggle" 
-                        data-toggle="dropdown"
-                        src={this.props.user.avatar}
-                        onError={(e) => {
-                          console.log('no avatar', e.target.src);
+                  {this.props.user ? <li className="dropdown">
+                      <img id="avatar" className="nav-avatar-img dropdown-toggle" data-toggle="dropdown" src={this.props.user.avatar} onError={e => {
+                          console.log("no avatar", e.target.src);
                           e.target.src = defaultAvatar;
-                        }} 
-                        width='40px' 
-                        height='40px'
-                      />
+                        }} width="40px" height="40px" />
                       <ul className="dropdown-menu dropdown-menu-right">
                         {this.state.items.map(item => {
-                          return (
-                            <li key={item} className="nav-dropdown-item" id={item.toLowerCase()} onClick={this.handleClick}>
+                          return <li key={item} className="nav-dropdown-item" id={item.toLowerCase()} onClick={this.handleClick}>
                               <span id={item.toLowerCase()}>{item}</span>
-                            </li>
-                          );
+                            </li>;
                         })}
                       </ul>
-                    </li>
-                    ) : (
-                    <li><button id="login" className="btn" onClick={this.handleOpenModal} >Login</button>
+                    </li> : <li>
+                      <button className="btn" onClick={this.handleOpenModal}>
+                        Login
+                      </button>
 
-                    <Modal isOpen={this.state.showModal} contentLabel="Login modal" >
-                      <button onClick={this.handleCloseModal}>Close Modal</button>
-                    </Modal>
-
-                    </li>
-                    )
-                  } 
+                      <Modal 
+                          className="Modal"
+                          isOpen={this.state.showModal} 
+                          contentLabel="Login modal">
+                        <button className="btn btn-github" id="github-login" onClick={this.handleClick}>
+                          Sign in with Github
+                        </button>
+                        <p>Fugiat enim culpa labore pariatur ad fugiat ipsum eu commodo mollit nostrud reprehenderit culpa.</p>
+                        <button className="btn" onClick={this.handleCloseModal}>
+                          X
+                        </button>
+                      </Modal>
+                    </li>}
                 </ul>
               </div>
             </div>
-          
           </nav>
           <div className="collapse" id="navbarSupportedContent">
-              {(this.props.user) ?
-                (
-                  <ul className="navbar-nav mr-auto">
-                    <li id="add-project" className="nav-dropdown-item" onClick={this.handleClick}>Add a Project</li>
-                    <li id="profile" className="nav-dropdown-item" onClick={this.handleClick}>Profile</li>
-                    <li id="logout" className="nav-dropdown-item" onClick={this.handleClick}>Logout</li>
-                  </ul>
-                ) : (
-                  <ul className="navbar-nav mr-auto">
-                    <li id="login" className="nav-dropdown-item" onClick={this.handleClick}>Login</li>
-                  </ul>
-                )
-              }
+            {this.props.user ? <ul className="navbar-nav mr-auto">
+                <li id="add-project" className="nav-dropdown-item" onClick={this.handleClick}>
+                  Add a Project
+                </li>
+                <li id="profile" className="nav-dropdown-item" onClick={this.handleClick}>
+                  Profile
+                </li>
+                <li id="logout" className="nav-dropdown-item" onClick={this.handleClick}>
+                  Logout
+                </li>
+              </ul> : <ul className="navbar-nav mr-auto">
+                <li id="login" className="nav-dropdown-item" onClick={this.handleClick}>
+                  Login
+                </li>
+              </ul>}
           </div>
-        </div>
-      );
+        </div>;
     }
 }
 
