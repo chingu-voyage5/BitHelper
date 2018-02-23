@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Modal from "react-modal";
 import '../../stylesheets/main.css';  // for dev
 import Button from '../atoms/Button';
 import logo from "../../images/logo.svg"
@@ -19,9 +20,22 @@ class Nav extends Component {
         items: [
           'Profile',
           'Logout'
-        ]
+        ],
+        showModal: false
       }
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
+
+      handleOpenModal = () => {
+    this.setState({ showModal: true });
+  }
+  
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  }
+  
+
     handleClick = (e) => {
       console.log('handleclick', e.target.id);
       switch (e.target.id) {
@@ -96,7 +110,13 @@ class Nav extends Component {
                       </ul>
                     </li>
                     ) : (
-                    <li><button id="login" className="btn" onClick={this.handleClick} >Login</button></li>
+                    <li><button id="login" className="btn" onClick={this.handleOpenModal} >Login</button>
+
+                    <Modal isOpen={this.state.showModal} contentLabel="Login modal" >
+                      <button onClick={this.handleCloseModal}>Close Modal</button>
+                    </Modal>
+
+                    </li>
                     )
                   } 
                 </ul>
