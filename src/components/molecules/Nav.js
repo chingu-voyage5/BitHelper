@@ -18,7 +18,8 @@ class Nav extends Component {
         dropdown: false,
         items: [
           'Profile',
-          'Logout'
+          'Logout',
+          'Dashboard',
         ]
       }
     }
@@ -42,6 +43,9 @@ class Nav extends Component {
           break;
         case "navbar-brand":
           this.props.history.push('/');
+          break;
+        case 'dashboard':
+          this.props.history.push('/dashboard');
           break;
         default:
       }
