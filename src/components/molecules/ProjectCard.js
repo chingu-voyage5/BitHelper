@@ -23,12 +23,10 @@ class ProjectCard extends Component {
     handleClick = (e, project_id) => {
         // Prevents link from activating router
         e.stopPropagation();
-        console.log(this.props, 'this is props on handleclick');
         let self = this;
         
         axios.post(`/api/follow/${project_id}`)
             .then(res => {
-                console.log(res, 'this is res');
                 this.props.updateProjects(project_id);
             });
     }
@@ -52,7 +50,7 @@ class ProjectCard extends Component {
                 onClick={() => this.props.history.push('/project/view/' + item._id)}
                 key={i}
                 id={item._id}>
-                {this.props.user && <FaStar className={iconColor} size={24} style={iconStyle} onClick={(e) => {this.handleClick(e, item._id)}} />}
+                {this.props.user && <FaStar color={iconColor} size={24} style={iconStyle} onClick={(e) => {this.handleClick(e, item._id)}} />}
                 <div className="card-body">
                     <p className="card-category">{item.category}</p>
                     <h4 className="card-title">{item.title}</h4>
