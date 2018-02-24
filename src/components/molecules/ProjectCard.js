@@ -9,6 +9,7 @@ import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
 import Input from "../atoms/Input";
+import SearchBox from '../molecules/SearchBox';
 
 
 class ProjectCard extends Component {
@@ -81,12 +82,7 @@ class ProjectCard extends Component {
                 ("container project-cards-full")}
             >
                 {(!partial) ? (
-                    <div>
-                        <Input onChange={this.onInputChange} data={{
-                            placeholder: 'Enter search word, separated by commas...',
-                            value: this.props.filters
-                        }}/>
-                    </div>
+                    <SearchBox />
                 ) : (
                     null
                 )}

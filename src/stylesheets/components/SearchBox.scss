@@ -1,0 +1,60 @@
+@import "../base/helpers.scss";
+ 
+ .container {
+    width: 70vw;
+    min-width: 300px;
+    margin: auto;
+    margin-top: 100px;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 5px 10px;
+    border: solid 1px #ccc;
+    border-radius: 10px;
+    background-color: white;
+  }
+  .input-area {
+    flex-grow: 1;
+    min-width: 200px;
+  }
+  input {
+    border: none;
+    width: 100%;
+    outline: none;
+    line-height: 25px;
+  }
+  .tags {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 5px;
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+  }
+  .tags span {
+    margin: 0 5px;
+  }
+  .tags:hover {
+    cursor: pointer;
+  }
+  .autocomplete {
+    margin-top: 3px;
+    width: 100%;
+    background-color: white;
+  }
+  .autocomplete-item {
+    border: none;
+    background-color: white;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    line-height: 15px;
+  }
+  .autocomplete-item:hover,
+  .autocomplete-item:focus {
+    outline: none;
+    background-color: #eee;
+  }
