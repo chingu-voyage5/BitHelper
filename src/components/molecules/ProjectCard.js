@@ -24,8 +24,7 @@ class ProjectCard extends Component {
             let match = false;
             let text = project.stack.join(' ')
                 .concat(' ' + project.title)
-                .concat(' ' + project.category)
-                .concat(' ' + project.description);
+                .concat(' ' + project.category);
             filters.forEach(filter => {
                 let regex = new RegExp('\\b' + filter + '\\b', 'i');
                 if (regex.test(text)) {
@@ -41,10 +40,10 @@ class ProjectCard extends Component {
                 return item.length > 1;
             })) : (null);
             const projects = this.props.projects.filter(project => {
+                console.log('filters', filters);
                 return this.filter(project, filters);
             });
             return projects.map((item,i) => {
-                console.log('limit', this.props.limit);
                 if (!this.props.limit || i < this.props.limit) {
                     return (
                         <div className="col-md-3 card"
@@ -70,11 +69,10 @@ class ProjectCard extends Component {
         return <Loader />
         }
     }
-    onInputChange = (name, val) => {
-        this.props.onFilterInput(val);
+    onInputChange = (filterArray) => {
+        this.props.onFilterInput(filterArray);
     }
     render() {
-        console.log('projects', this.props.projects, this.props.filters);
         const partial = Boolean(this.props.limit);
         return (
             <div className={(partial) ? 
@@ -82,7 +80,7 @@ class ProjectCard extends Component {
                 ("container project-cards-full")}
             >
                 {(!partial) ? (
-                    <SearchBox />
+                    <SearchBox projects={this.props.projects} onTagsUpdate={this.onInputChange}/>
                 ) : (
                     null
                 )}

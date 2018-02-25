@@ -1,12 +1,5 @@
 @import "../base/helpers.scss";
- 
- .container {
-    width: 70vw;
-    min-width: 300px;
-    margin: auto;
-    margin-top: 100px;
-  }
-  .row {
+  .search-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -15,11 +8,11 @@
     border-radius: 10px;
     background-color: white;
   }
-  .input-area {
+  .search-input-area {
     flex-grow: 1;
     min-width: 200px;
   }
-  input {
+  .search-input-area input {
     border: none;
     width: 100%;
     outline: none;

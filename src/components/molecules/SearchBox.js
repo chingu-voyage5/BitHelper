@@ -6,48 +6,48 @@
 
 import React, { Component } from 'react';
 
-import '../../stylesheets/components/SearchBox.scss';
-
-const wordBank = [
-    "apple",
-    "angular",
-    "asphalt",
-    "ahhhhhh!",
-    "bear",
-    "bull",
-    "css",
-    "deer",
-    "elephant",
-    "freeCodeCamp",
-    "grunt",
-    "html",
-    "isle",
-    "javascript",
-    "knob",
-  ];
+import '../../stylesheets/components/SearchBox.css';
 
 class SearchBox extends Component{
     constructor(props) {
         super(props);
         this.state = {
+          searchText: "",
           tags: [],
           dropdown: null,
           selected: null,
           value: ""
         };
       }
+      componentWillReceiveProps(newProps) {
+        if (newProps.projects) {
+            let text = [];
+            newProps.projects.forEach(project => {
+                let newWords = [...project.stack, project.title, project.category]
+                newWords = newWords.filter((word, i) => {
+                    return text.indexOf(word) === -1;
+                });
+                text = [...text, ...newWords];
+            });
+
+            this.setState({
+                searchText: text
+            })
+        }
+      }
       onInput = (e) => {
         let tags = [...this.state.tags]
         let value = e.target.value;
         let newTags = e.target.value.split(",");
         if (newTags.length > 1) {
-          tags.push(newTags[0]);
-          value = newTags[1];
+            tags.push(newTags[0]);
+            value = newTags[1];
+            this.submitTags(tags);
         }
         if (value.length > 0) { this.updateDropdown(value); }
         this.setState({
-          tags: tags,
-          value: value
+            tags: tags,
+            value: value
         });
       } 
       onKeyUp = (e) => {
@@ -60,11 +60,12 @@ class SearchBox extends Component{
           case 8:
             // Removes last tag if delete is pressed with empty input field
             if (e.target.value.length < 1) {
-              let tags = [...this.state.tags];
-              tags.splice(tags.length - 1, 1);
-              this.setState({
-                tags: tags
-              });
+                let tags = [...this.state.tags];
+                tags.splice(tags.length - 1, 1);
+                this.setState({
+                    tags: tags
+                });
+                this.submitTags(tags);
             }
             break;
           default:
@@ -77,7 +78,7 @@ class SearchBox extends Component{
       }
       updateDropdown = (value) => {
         let regex = new RegExp('\\b' + value);
-        let match = wordBank.filter(word => {
+        let match = this.state.searchText.filter(word => {
           return regex.test(word) && this.state.tags.indexOf(word) === -1;
         });
         if (match.length < 1 || value.length < 1) {
@@ -93,6 +94,7 @@ class SearchBox extends Component{
         let tag = input[1];
         let method = input[0];
         let tags = [...this.state.tags];
+        let value = this.state.value;
         if (method === "add") {
           tags.push(tag);
           value = "";
@@ -102,7 +104,11 @@ class SearchBox extends Component{
         this.setState({
           value: value,
           tags: tags
-        })
+        });
+        this.submitTags(tags);
+      }
+      submitTags = (newTags) => {
+        this.props.onTagsUpdate(newTags);
       }
       handleClick = (e) => {
         const tag = e.target.id;
@@ -116,7 +122,7 @@ class SearchBox extends Component{
       render() {
         return (
           <div>    
-              <div className="row">
+              <div className="search-row">
                 {(this.state.tags) ? (
                   this.state.tags.map(tag => {
                     return (
@@ -130,7 +136,7 @@ class SearchBox extends Component{
                     );
                   })
                 ) : ( null )}
-                <div className="input-area">
+                <div className="search-input-area">
                   <input
                     id="search-input"
                     type="text"

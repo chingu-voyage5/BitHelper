@@ -30,7 +30,6 @@ require('dotenv').load();
 // Declare App component 
 class App extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
 
     // url is REACT_APP_APPURL if set, otherwise it's window.location.origin
@@ -171,11 +170,10 @@ class App extends Component {
   }
 
   // update filter
-  updateFilter = (val) => {
-    let newFilter = val.split(',');
-    console.log('new filter', newFilter);
+  updateFilter = (filterArray) => {
+    console.log('new filter', filterArray);
     this.setState({
-      filters: newFilter
+      filters: filterArray
   });
   }
   render() {
