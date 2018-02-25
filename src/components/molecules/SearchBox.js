@@ -12,7 +12,7 @@ class SearchBox extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          searchText: "",
+          searchText: [],
           tags: [],
           dropdown: null,
           selected: null,
@@ -77,7 +77,7 @@ class SearchBox extends Component{
         });
       }
       updateDropdown = (value) => {
-        let regex = new RegExp('\\b' + value);
+        let regex = new RegExp('\\b' + value, 'i');
         let match = this.state.searchText.filter(word => {
           return regex.test(word) && this.state.tags.indexOf(word) === -1;
         });
@@ -109,6 +109,9 @@ class SearchBox extends Component{
       }
       submitTags = (newTags) => {
         this.props.onTagsUpdate(newTags);
+        this.setState({
+          dropdown: null
+        })
       }
       handleClick = (e) => {
         const tag = e.target.id;
@@ -116,7 +119,7 @@ class SearchBox extends Component{
           this.updateTags(e.target.id);
         }
         this.setState({
-          dropdown: false
+          dropdown: null
         });
       }
       render() {

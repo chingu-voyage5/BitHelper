@@ -14,24 +14,24 @@ import SearchBox from '../molecules/SearchBox';
 
 class ProjectCard extends Component {
     // for filtering projects to show, by filter state
-    // currently just looks for filter terms in project stack
-    filter = (project, filters) => {
+    filterProjects = (projects, filters) => {
         // if no filter is set, display all projects
 
         if (!filters || filters.length < 1) {
-            return true;
+            return projects;
         } else {
             let match = false;
-            let text = project.stack.join(' ')
-                .concat(' ' + project.title)
-                .concat(' ' + project.category);
+            
             filters.forEach(filter => {
                 let regex = new RegExp('\\b' + filter + '\\b', 'i');
-                if (regex.test(text)) {
-                    match = true;
-                }
+                projects = projects.filter(project => {
+                    let text = project.stack.join(' ')
+                        .concat(' ' + project.title)
+                        .concat(' ' + project.category);
+                    return regex.test(text);
+                });
             })
-            return match;   
+            return projects;   
         }
     }
     setProjects() {
@@ -39,10 +39,7 @@ class ProjectCard extends Component {
             const filters = (this.props.filters) ? (this.props.filters.filter(item => {
                 return item.length > 1;
             })) : (null);
-            const projects = this.props.projects.filter(project => {
-                console.log('filters', filters);
-                return this.filter(project, filters);
-            });
+            const projects = this.filterProjects(this.props.projects, filters);
             return projects.map((item,i) => {
                 if (!this.props.limit || i < this.props.limit) {
                     return (
