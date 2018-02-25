@@ -39,7 +39,11 @@ class ProjectCard extends Component {
             const filters = (this.props.filters) ? (this.props.filters.filter(item => {
                 return item.length > 1;
             })) : (null);
-            const projects = this.filterProjects(this.props.projects, filters);
+            const projects = (Boolean(this.props.limit)) ? (
+                    this.props.projects
+                ) : (
+                    this.filterProjects(this.props.projects, filters)
+                );
             return projects.map((item,i) => {
                 if (!this.props.limit || i < this.props.limit) {
                     return (
@@ -67,7 +71,10 @@ class ProjectCard extends Component {
         }
     }
     onInputChange = (filterArray) => {
-        this.props.onFilterInput(filterArray);
+        this.props.onFilterUpdate(filterArray);
+    }
+    resetFilter = () => {
+        this.props.onFilterUpdate(null);
     }
     render() {
         const partial = Boolean(this.props.limit);
@@ -77,7 +84,7 @@ class ProjectCard extends Component {
                 ("container project-cards-full")}
             >
                 {(!partial) ? (
-                    <SearchBox projects={this.props.projects} onTagsUpdate={this.onInputChange}/>
+                    <SearchBox projects={this.props.projects} filters={this.props.filters} onTagsUpdate={this.onInputChange}/>
                 ) : (
                     null
                 )}
@@ -87,7 +94,7 @@ class ProjectCard extends Component {
                 <div className="text-center">
                     {(partial) ? 
                         (<Button label="All projects" redirect="/project/view/"/>) :
-                        (<Button label="Back to main" redirect="/" />)
+                        (<Button label="Back to main" onClick={this.resetFilter} redirect="/" />)
                     }
                 </div>
             </div>

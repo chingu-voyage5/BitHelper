@@ -171,6 +171,7 @@ class App extends Component {
 
   // update filter
   updateFilter = (filterArray) => {
+    console.log('update filter', filterArray);
     this.setState({
       filters: filterArray
   });
@@ -205,7 +206,8 @@ class App extends Component {
                     projects: this.state.projects,
                     user: this.state.user,
                     filters: this.state.filters,
-                    limit: 6  
+                    limit: 6,
+                    onFilterUpdate: this.updateFilter
                   }} 
                 />
                 {/* About component */}
@@ -227,7 +229,7 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              onFilterInput: this.updateFilter
+              onFilterUpdate: this.updateFilter
             }} />
         }
         }/>
