@@ -33,12 +33,12 @@
   color: white; }
 
 * {
-  color: #707070;
-  font-family: "Work Sans", sans-serif;
-  box-size: border-box; }
+  box-sizing: border-box; }
 
 html,
 body {
+  color: #707070;
+  font-family: "Work Sans", sans-serif;
   font-weight: 300;
   font-size: 100%;
   font-size: 18px;
