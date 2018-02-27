@@ -4,7 +4,6 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button.js';
 import ProjectCard from './ProjectCard';
 import Loader from "../atoms/Loader";
@@ -33,7 +32,6 @@ class ProjectInfo extends Component {
   getProject = projectId => {
     if (projectId) {
       this.props.getOneProject(projectId, project => {
-        console.log("setting project", project);
         if (project) {
           this.setState({
             project: project
@@ -109,6 +107,8 @@ class ProjectInfo extends Component {
           </div>
         );
       }
+
+      console.log(this.props.user, ' this is user');
       return (
         <div className="container">
           <div className="row ">
@@ -122,7 +122,13 @@ class ProjectInfo extends Component {
                   <hr />
                 </div>
                 {!isOwner && (
-                  <button style={followStyle} className={followed ? "btn btn-primary" : "btn btn-secondary"} onClick={(e)=>{ this.handleClick(e, projectId)}}>Follow Project</button>
+                  <button 
+                    style={followStyle} 
+                    className={followed ? "btn-primary" : "btn-secondary"} 
+                    onClick={(e)=>{ this.handleClick(e, projectId)}}>
+                    {followed && "Unfollow Project"}
+                    {!followed && "Follow Project"}
+                  </button>
                 )}
                 <h1>{project.title}</h1>
                 <p>{project.description}</p>

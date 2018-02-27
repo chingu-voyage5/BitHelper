@@ -3,6 +3,12 @@ import axios from "axios";
 
 import ProjectCard from './ProjectCard.js';
 
+const dashboardStyle = {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+}
+
 class Dashboard extends Component {
 
     render() {
@@ -16,7 +22,12 @@ class Dashboard extends Component {
         console.log(projects, followedProjects, 'this is props on dashbaord');
         return (
             <div>
-                <ProjectCard limit={this.props.limit} updateProjects={this.props.updateProjects} projects={projects} user={this.props.user} />
+                <h2 style={{"textAlign": 'center'}}>
+                    Dashboard
+                </h2>
+                <div style={dashboardStyle}>
+                    <ProjectCard limit={this.props.limit} updateProjects={this.props.updateProjects} projects={projects} user={this.props.user} />
+                </div>
             </div>
         )
     }

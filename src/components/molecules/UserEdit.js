@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 // import '../stylesheets/components/UserEdit.css';
-import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 
