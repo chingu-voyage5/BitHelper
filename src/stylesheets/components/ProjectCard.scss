@@ -19,10 +19,24 @@
     margin-bottom: 0.2em;
 }
 
-.red {
-    color: red !important;
+.follow-icon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  border: 1px solid #9E9E9E;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px #707070, 0 3px 6px #707070;
 }
 
-.aliceblue {
-    color: aliceblue !important;
+.follow-icon:active {
+  transform: translateY(0.10em);
+  box-shadow: none;
+  transition: 0.25s ease-in-out;
+}
+
+.active-icon {
+    border-color: #9ecaed;
+    box-shadow: none;
+    transition: 0.1s ease-in;
 }
