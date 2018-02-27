@@ -23,12 +23,13 @@
     height: 25px;
     line-height: 25px;
     margin-right: 5px;
-    background-color: red;
+    background-color: $primary;
     border-radius: 5px;
     color: white;
   }
   .tags span {
     margin: 0 5px;
+    color: white;
   }
   .tags:hover {
     cursor: pointer;

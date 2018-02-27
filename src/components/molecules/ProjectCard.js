@@ -73,9 +73,6 @@ class ProjectCard extends Component {
     onInputChange = (filterArray) => {
         this.props.onFilterUpdate(filterArray);
     }
-    resetFilter = () => {
-        this.props.onFilterUpdate(null);
-    }
     render() {
         const partial = Boolean(this.props.limit);
         return (
@@ -94,7 +91,7 @@ class ProjectCard extends Component {
                 <div className="text-center">
                     {(partial) ? 
                         (<Button label="All projects" redirect="/project/view/"/>) :
-                        (<Button label="Back to main" onClick={this.resetFilter} redirect="/" />)
+                        (<Button label="Back to main" redirect="/" />)
                     }
                 </div>
             </div>

@@ -13,7 +13,6 @@ class SearchBox extends Component{
         super(props);
         this.state = {
           searchText: [],
-          tags: [],
           dropdown: null,
           selected: null,
           value: ""
@@ -46,7 +45,6 @@ class SearchBox extends Component{
         }
         if (value.length > 0) { this.updateDropdown(value); }
         this.setState({
-            tags: tags,
             value: value
         });
       } 
@@ -62,9 +60,6 @@ class SearchBox extends Component{
             if (e.target.value.length < 1) {
                 let tags = [...this.state.tags];
                 tags.splice(tags.length - 1, 1);
-                this.setState({
-                    tags: tags
-                });
                 this.submitTags(tags);
             }
             break;
@@ -102,8 +97,7 @@ class SearchBox extends Component{
           tags.splice(tags.indexOf(tag), 1);
         }
         this.setState({
-          value: value,
-          tags: tags
+          value: value
         });
         this.submitTags(tags);
       }
@@ -123,11 +117,12 @@ class SearchBox extends Component{
         });
       }
       render() {
+        console.log('search box', this.props.filters, this.state.tags);
         return (
           <div>    
               <div className="search-row">
-                {(this.state.tags) ? (
-                  this.state.tags.map(tag => {
+                {(this.props.filters) ? (
+                  this.props.filters.map(tag => {
                     return (
                       <div key={tag} 
                         id={"del_" + tag}
