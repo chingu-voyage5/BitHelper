@@ -1,6 +1,8 @@
 // All authentication strategy code should go here.
 
+
 const GitHubStrategy = require('passport-github').Strategy;
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require('../model/users');
 
 module.exports = function(passport) {
@@ -41,6 +43,50 @@ module.exports = function(passport) {
         });
       }
     ));
+
+    /* 
+    * GOOGLE LOGIN
+    */
+
+     passport.use(new GoogleStrategy(
+         {
+           clientID: process.env.GOOGLE_CLIENT_ID,
+           clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+           callbackURL: "/auth/google/callback"
+         },
+         function(token, refreshToken, profile, done) {
+           // make the code asynchronous
+           // User.findOne won't fire until we have all our data back from Google
+           process.nextTick(function() {
+             // try to find the user based on their google id
+             User.findOne({ "google.id": profile.id }, function(
+               err,
+               user
+             ) {
+               if (err) return done(err);
+
+               if (user) {
+                 // if a user is found, log them in
+                 return done(null, user);
+               } else {
+                 // if the user isnt in our database, create a new user
+                 var newUser = new User();
+
+                 newUser.google.email = profile.emails[0].value;
+                 newUser.google.id = profile.id;
+                 newUser.google.name = profile.displayName;
+
+                 // save the user
+                 newUser.save(function(err) {
+                   if (err) throw err;
+                   return done(null, newUser);
+                 });
+               }
+             });
+           });
+         }
+       ));
+
     
     // User ID is stored in the passport session,
     // which can be used to access the rest of the User data

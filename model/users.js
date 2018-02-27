@@ -12,7 +12,17 @@ const UsersSchema = new Schema({
     avatar: String,       //avatar image URL, can be empty
     skillset: [String],   //array of strings, like "React" and "Nodejs"
     email: String,        //email address
-    projects: [String]    //array of project IDs that this user has created
+    projects: [String],  //array of project IDs that this user has created
+    google: {
+        id: String,
+        name: String,
+        email: String
+    },
+    facebook: {
+        id: String, 
+        name: String,
+        email: String
+    }
 });
 
 //export our module to use in server.js

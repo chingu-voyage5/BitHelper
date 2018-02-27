@@ -13,13 +13,29 @@ router.get('/github/callback',
   passport.authenticate('github'),
   function(req, res) {
     // Successful authentication.
-    console.log('authenticated')
+    console.log('Authenticated with Github')
 
     // set userId cookie using passport session
     res.cookie('userId', req.session.passport.user)
     // redirect to homepage cant be done in react as github response doesn't allow cors
     res.redirect('/');
 });
+
+
+// TODO: Add email login here
+
+// TODO: Add Google login here
+    router.get('/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    
+    
+    router.get("/google/callback", 
+      passport.authenticate("google",{
+        successRedirect: "/",
+        failureRedirect: "/"
+      })
+    );
+      
+// TODO: Add Facebook login here
 
 // This route return the logged-in user's profile. 
 router.get('/', function(req, res) {

@@ -49,3 +49,15 @@ body {
     cursor: pointer;
     opacity: 0.5;
 }
+
+.ReactModal__Overlay {
+    background-color: lightcoral;
+}
+
+.ReactModal__Overlay--after-open {
+    background-color: green;
+}
+
+.ReactModal__Overlay--before-close {
+    background-color: blueviolet;
+}

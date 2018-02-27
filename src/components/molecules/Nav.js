@@ -50,6 +50,10 @@ class Nav extends Component {
           console.log('login clicked', window.location.pathname);
           window.location = '/auth/github/'
           break;  
+        case "google-login":
+          document.cookie="redirect=" + window.location.pathname;
+          console.log('login clicked', window.location.pathname);
+          window.location = '/auth/google/'
         case "logout":
           this.props.history.push('/');
           this.props.logoutUser();
@@ -98,17 +102,22 @@ class Nav extends Component {
                         Login
                       </button>
 
-                      <Modal 
-                          className="Modal"
-                          isOpen={this.state.showModal} 
-                          contentLabel="Login modal">
-                        <button className="btn btn-github" id="github-login" onClick={this.handleClick}>
-                          Sign in with Github
-                        </button>
-                        <p>Fugiat enim culpa labore pariatur ad fugiat ipsum eu commodo mollit nostrud reprehenderit culpa.</p>
-                        <button className="btn" onClick={this.handleCloseModal}>
-                          X
-                        </button>
+                      <Modal isOpen={this.state.showModal} contentLabel="Login modal">
+                          <button className="btn btn-github" id="github-login" onClick={this.handleClick}>
+                            Sign in with Github
+                          </button>
+
+                          <button className="btn btn-google" id="google-login" onClick={this.handleClick}>
+                            Sign in with Google
+                          </button>
+                          <form>
+                            <input type="text" name="email" id="email" placeholder="email" />
+                            <input type="password" name="password" id="password" placeholder="password" />
+                          </form>
+
+                          <button className="btn" onClick={this.handleCloseModal}>
+                            X
+                          </button>
                       </Modal>
                     </li>}
                 </ul>
