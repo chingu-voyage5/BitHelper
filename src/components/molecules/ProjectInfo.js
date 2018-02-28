@@ -108,7 +108,6 @@ class ProjectInfo extends Component {
         );
       }
 
-      console.log(this.props.user, ' this is user');
       return (
         <div className="container">
           <div className="row ">
@@ -124,7 +123,7 @@ class ProjectInfo extends Component {
                 {!isOwner && (
                   <button 
                     style={followStyle} 
-                    className={followed ? "btn-primary" : "btn-secondary"} 
+                    className={followed ? "btn btn--primary" : "btn btn--secondary"} 
                     onClick={(e)=>{ this.handleClick(e, projectId)}}>
                     {followed && "Unfollow Project"}
                     {!followed && "Follow Project"}

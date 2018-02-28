@@ -19,7 +19,6 @@ class Dashboard extends Component {
             return followedProjects.includes(e._id);
         });
 
-        console.log(projects, followedProjects, 'this is props on dashbaord');
         return (
             <div>
                 <h2 style={{"textAlign": 'center'}}>
