@@ -35,7 +35,7 @@ class SearchBox extends Component{
         }
       }
       onInput = (e) => {
-        let tags = [...this.state.tags]
+        let tags = [...this.props.filters]
         let value = e.target.value;
         let newTags = e.target.value.split(",");
         if (newTags.length > 1) {
@@ -58,7 +58,7 @@ class SearchBox extends Component{
           case 8:
             // Removes last tag if delete is pressed with empty input field
             if (e.target.value.length < 1) {
-                let tags = [...this.state.tags];
+                let tags = [...this.props.filters];
                 tags.splice(tags.length - 1, 1);
                 this.submitTags(tags);
             }
@@ -74,7 +74,7 @@ class SearchBox extends Component{
       updateDropdown = (value) => {
         let regex = new RegExp('\\b' + value, 'i');
         let match = this.state.searchText.filter(word => {
-          return regex.test(word) && this.state.tags.indexOf(word) === -1;
+          return regex.test(word) && this.props.filters.indexOf(word) === -1;
         });
         if (match.length < 1 || value.length < 1) {
           match = null;
@@ -88,7 +88,7 @@ class SearchBox extends Component{
         let input = id.split("_");
         let tag = input[1];
         let method = input[0];
-        let tags = [...this.state.tags];
+        let tags = [...this.props.filters];
         let value = this.state.value;
         if (method === "add") {
           tags.push(tag);

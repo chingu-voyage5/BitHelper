@@ -41,7 +41,7 @@ class App extends Component {
     this.state = {
       apiUrl: url,
       projects: [], 
-      filters: null,
+      filters: [],
       user: null
     }
   }
