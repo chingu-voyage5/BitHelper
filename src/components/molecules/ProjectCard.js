@@ -24,7 +24,7 @@ class ProjectCard extends Component {
             });
     }
 
-    setProjects() {
+    setProjects = () => {
     let iconColor = 'red';
 
     if (this.props.projects.length > 0) {
@@ -47,7 +47,7 @@ class ProjectCard extends Component {
                     className={this.props.user.followedProjects.includes(item._id) ? "follow-icon active-icon" : "follow-icon"} 
                     size={32} 
                     color={iconColor} 
-                    onClick={(e) => {this.handleClick(e, item._id)}} 
+                    onClick={this.handleClick.bind(this, item._id)} 
                 />}
                 <div className="card-body">
                     <p className="card-category">{item.category}</p>

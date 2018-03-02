@@ -50,7 +50,7 @@ class ProjectInfo extends Component {
     });
   };
 
-  handleClick = (e, project_id) => {
+  handleClick = (project_id, e) => {
     e.stopPropagation();
     let self = this;
     if (this.props.user) {
@@ -124,7 +124,7 @@ class ProjectInfo extends Component {
                   <button 
                     style={followStyle} 
                     className={followed ? "btn btn--primary" : "btn btn--secondary"} 
-                    onClick={(e)=>{ this.handleClick(e, projectId)}}>
+                    onClick={this.handleClick.bind(this, projectId)}>
                     {followed && "Unfollow Project"}
                     {!followed && "Follow Project"}
                   </button>
