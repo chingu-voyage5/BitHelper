@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Modal from "react-modal";
-import '../../stylesheets/main.css';  // for dev
 import Button from '../atoms/Button';
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";

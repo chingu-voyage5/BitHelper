@@ -4,7 +4,6 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import '../../stylesheets/main.css'; // for dev
 import Button from '../atoms/Button.js';
 import Input from '../atoms/Input'
 

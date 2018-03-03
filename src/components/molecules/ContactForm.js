@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../../stylesheets/main.css';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Loader from "../atoms/Loader.js";
