@@ -36,13 +36,20 @@ class SearchBox extends Component{
       }
       onInput = (e) => {
         let tags = [...this.props.filters]
-        let value = e.target.value;
-        let newTags = e.target.value.split(",");
+        let value = e.target.value.replace(' ','');
+        let newTags = value.split(",");
         if (newTags.length > 1) {
+          if (newTags[0].length > 1 && tags.indexOf(newTags[0]) === -1) {
             tags.push(newTags[0]);
             value = newTags[1];
             this.submitTags(tags);
-        }
+          } else if (newTags[0].length > 1) {
+            // if new word already exist in tags
+            value = newTags[1];
+          } else {
+            value = newTags.join('');
+          }
+        } 
         if (value.length > 0) { this.updateDropdown(value); }
         this.setState({
             value: value
