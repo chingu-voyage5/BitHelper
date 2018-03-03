@@ -1,0 +1,54 @@
+@import "../base/helpers.scss";
+  .search-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 5px 10px;
+    border: solid 1px #ccc;
+    border-radius: 10px;
+    background-color: white;
+  }
+  .search-input-area {
+    flex-grow: 1;
+    min-width: 200px;
+  }
+  .search-input-area input {
+    border: none;
+    width: 100%;
+    outline: none;
+    line-height: 25px;
+  }
+  .tags {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    margin-right: 5px;
+    background-color: $primary;
+    border-radius: 5px;
+    color: white;
+  }
+  .tags span {
+    margin: 0 5px;
+    color: white;
+  }
+  .tags:hover {
+    cursor: pointer;
+  }
+  .autocomplete {
+    margin-top: 3px;
+    width: 100%;
+    background-color: white;
+  }
+  .autocomplete-item {
+    border: none;
+    background-color: white;
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    line-height: 15px;
+  }
+  .autocomplete-item:hover,
+  .autocomplete-item:focus {
+    outline: none;
+    background-color: #eee;
+  }
