@@ -79,15 +79,28 @@ class SearchBox extends Component{
         });
       }
       updateDropdown = (value) => {
-        let regex = new RegExp('\\b' + value, 'i');
-        let match = this.state.searchText.filter(word => {
-          return regex.test(word) && this.props.filters.indexOf(word) === -1;
+        // If value is empty string, do not proceed
+        if (value.length < 1) { return; }
+
+
+        let partialWord = new RegExp('\\b' + value, 'i');
+
+        let textMatch = this.state.searchText.filter(item => {
+          return partialWord.test(item);
+        }).filter(item => {
+          let fullWord = new RegExp('^' + item + '$', 'i');
+          let match = false;
+          this.props.filters.forEach(tag => {
+            match = fullWord.test(tag);
+          });
+          return !match;
         });
-        if (match.length < 1 || value.length < 1) {
-          match = null;
+
+        if (textMatch.length < 1 || value.length < 1) {
+          textMatch = null;
         }
         this.setState({
-          dropdown: match
+          dropdown: textMatch
         });
       }
       updateTags = (id) => {
@@ -98,7 +111,13 @@ class SearchBox extends Component{
         let tags = [...this.props.filters];
         let value = this.state.value;
         if (method === "add") {
-          tags.push(tag);
+          let regex = new RegExp('\\b' + tag, 'i');
+          let match = tags.filter(item => {
+            return regex.test(item);
+          });
+          if (match.length < 1) {
+            tags.push(tag);
+          }
           value = "";
         } else if (method === "del") {
           tags.splice(tags.indexOf(tag), 1);
@@ -124,7 +143,6 @@ class SearchBox extends Component{
         });
       }
       render() {
-        console.log('search box', this.props.filters, this.state.tags);
         return (
           <div>    
               <div className="search-row">

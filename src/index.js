@@ -171,7 +171,6 @@ class App extends Component {
 
   // update filter
   updateFilter = (filterArray) => {
-    console.log('update filter', filterArray);
     this.setState({
       filters: filterArray
   });

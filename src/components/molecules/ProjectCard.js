@@ -70,7 +70,7 @@ class ProjectCard extends Component {
         return <Loader />
         }
     }
-    onInputChange = (filterArray) => {
+    handleTagsUpdate = (filterArray) => {
         this.props.onFilterUpdate(filterArray);
     }
     render() {
@@ -81,7 +81,7 @@ class ProjectCard extends Component {
                 ("container project-cards-full")}
             >
                 {(!partial) ? (
-                    <SearchBox projects={this.props.projects} filters={this.props.filters} onTagsUpdate={this.onInputChange}/>
+                    <SearchBox projects={this.props.projects} filters={this.props.filters} onTagsUpdate={this.handleTagsUpdate}/>
                 ) : (
                     null
                 )}
