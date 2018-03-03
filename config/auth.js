@@ -35,7 +35,20 @@ router.get('/github/callback',
       })
     );
       
-// TODO: Add Facebook login here
+// =====================================
+// FACEBOOK ROUTES =====================
+// =====================================
+// route for facebook authentication and login
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['public_profile', 'email']
+}));
+
+// handle the callback after facebook has authenticated the user
+router.get('/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
 
 // This route return the logged-in user's profile. 
 router.get('/', function(req, res) {

@@ -15,13 +15,12 @@ const UsersSchema = new Schema({
     projects: [String],  //array of project IDs that this user has created
     google: {
         id: String,
-        name: String,
-        email: String
     },
     facebook: {
         id: String, 
-        name: String,
-        email: String
+    },
+    github: {
+        id: String
     }
 });
 
