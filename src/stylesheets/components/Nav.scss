@@ -50,14 +50,15 @@ body {
     opacity: 0.5;
 }
 
-.ReactModal__Overlay {
-    background-color: lightcoral;
+.Modal {
+    background-color: red !important;
 }
 
-.ReactModal__Overlay--after-open {
-    background-color: green;
-}
-
-.ReactModal__Overlay--before-close {
-    background-color: blueviolet;
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rebeccapurple !important;
 }

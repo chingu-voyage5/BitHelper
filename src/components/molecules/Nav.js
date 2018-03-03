@@ -40,26 +40,22 @@ class Nav extends Component {
       console.log('handleclick: ', e.target.id);
       switch (e.target.id) {
         case "add-project":
-          this.props.history.push('/project/add/');
+          this.props.history.push("/project/add/");
           break;
         case "profile":
-          this.props.history.push('/user/view/' + this.props.user._id);
+          this.props.history.push("/user/view/" + this.props.user._id);
           break;
         case "github-login":
-          document.cookie="redirect=" + window.location.pathname;
-          console.log('login clicked', window.location.pathname);
-          window.location = '/auth/github/'
-          break;  
-        case "google-login":
-          document.cookie="redirect=" + window.location.pathname;
-          console.log('login clicked', window.location.pathname);
-          window.location = '/auth/google/'
+          document.cookie = "redirect=" + window.location.pathname;
+          console.log("login clicked", window.location.pathname);
+          window.location = "/auth/github/";
+          break;
         case "logout":
-          this.props.history.push('/');
+          this.props.history.push("/");
           this.props.logoutUser();
           break;
         case "navbar-brand":
-          this.props.history.push('/');
+          this.props.history.push("/");
           break;
         default:
       }
@@ -103,21 +99,17 @@ class Nav extends Component {
                       </button>
 
                       <Modal isOpen={this.state.showModal} contentLabel="Login modal">
-                          <button className="btn btn-github" id="github-login" onClick={this.handleClick}>
-                            Sign in with Github
-                          </button>
+                        {/* <button className="btn btn-github" id="github-login" onClick={this.handleClick}>
+                          Sign in with Github
+                        </button> */}
 
-                          <button className="btn btn-google" id="google-login" onClick={this.handleClick}>
-                            Sign in with Google
-                          </button>
-                          <form>
-                            <input type="text" name="email" id="email" placeholder="email" />
-                            <input type="password" name="password" id="password" placeholder="password" />
-                          </form>
+                        <a href="/auth/github">Sign in with GitHub</a>
+                        <a href="/auth/google">Sign in with Google</a>
+                        <a href="/auth/facebook">Sign in with Facebook</a>
 
-                          <button className="btn" onClick={this.handleCloseModal}>
-                            X
-                          </button>
+                        <button className="btn" onClick={this.handleCloseModal}>
+                          X
+                        </button>
                       </Modal>
                     </li>}
                 </ul>
