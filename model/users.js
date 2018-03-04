@@ -1,6 +1,8 @@
 'use strict';
 //import dependency
 const mongoose = require('mongoose');
+var bcrypt = require("bcrypt-nodejs");
+
 const Schema = mongoose.Schema;
 
 //create new instance of the mongoose.schema. the schema takes an object that shows
@@ -20,8 +22,20 @@ const UsersSchema = new Schema({
     },
     github: {
         id: String
+    },
+    local: {
+        password: String
     }
 });
+
+
+UsersSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+UsersSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.local.password);
+};
 
 //export our module to use in server.js
 module.exports = mongoose.model('User', UsersSchema);
