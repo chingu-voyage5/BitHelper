@@ -1,5 +1,6 @@
 const Project = require('../model/projects');
 const User = require('../model/users');
+const passport = require("passport");
 
 module.exports = function(router) {
 
@@ -7,6 +8,15 @@ module.exports = function(router) {
     router.get('/', function(req, res) {
       res.json({ message: 'API Initialized!'});
     });
+
+    // registration routes
+    router.route("/register")
+      .get(function(req, res){
+        res.send("Hitting registration get route")
+      })
+      .post(function(req, res){
+        res.send("Hitting registration post route")
+      })
 
     // PROJECT ROUTES
 

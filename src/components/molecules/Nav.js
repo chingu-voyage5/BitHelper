@@ -110,18 +110,30 @@ class Nav extends Component {
                         <a href="auth/facebook">
                           <img src={facebookLogin} className="social-login" alt="Sign in with Facebook." />
                         </a>
-                        <p><strong>or sign in with your email</strong></p>
-                        <Form>
+                        <p>
+                          <strong>or sign in with your email</strong>
+                        </p>
+                        <Form action="/login" method="POST">
                           <FormGroup>
                             <Input type="email" name="email" className="local-login" id="email-login" placeholder="Email" />
                             <Input type="password" name="password" className="local-login" id="password-login" placeholder="Password" />
+                            <button type="submit" className="btn">
+                              Submit
+                            </button>
                           </FormGroup>
                         </Form>
-                        <p><strong>You don't have an account? Sign up</strong></p>
-                        <Form>
+                        <p>
+                          <strong>
+                            You don't have an account? Sign up
+                          </strong>
+                        </p>
+                        <Form action="/register" method="POST">
                           <FormGroup>
                             <Input type="email" name="email" className="local-login" id="email-signup" placeholder="Email" />
                             <Input type="password" name="password" className="local-login" id="password-signup" placeholder="Password" />
+                            <button type="submit" className="btn">
+                              Submit
+                            </button>
                           </FormGroup>
                         </Form>
                       </ModalBody>
