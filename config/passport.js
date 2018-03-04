@@ -180,7 +180,7 @@ module.exports = function(passport) {
               // check to see if theres already a user with that email
               if (user) {
                 return done(null, false);
-                  // req.flash("registerMessage", "That email is already taken.") // need to add connect-flash
+
               } else {
                 // if there is no user with that email
                 // create the user
@@ -229,7 +229,7 @@ module.exports = function(passport) {
             if (!user)
               return done(
                 null,
-                false ); // req.flash is the way to set flashdata using connect-flash
+                false ); 
 
             // if the user is found but the password is wrong
             if (!user.validPassword(password))

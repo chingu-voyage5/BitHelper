@@ -9,14 +9,8 @@ module.exports = function(router) {
       res.json({ message: 'API Initialized!'});
     });
 
-    // registration routes
-    router.route("/register")
-      .get(function(req, res){
-        res.send("Hitting registration get route")
-      })
-      .post(function(req, res){
-        res.send("Hitting registration post route")
-      })
+
+
 
     // PROJECT ROUTES
 

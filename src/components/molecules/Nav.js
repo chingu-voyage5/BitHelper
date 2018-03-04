@@ -113,7 +113,7 @@ class Nav extends Component {
                         <p>
                           <strong>or sign in with your email</strong>
                         </p>
-                        <Form action="/login" method="POST">
+                        <Form action="/auth/login" method="POST">
                           <FormGroup>
                             <Input type="email" name="email" className="local-login" id="email-login" placeholder="Email" />
                             <Input type="password" name="password" className="local-login" id="password-login" placeholder="Password" />
@@ -127,14 +127,14 @@ class Nav extends Component {
                             You don't have an account? Sign up
                           </strong>
                         </p>
-                        <Form action="/register" method="POST">
+                        <Form action="/auth/register" method="POST">
                           <FormGroup>
                             <Input type="email" name="email" className="local-login" id="email-signup" placeholder="Email" />
                             <Input type="password" name="password" className="local-login" id="password-signup" placeholder="Password" />
-                            <button type="submit" className="btn">
-                              Submit
-                            </button>
                           </FormGroup>
+                          <button type="submit" className="btn">
+                            Submit
+                          </button>
                         </Form>
                       </ModalBody>
                     </Modal>

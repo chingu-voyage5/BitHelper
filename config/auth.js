@@ -4,6 +4,10 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
+// =====================================
+// GITHUB ROUTES =====================
+// =====================================
+
 // To log-in with GitHub OAuth
 router.get('/github',
   passport.authenticate('github'));
@@ -21,10 +25,9 @@ router.get('/github/callback',
     res.redirect('/');
 });
 
-
-// TODO: Add email login here
-
-// TODO: Add Google login here
+// =====================================
+// GOOGLE ROUTES =====================
+// =====================================
     router.get('/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
     
     
@@ -49,6 +52,23 @@ router.get('/facebook/callback',
     successRedirect: '/',
     failureRedirect: '/'
   }));
+
+// =====================================
+// LOCAL AUTH ROUTES =====================
+// =====================================
+  router.post("/login", passport.authenticate("local-login", {
+      successRedirect: "/", // redirect to the secure profile section
+      failureRedirect: "/", // redirect back to the signup page if there is an error
+    }));
+
+  router.post(
+    "/register",
+    passport.authenticate("local-signup", {
+      successRedirect: "/", // redirect to the secure profile section
+      failureRedirect: "/", // redirect back to the signup page if there is an error
+    })
+  );
+
 
 // This route return the logged-in user's profile. 
 router.get('/', function(req, res) {
