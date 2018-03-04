@@ -31,7 +31,6 @@ require('dotenv').load();
 // Declare App component 
 class App extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
 
     // url is REACT_APP_APPURL if set, otherwise it's window.location.origin
@@ -43,6 +42,7 @@ class App extends Component {
     this.state = {
       apiUrl: url,
       projects: [], 
+      filters: [],
       user: null
     }
   }
@@ -193,6 +193,13 @@ class App extends Component {
       window.location = '/'; // and redirects to the homepage
     });
   }
+
+  // update filter
+  updateFilter = (filterArray) => {
+    this.setState({
+      filters: filterArray
+  });
+  }
   render() {
     return(
       
@@ -224,6 +231,8 @@ class App extends Component {
                     user: this.state.user,
                     limit: 6,
                     updateProjects: this.updateUserProjects
+                    filters: this.state.filters,
+                    onFilterUpdate: this.updateFilter
                   }} 
                 />
                 {/* About component */}
@@ -240,11 +249,13 @@ class App extends Component {
             {...{
               projects: this.state.projects,
               user: this.state.user,
+              filters: this.state.filters,
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              updateProjects: this.updateUserProjects
+              updateProjects: this.updateUserProjects,
+              onFilterUpdate: this.updateFilter
             }} />
         }
         }/>
