@@ -18,7 +18,7 @@ module.exports = function(passport) {
         // Look for the user in existing database
         User.findOne(
           {
-            githubId: profile.id
+            "github.id": profile.id
           },
           function(err, user) {
             if (err) {

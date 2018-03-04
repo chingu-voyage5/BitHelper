@@ -7,9 +7,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from '../atoms/Button';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText }  from "reactstrap";
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";
+import githubLogin from "../../images/github-login.svg";
+import facebookLogin from "../../images/facebook-login.svg";
+import googleLogin from "../../images/google-login.svg";
+
 
 class Nav extends Component {
   constructor(props) {
@@ -96,14 +100,24 @@ class Nav extends Component {
                       <ModalHeader toggle={this.toggleModal}>
                         Login or sign up
                       </ModalHeader>
-                      <ModalBody className="modal-login">
-                        <a  href="auth/github"> Sign in with Github </a>
-                        <a href="auth/google"> Sign in with Google </a>
-                        <a href="auth/facebook"> Sign in with Facebook </a>
+                      <ModalBody className="text-center">
+                        <a href="auth/github">
+                          <img src={githubLogin} className="social-login" alt="Sign in with GitHub" />
+                        </a>
+                        <a href="auth/google">
+                          <img src={googleLogin} className="social-login" alt="Sign in with Google" />
+                        </a>
+                        <a href="auth/facebook">
+                          <img src={facebookLogin} className="social-login" alt="Sign in with Facebook." />
+                        </a>
+                        <p>or sign in with your email</p>
+                        <Form>
+                          <FormGroup>
+                            <Input type="email" name="email" className="local-login"  id="email-login" placeholder="Email" />
+                            <Input type="password" name="password" className="local-login" id="password-login" placeholder="Password" />
+                          </FormGroup>
+                        </Form>
                       </ModalBody>
-                      <ModalFooter>
-                        <button onClick={this.toggleModal}>Cancel</button>
-                      </ModalFooter>
                     </Modal>
                   </li>}
               </ul>
