@@ -120,7 +120,7 @@ class ProjectInfo extends Component {
                   </p>
                   <hr />
                 </div>
-                {!isOwner && (
+                {!isOwner && user && (
                   <button 
                     style={followStyle} 
                     className={followed ? "btn btn--primary" : "btn btn--secondary"} 
