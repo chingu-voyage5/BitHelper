@@ -230,7 +230,7 @@ class App extends Component {
                     projects: this.state.projects,
                     user: this.state.user,
                     limit: 6,
-                    updateProjects: this.updateUserProjects
+                    updateProjects: this.updateUserProjects,
                     filters: this.state.filters,
                     onFilterUpdate: this.updateFilter
                   }} 
