@@ -1,4 +1,4 @@
-function userReducers (state = {}, action) {
+function userReducer (state = {}, action) {
     switch(action.type) {
         case 'UPDATE_USER': 
             return state;

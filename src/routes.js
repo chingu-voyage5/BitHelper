@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import getCookie from './js/getCookie';
 import axios from 'axios';
 import {
