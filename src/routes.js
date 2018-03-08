@@ -7,6 +7,14 @@ import {
     Redirect
   } from 'react-router-dom';
 
+
+// Actions
+import { setUser } from './actions/users.js';
+import { setProjects } from './actions/projects.js';
+
+// Connects component to Store state & dispatch actions to store
+import { connect } from 'react-redux';
+
 // Import stylesheets
 import "./stylesheets/main.css";
 
@@ -67,11 +75,26 @@ class App extends Component {
     axios.get(this.state.apiUrl + '/api/projects')
     .then(res => {
       this.setState({projects: res.data}) // update state to response data
+      this.props.setProjects(res.data); // redux store
     })
     .catch(err => {
       console.error('fetch project', err); // handle error if there is one
     });  
   }
+
+  // delete project
+  deleteProject = (data) => {
+    axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
+    .then(res => {
+      this.allProjects();
+    })
+    .catch(err => {
+      console.error('delete project error', err);
+    });
+  }
+
+
+  
   
   getOneProject = (projectId, next) => {
     // If the project is already stored in state
@@ -94,15 +117,7 @@ class App extends Component {
       });
     }
   }
-  // get user data from api and assign it to state
-  setUser = () => {
-    axios.get(this.state.apiUrl + '/auth')
-    .then(res => {
-      this.setState({
-        user: res.data
-      });
-    })
-  }
+
   // get user data from api
   getOneUser = (id, next) => {
     axios.get(this.state.apiUrl + '/api/users/' + id)
@@ -111,16 +126,13 @@ class App extends Component {
     });
   }
 
-  // updates user data 
-  postUser = (data) => {
-    axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
-    .then(res => {
-      console.log('update user success');
-      this.allProjects();
-      this.setUser();
-    })
-    .catch(err => {
-      console.error('error posting user update', err);
+  // logout the user by setting the app state.user as null
+  logoutUser = () => { // logout user
+    axios.get('/auth/logout').then(()=> {
+      this.setState({
+        user: null
+      });
+      window.location = '/'; // and redirects to the homepage
     });
   }
 
@@ -135,6 +147,40 @@ class App extends Component {
     });
   }
 
+
+   // updates user data 
+   postUser = (data) => {
+    axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
+    .then(res => {
+      console.log('update user success');
+      this.allProjects();
+      this.setUser();
+    })
+    .catch(err => {
+      console.error('error posting user update', err);
+    });
+  }
+
+  // get user data from api and assign it to state
+  setUser = () => {
+    axios.get(this.state.apiUrl + '/auth')
+    .then(res => {
+      this.setState({
+        user: res.data
+      });
+
+      // send data to redux store
+      this.props.setProjects(res.data);
+    })
+  }
+
+  // update filter
+  updateFilter = (filterArray) => {
+    this.setState({
+      filters: filterArray
+  });
+  }
+
   // update project
   updateProject = (data) => {
     axios.put(this.state.apiUrl + '/api/projects/' + data._id, data)
@@ -146,33 +192,6 @@ class App extends Component {
     });
   }
 
-  // delete project
-  deleteProject = (data) => {
-    axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
-    .then(res => {
-      this.allProjects();
-    })
-    .catch(err => {
-      console.error('delete project error', err);
-    });
-  }
-
-  // logout the user by setting the app state.user as null
-  logoutUser = () => { // logout user
-    axios.get('/auth/logout').then(()=> {
-      this.setState({
-        user: null
-      });
-      window.location = '/'; // and redirects to the homepage
-    });
-  }
-
-  // update filter
-  updateFilter = (filterArray) => {
-    this.setState({
-      filters: filterArray
-  });
-  }
   render() {
     return(
       
@@ -297,4 +316,26 @@ class App extends Component {
  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  console.log(state, 'this is state');
+  
+  return {
+    projects: state.projectReducer.projects,
+    user: state.userReducer.user
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (user) => {
+      dispatch(setUser(user));
+    },
+    setProjects: (projects) => {
+      dispatch(setProjects(projects));
+    }
+  }
+}
+
+const AppConnect = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default AppConnect;
