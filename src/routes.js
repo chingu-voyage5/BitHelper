@@ -231,7 +231,7 @@ class App extends Component {
             )
           )
         }/>
-        {/* Shows single project */}
+        {/* Shows single project */}+
         <Route path="/project/view/:id?" render={(routeProps)=> {
           {/* ProjectInfo component shows single project. Functions defined at parent level */}
           return <ProjectInfo 
@@ -315,6 +315,8 @@ class App extends Component {
  }
 }
 
+
+// Takes the state from store and maps it to this.props
 const mapStateToProps = (state) => {
   return {
     projects: state.projectReducer.projects,
@@ -322,6 +324,7 @@ const mapStateToProps = (state) => {
   }
 };
 
+// Allows you to bind this.props.dispatch to object methods. this.props.dispatch(setUser(user)) becomes this.props.setUser(user)
 const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => {
@@ -336,6 +339,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+// Wraps component with connect allowing access to store and dispatch
 const AppConnect = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default AppConnect;
