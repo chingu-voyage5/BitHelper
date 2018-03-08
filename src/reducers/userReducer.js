@@ -1,4 +1,8 @@
-function userReducer (state = {}, action) {
+const defaultState = {
+    user: null
+};
+
+function userReducer (state = defaultState, action) {
     switch(action.type) {
         case 'UPDATE_USER': 
             return state;
