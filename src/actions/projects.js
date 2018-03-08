@@ -1,5 +1,6 @@
 const ADD_PROJECT = 'ADD_PROJECT';
 const REMOVE_PROJECT = 'REMOVE_PROJECT';
+const SET_PROJECTS = 'SET_PROJECTS';
 
 function addProject (project) {
     return {
@@ -15,5 +16,11 @@ function removeProject (project) {
     }
 }
 
+function setProjects (projects) {
+    return {
+        type: SET_PROJECTS,
+        projects
+    }
+}
 
-export {addProject, removeProject};
+export {addProject, removeProject, setProjects};

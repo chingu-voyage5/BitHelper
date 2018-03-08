@@ -1,5 +1,6 @@
 const ADD_USER = 'ADD_USER';
 const REMOVE_USER = 'REMOVE_USER';
+const SET_USER = 'SET_USER';
 
 function addUser (user) {
     return {
@@ -15,4 +16,11 @@ function removeUser (user) {
     }
 }
 
-export {addUser, removeUser};
+function setUser (user) {
+    return {
+        type: SET_USER,
+        user
+    }
+}
+
+export {addUser, removeUser, setUser};
