@@ -131,6 +131,7 @@ class App extends Component {
       this.setState({
         user: null
       });
+
       window.location = '/'; // and redirects to the homepage
     });
   }
@@ -145,7 +146,6 @@ class App extends Component {
       console.error('error posting new project', err);
     });
   }
-
 
    // updates user data 
    postUser = (data) => {
@@ -169,7 +169,7 @@ class App extends Component {
       });
 
       // send data to redux store
-      this.props.setProjects(res.data);
+      this.props.setUser(res.data);
     })
   }
 
@@ -197,14 +197,14 @@ class App extends Component {
     <Router>
       <div>
         {/* Nav components get rendered in all pages. User is set to null when user logged out */}
-        <Nav user={this.state.user} logoutUser={this.logoutUser}/>
+        <Nav user={this..user} logoutUser={this.logoutUser}/>
 
         {/* Routing for homepage */}
         <Route exact
           path="/"
           render={(routeProps)=> (
             /* If user is logged in, but user doesn't have username, redirect to user edit page */
-            ( this.state.user && !this.state.user.username ) ?
+            ( this.props.user && !this.state.user.username ) ?
             ( <Redirect to={{
                 pathname: '/user/edit/'
               }}/> ) :
@@ -212,21 +212,21 @@ class App extends Component {
               <div>
                 {/* If user is logged out, render Header, ProjectCard and About components (Landing page) */ }
                 {/* Header component. toggleHeader not defined anywhere! */}
-                <Header user={this.state.user} toggleHeader={this.toggleHeader}/>
+                <Header user={this.props.user} toggleHeader={this.toggleHeader}/>
 
                 {/* ProjectCard inherits route props, plus App is passed on as ProjectCard prop */}
                 <ProjectCard 
                   {...routeProps} 
                   {...{
                     projects: this.props.projects,
-                    user: this.state.user,
+                    user: this.props.user,
                     filters: this.state.filters,
                     limit: 6,
                     onFilterUpdate: this.updateFilter
                   }} 
                 />
                 {/* About component */}
-                <About user={this.state.user} />
+                <About user={this.props.user} />
               </div>
             )
           )
@@ -238,7 +238,7 @@ class App extends Component {
             {...routeProps} 
             {...{
               projects: this.props.projects,
-              user: this.state.user,
+              user: this.props.user,
               filters: this.state.filters,
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
@@ -253,7 +253,7 @@ class App extends Component {
           return <UserInfo 
             {...routeProps} 
             {...{
-              user: this.state.user,
+              user: this.props.user,
               projects: this.props.projects,
               getOneUser: this.getOneUser
             }} />
@@ -262,7 +262,7 @@ class App extends Component {
         {/* User can edit its own information when logged in */}
         <Route path="/user/edit/" render={(routeProps)=> {
             return <UserEdit {...routeProps} {...{
-              user: this.state.user,
+              user: this.props.user,
               onUserPost: this.postUser
             }} />
           }
@@ -275,7 +275,7 @@ class App extends Component {
                 {...{
                   title: 'Create New Project',
                   edit: false,
-                  user: this.state.user,
+                  user: this.props.user,
                   handleSubmit: this.newProject
                 }} />
           }
@@ -288,7 +288,7 @@ class App extends Component {
                 {...{
                   title: 'Edit a Project',
                   edit: true,
-                  user: this.state.user,
+                  user: this.props.user,
                   handleSubmit: this.updateProject,
                   getOneProject: this.getOneProject
                 }} />
@@ -300,7 +300,7 @@ class App extends Component {
               return <ContactForm 
                 {...routeProps} 
                 {...{
-                    user: this.state.user,
+                    user: this.props.user,
                     handleSubmit: this.sendMessage,
                     getOneProject: this.getOneProject,
                     getOneUser: this.getOneUser
