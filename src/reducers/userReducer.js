@@ -4,9 +4,15 @@ const defaultState = {
 
 function userReducer (state = defaultState, action) {
     switch(action.type) {
-        case 'UPDATE_USER': 
-            return state;
+        case 'LOGOUT_USER':
 
+            return {
+                ...state,
+                user: null
+            };
+
+            case 'UPDATE_USER': 
+            return state;
 
         case 'SET_USER':
 

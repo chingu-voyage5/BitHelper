@@ -9,7 +9,7 @@ import {
 
 
 // Actions
-import { setUser } from './actions/users.js';
+import { setUser, logoutUser } from './actions/users.js';
 import { setProjects } from './actions/projects.js';
 
 // Connects component to Store state & dispatch actions to store
@@ -46,8 +46,7 @@ class App extends Component {
     // component state has 
     this.state = {
       apiUrl: url,
-      filters: [],
-      user: null
+      filters: []
     }
   }
   // Once the app is mounted
@@ -132,6 +131,7 @@ class App extends Component {
         user: null
       });
 
+      this.props.logoutUser();
       window.location = '/'; // and redirects to the homepage
     });
   }
@@ -197,14 +197,14 @@ class App extends Component {
     <Router>
       <div>
         {/* Nav components get rendered in all pages. User is set to null when user logged out */}
-        <Nav user={this..user} logoutUser={this.logoutUser}/>
+        <Nav user={this.props.user} logoutUser={this.logoutUser}/>
 
         {/* Routing for homepage */}
         <Route exact
           path="/"
           render={(routeProps)=> (
             /* If user is logged in, but user doesn't have username, redirect to user edit page */
-            ( this.props.user && !this.state.user.username ) ?
+            ( this.props.user && !this.props.user.username ) ?
             ( <Redirect to={{
                 pathname: '/user/edit/'
               }}/> ) :
@@ -316,8 +316,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state, 'this is state');
-
   return {
     projects: state.projectReducer.projects,
     user: state.userReducer.user
@@ -331,6 +329,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setProjects: (projects) => {
       dispatch(setProjects(projects));
+    },
+    logoutUser: () => {
+      dispatch(logoutUser());
     }
   }
 }
