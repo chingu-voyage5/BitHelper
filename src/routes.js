@@ -46,7 +46,6 @@ class App extends Component {
     // component state has 
     this.state = {
       apiUrl: url,
-      projects: [], 
       filters: [],
       user: null
     }
@@ -98,9 +97,9 @@ class App extends Component {
   
   getOneProject = (projectId, next) => {
     // If the project is already stored in state
-    if (this.state.projects.length > 0) { 
+    if (this.props.projects.length > 0) { 
       // check if projectId is equal to the found item
-      const project = this.state.projects.find(item => {
+      const project = this.props.projects.find(item => {
         console.log("item ", item);
           return item._id === projectId;
       });
@@ -219,7 +218,7 @@ class App extends Component {
                 <ProjectCard 
                   {...routeProps} 
                   {...{
-                    projects: this.state.projects,
+                    projects: this.props.projects,
                     user: this.state.user,
                     filters: this.state.filters,
                     limit: 6,
@@ -238,7 +237,7 @@ class App extends Component {
           return <ProjectInfo 
             {...routeProps} 
             {...{
-              projects: this.state.projects,
+              projects: this.props.projects,
               user: this.state.user,
               filters: this.state.filters,
               deleteProject: this.deleteProject,
@@ -255,7 +254,7 @@ class App extends Component {
             {...routeProps} 
             {...{
               user: this.state.user,
-              projects: this.state.projects,
+              projects: this.props.projects,
               getOneUser: this.getOneUser
             }} />
         }
@@ -318,7 +317,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   console.log(state, 'this is state');
-  
+
   return {
     projects: state.projectReducer.projects,
     user: state.userReducer.user

@@ -1,14 +1,17 @@
-function projectReducer (state = {}, action) {
+const defaultState = {
+    projects: []
+};
+
+function projectReducer (state = defaultState, action) {
     switch (action.type) {
         case 'ADD_PROJECT':
             return state;
 
         case 'SET_PROJECTS':
 
-            const projects = [...action.projects];
             return {
                 ...state,
-                projects
+                projects: [...action.projects]
             };
 
         default:
