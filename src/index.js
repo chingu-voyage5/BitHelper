@@ -37,6 +37,8 @@ class App extends Component {
       ( process.env.REACT_APP_APPURL ) : 
       ( window.location.origin );
       
+    console.log('api url', url);
+      
     // component state has 
     this.state = {
       apiUrl: url,
@@ -214,6 +216,23 @@ class App extends Component {
               </div>
             )
           )
+        }/>
+        {/* Project full list view */}
+        <Route exact path="/project/view/" render={(routeProps)=> {
+          {/* ProjectInfo component shows single project. Functions defined at parent level */}
+          return <ProjectCard
+            {...routeProps} 
+            {...{
+              projects: this.state.projects,
+              user: this.state.user,
+              filters: this.state.filters,
+              deleteProject: this.deleteProject,
+              allProjects: this.allProjects,
+              getOneProject: this.getOneProject,
+              getOneUser: this.getOneUser,
+              onFilterUpdate: this.updateFilter
+            }} />
+        }
         }/>
         {/* Shows single project */}
         <Route path="/project/view/:id?" render={(routeProps)=> {
