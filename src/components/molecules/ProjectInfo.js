@@ -57,9 +57,9 @@ class ProjectInfo extends Component {
         const user = this.props.user;
         const isOwner = (user && owner && user._id === owner._id);
         
-        if (!project) {
-            return <Loader />
-        }
+        if (!projectId) { return null }
+        
+        if (!project) { return <Loader /> }
         
         let buttons = null;
         if (isOwner) {

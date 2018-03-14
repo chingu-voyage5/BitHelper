@@ -190,7 +190,7 @@ class App extends Component {
               <div>
                 {/* If user is logged out, render Header, ProjectCard and About components (Landing page) */ }
                 {/* Header component. toggleHeader not defined anywhere! */}
-                <Header user={this.state.user} toggleHeader={this.toggleHeader}/>
+                <Header user={this.state.user} />
 
                 {/* ProjectCard inherits route props, plus App is passed on as ProjectCard prop */}
                 <ProjectCard 
@@ -261,8 +261,6 @@ class App extends Component {
               return <ProjectEdit
                 {...routeProps}
                 {...{
-                  title: 'Create New Project',
-                  edit: false,
                   user: this.state.user,
                   handleSubmit: this.newProject
                 }} />
@@ -274,8 +272,6 @@ class App extends Component {
               return <ProjectEdit
                 {...routeProps}
                 {...{
-                  title: 'Edit a Project',
-                  edit: true,
                   user: this.state.user,
                   handleSubmit: this.updateProject,
                   getOneProject: this.getOneProject
