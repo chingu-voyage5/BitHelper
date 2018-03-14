@@ -7,7 +7,6 @@ import React, { Component } from 'react';
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
-import Input from "../atoms/Input";
 import SearchBox from '../molecules/SearchBox';
 
 
@@ -42,14 +41,8 @@ class ProjectCard extends Component {
     }
     setProjects() {
         if (this.props.projects.length > 0) {
-            const filters = (this.state.filters) ? (this.state.filters.filter(item => {
-                return item.length > 1;
-            })) : (null);
-            const projects = (Boolean(this.state.limit)) ? (
-                    this.props.projects
-                ) : (
-                    this.filterProjects(this.props.projects, filters)
-                );
+            const filters = this.state.filters;
+            const projects = this.filterProjects(this.props.projects, filters);
             return projects.map((item,i) => {
                 if (!this.state.limit || i < this.state.limit) {
                     return (
