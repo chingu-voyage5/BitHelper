@@ -12,10 +12,17 @@ import SearchBox from '../molecules/SearchBox';
 
 
 class ProjectCard extends Component {
+    constructor(props) {
+        super(props);
+        console.log('url params', this.props.match);
+        this.state = {
+          filters: [],
+          limit: (this.props.match.path === '/') ? (6) : (null)
+        };
+    }
     // for filtering projects to show, by filter state
     filterProjects = (projects, filters) => {
         // if no filter is set, display all projects
-
         if (!filters || filters.length < 1) {
             return projects;
         } else {
@@ -35,16 +42,16 @@ class ProjectCard extends Component {
     }
     setProjects() {
         if (this.props.projects.length > 0) {
-            const filters = (this.props.filters) ? (this.props.filters.filter(item => {
+            const filters = (this.state.filters) ? (this.state.filters.filter(item => {
                 return item.length > 1;
             })) : (null);
-            const projects = (Boolean(this.props.limit)) ? (
+            const projects = (Boolean(this.state.limit)) ? (
                     this.props.projects
                 ) : (
                     this.filterProjects(this.props.projects, filters)
                 );
             return projects.map((item,i) => {
-                if (!this.props.limit || i < this.props.limit) {
+                if (!this.state.limit || i < this.state.limit) {
                     return (
                         <div className="col-md-3 card"
                             onClick={() => this.props.history.push('/project/view/' + item._id)}
@@ -66,21 +73,23 @@ class ProjectCard extends Component {
                 }
             });
         } else {
-        return <Loader />
+            return <Loader />
         }
     }
-    handleTagsUpdate = (filterArray) => {
-        this.props.onFilterUpdate(filterArray);
+    handleFilterUpdate = (filterArray) => {
+        this.setState({
+          filters: filterArray
+        });
     }
     render() {
-        const partial = Boolean(this.props.limit);
+        const partial = Boolean(this.state.limit);
         return (
             <div className={(partial) ? 
                 ("container") : 
                 ("container project-cards-full")}
             >
                 {(!partial) ? (
-                    <SearchBox projects={this.props.projects} filters={this.props.filters} onTagsUpdate={this.handleTagsUpdate}/>
+                    <SearchBox projects={this.props.projects} filters={this.state.filters} onTagsUpdate={this.handleFilterUpdate}/>
                 ) : (
                     null
                 )}
