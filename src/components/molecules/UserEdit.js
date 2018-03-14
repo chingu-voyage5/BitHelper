@@ -5,7 +5,6 @@
 
 
 import React, { Component } from 'react';
-// import '../stylesheets/components/UserEdit.css';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 

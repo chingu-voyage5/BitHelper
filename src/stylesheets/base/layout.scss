@@ -1,13 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:300,400,700');
 @import "./helpers.scss";
 
-* {
-    box-sizing: border-box;
-}
-
 html,
 body {
-    // background: red;
+    color: $dark-grey;
+    font-family: $font-family;
     color: $dark-grey;
     font-family: $font-family;
     font-weight: $font-weight-light;

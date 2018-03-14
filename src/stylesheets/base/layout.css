@@ -51,9 +51,6 @@
 .white-text {
   color: white; }
 
-* {
-  box-sizing: border-box; }
-
 html,
 body {
   color: #707070;
