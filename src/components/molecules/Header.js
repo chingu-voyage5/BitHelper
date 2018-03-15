@@ -6,7 +6,6 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../stylesheets/main.css';  // for dev
 import Button from '../atoms/Button.js';
 
 class Header extends Component{

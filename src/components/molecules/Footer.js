@@ -4,7 +4,6 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import '../../stylesheets/main.css'; 
 import heart from "../../images/heart.svg"
 import github from "../../images/github-logo.svg"
 

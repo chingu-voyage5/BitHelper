@@ -5,7 +5,6 @@
 
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../stylesheets/main.css'; 
 
 class Button extends Component {
   constructor(props){

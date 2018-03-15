@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2056 -859 187 40">
+  <defs>
+    <style>
+      .cls-1, .cls-5 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: #475993;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #475993;
+      }
+
+      .cls-2 {
+        font-size: 10px;
+        font-family: WorkSans-Regular, Work Sans;
+        opacity: 0.8;
+      }
+
+      .cls-4 {
+        stroke: none;
+      }
+    </style>
+  </defs>
+  <g id="facebook-login" transform="translate(1964 -1018)">
+    <g id="Rectangle_2" data-name="Rectangle 2" class="cls-1" transform="translate(92 159)">
+      <rect class="cls-4" width="187" height="40"/>
+      <rect class="cls-5" x="0.5" y="0.5" width="186" height="39"/>
+    </g>
+    <text id="Sign_in_with_Facebook" data-name="Sign in with Facebook" class="cls-2" transform="translate(160 183)"><tspan x="0" y="0">Sign in with Facebook</tspan></text>
+    <path id="facebook" class="cls-3" d="M25.959,0H4.045A4.043,4.043,0,0,0,0,4.043V25.957A4.043,4.043,0,0,0,4.045,30H14.853l.018-10.72H12.086a.657.657,0,0,1-.657-.655l-.013-3.456a.657.657,0,0,1,.657-.66h2.78V11.171c0-3.875,2.367-5.985,5.823-5.985h2.836a.657.657,0,0,1,.657.657V8.757a.657.657,0,0,1-.657.657H21.772c-1.88,0-2.244.893-2.244,2.2V14.51h4.131a.657.657,0,0,1,.653.735L23.9,18.7a.657.657,0,0,1-.653.58h-3.7L19.528,30h6.431A4.042,4.042,0,0,0,30,25.958V4.043A4.043,4.043,0,0,0,25.959,0Z" transform="translate(100.998 164.213)"/>
+  </g>
+</svg>

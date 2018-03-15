@@ -1,9 +1,10 @@
 {
-    "name": "bears-20",
-    "version": "0.1.0",
+    "name": "bithelper",
+    "version": "1.0.0",
     "private": true,
     "dependencies": {
         "axios": "^0.17.1",
+        "bcrypt-nodejs": "0.0.3",
         "body-parser": "^1.18.2",
         "bootstrap": "^4.0.0",
         "cookie.js": "^3.0.0",
@@ -14,14 +15,18 @@
         "mongoose": "^4.13.6",
         "node-sass-chokidar": "0.0.3",
         "passport": "^0.4.0",
+        "passport-facebook": "^2.1.1",
         "passport-github": "^1.1.0",
+        "passport-google-oauth": "^1.0.0",
+        "passport-local": "^1.0.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "react-dotdotdot": "^1.1.0",
         "react-redux": "^5.0.7",
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.0.17",
-        "redux": "^3.7.2"
+        "redux": "^3.7.2".
+        "reactstrap": "^5.0.0-beta.2"
     },
     "devDependencies": {
         "faker": "^4.1.0",

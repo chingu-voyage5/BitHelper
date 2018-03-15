@@ -5,7 +5,6 @@
 
 
 import React, { Component } from 'react';
-import '../../stylesheets/main.css';  // for dev
 
 class Input extends Component {
   onChange = (e) => {
