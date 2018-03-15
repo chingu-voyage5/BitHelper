@@ -15,4 +15,4 @@ function setUser (user) {
     }
 }
 
-export {addUser, logoutUser, setUser};
+export {logoutUser, setUser};
