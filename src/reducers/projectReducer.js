@@ -4,9 +4,6 @@ const defaultState = {
 
 function projectReducer (state = defaultState, action) {
     switch (action.type) {
-        case 'ADD_PROJECT':
-            return state;
-
         case 'SET_PROJECTS':
 
             return {
