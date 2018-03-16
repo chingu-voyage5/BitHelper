@@ -7,6 +7,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import getCookie from './js/getCookie';
+import apiCall from './js/apiCalls';
 import axios from 'axios';
 
 // Import stylesheets
@@ -66,6 +67,10 @@ class App extends Component {
   */
 
   allProjects = () => {
+    // trying apiCalls.js
+    apiCall.getAllProjects(result => {
+      console.log('api call got projects', result.projects);
+    });
     // get projects from api
     axios.get(this.state.apiUrl + '/api/projects')
     .then(res => {
