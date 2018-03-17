@@ -28,7 +28,6 @@ class ProjectInfo extends Component {
     getProject = (projectId) => {
         if (projectId) {
             this.props.getOneProject(projectId, project => {
-                console.log('setting project', project);
                 if (project) {
                     this.setState({
                         project: project
@@ -108,8 +107,8 @@ class ProjectInfo extends Component {
                             <div className="row d-flex justify-content-center">
                                 {project.img.map(imgUrl => {
                                     return (
-                                        <div>
-                                            <img key={imgUrl} src={imgUrl} className="img-fluid screenshots" width='300px' alt="Project" />
+                                        <div key={imgUrl}>
+                                            <img src={imgUrl} className="img-fluid screenshots" width='300px' alt="Project" />
                                         </div>
                                     );
                                 })}

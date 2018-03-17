@@ -48,7 +48,6 @@ class ProjectCard extends Component {
         const partial = Boolean(this.state.limit);
         let projects = this.filterProjects(this.props.projects, this.state.filters);
         if (projects) {
-            console.log('projects', projects);
             return (
                 <div className={partial ? "container" : "container project-cards-full"}
                 >
@@ -62,6 +61,7 @@ class ProjectCard extends Component {
                             if (!partial || i < this.state.limit) {
                                 return (
                                     <Card 
+                                        key={project._id}
                                         project={project}
                                         onClick={() => this.props.history.push('/project/view/' + project._id)}
                                     />

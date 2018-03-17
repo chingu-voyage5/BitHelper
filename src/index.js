@@ -67,102 +67,66 @@ class App extends Component {
   */
 
   allProjects = () => {
-    // trying apiCalls.js
-    apiCall.getAllProjects(result => {
-      console.log('api call got projects', result.projects);
+    // testing apiCalls.js
+    apiCall.getAllProjects(res => {
+      if (res.error) {console.error(res.error)}
+      this.setState({projects: res.data});
     });
-    // get projects from api
-    axios.get(this.state.apiUrl + '/api/projects')
-    .then(res => {
-      this.setState({projects: res.data}) // update state to response data
-    })
-    .catch(err => {
-      console.error('fetch project', err); // handle error if there is one
-    });  
   }
   
   getOneProject = (projectId, next) => {
-    // If the project is already stored in state
-    if (this.state.projects.length > 0) { 
-      // check if projectId is equal to the found item
-      const project = this.state.projects.find(item => {
-        console.log("item ", item);
-          return item._id === projectId;
-      });
-      next(project);
-    } else {
-      // otherwise looks for it in the api
-      axios.get(this.state.apiUrl + '/api/projects/' + projectId)
-      .then(res => {
-        next(res.data);
-      })
-      // and handle errors
-      .catch(err => {
-        if (err) throw err;
-      });
-    }
+    // Testing apiCall
+    const projects = (this.state.projects.length > 0) ? this.state.projects : null;
+    apiCall.getProjectById(projects, projectId, res => {
+      if (res.error) {console.error(res.error)}
+      next(res.data);
+    });
   }
   // get user data from api and assign it to state
   setUser = () => {
-    axios.get(this.state.apiUrl + '/auth')
-    .then(res => {
-      this.setState({
-        user: res.data
-      });
-    })
+    // Testing apiCall
+    apiCall.getCurrentUser(res => {
+      console.log('getCurrentUser', res.data);
+      if (res.error) {console.error(res.error)}
+      if (res.data) {
+        this.setState({user: res.data});
+      } else {
+        console.log('User not logged in');
+      }
+    });
   }
   // get user data from api
   getOneUser = (id, next) => {
-    axios.get(this.state.apiUrl + '/api/users/' + id)
-    .then(res => {
+    // Testing apiCall
+    apiCall.getUserById(id, res => {
+      if (res.error) {console.error(res.error)}
       next(res.data);
     });
   }
 
   // updates user data 
   postUser = (data) => {
-    axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
-    .then(res => {
-      console.log('update user success');
+    apiCall.postUser(data, () => {
       this.allProjects();
       this.setUser();
-    })
-    .catch(err => {
-      console.error('error posting user update', err);
     });
   }
 
   // creates new project
   newProject = (data) => {
-    axios.post(this.state.apiUrl + '/api/projects', data)
-    .then(res => {
-      this.allProjects();
-    })
-    .catch(err => {
-      console.error('error posting new project', err);
-    });
+    // This is now identical to this.updateProject()...
+    apiCall.postProject(data, this.allProjects());
   }
 
   // update project
   updateProject = (data) => {
-    axios.put(this.state.apiUrl + '/api/projects/' + data._id, data)
-    .then(res => {
-      this.allProjects();
-    })
-    .catch(err => {
-      console.error('update project error', err);
-    });
+    // This is now identical to this.newProject()...
+    apiCall.postProject(data, this.allProjects());
   }
 
   // delete project
   deleteProject = (data) => {
-    axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
-    .then(res => {
-      this.allProjects();
-    })
-    .catch(err => {
-      console.error('delete project error', err);
-    });
+    apiCall.deleteProject(data, this.allProjects());
   }
 
   // logout the user by setting the app state.user as null
