@@ -25,8 +25,6 @@ class ProjectCard extends Component {
         if (!filters || filters.length < 1) {
             return projects;
         } else {
-            let match = false;
-            
             filters.forEach(filter => {
                 let regex = new RegExp('\\b' + filter + '\\b', 'i');
                 projects = projects.filter(project => {
@@ -67,7 +65,7 @@ class ProjectCard extends Component {
                                     />
                                 );
                             } else {
-                                null
+                                return null
                             }
                         })}
                     </div>

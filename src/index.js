@@ -177,7 +177,7 @@ class App extends Component {
         }/>
         {/* Project full list view */}
         <Route exact path="/project/view/" render={(routeProps)=> {
-          {/* ProjectInfo component shows single project. Functions defined at parent level */}
+          // ProjectInfo component shows single project. Functions defined at parent level
           return <ProjectCard
             {...routeProps} 
             {...{
@@ -192,7 +192,7 @@ class App extends Component {
         }/>
         {/* Shows single project */}
         <Route path="/project/view/:id?" render={(routeProps)=> {
-          {/* ProjectInfo component shows single project. Functions defined at parent level */}
+          // ProjectInfo component shows single project. Functions defined at parent level
           return <ProjectInfo 
             {...routeProps} 
             {...{
