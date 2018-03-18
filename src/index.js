@@ -23,6 +23,7 @@ import UserEdit from './components/molecules/UserEdit';
 import ContactForm from './components/molecules/ContactForm';
 import About from "./components/organisms/About";
 import Footer from './components/molecules/Footer';
+import Dashboard from './components/molecules/Dashboard';
 
 // Loads environment variables with dotenv
 require('dotenv').load();
@@ -148,6 +149,30 @@ class App extends Component {
     });
   }
 
+  // once project is unfollowed or followed, matches the db value without calling db
+  updateUserProjects = (project_id) => {
+    // copy state
+    let { user } = this.state;
+    let { followedProjects } = user;
+    
+    // findindex of project that was followed
+    const projectIndex = followedProjects.findIndex((e) => {
+      return e === project_id;
+    });
+
+    // if project exists on array, remove it else add it
+    followedProjects = projectIndex !== -1
+      ? [ ...followedProjects.slice(0, projectIndex),
+          ...followedProjects.slice(projectIndex + 1)] 
+      : [...followedProjects, project_id]; 
+
+    // save new state
+    user.followedProjects = followedProjects;  
+    this.setState({
+      user
+    });
+  }
+
   // delete project
   deleteProject = (data) => {
     axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
@@ -204,8 +229,9 @@ class App extends Component {
                   {...{
                     projects: this.state.projects,
                     user: this.state.user,
-                    filters: this.state.filters,
                     limit: 6,
+                    updateProjects: this.updateUserProjects,
+                    filters: this.state.filters,
                     onFilterUpdate: this.updateFilter
                   }} 
                 />
@@ -228,6 +254,7 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
+              updateProjects: this.updateUserProjects,
               onFilterUpdate: this.updateFilter
             }} />
         }
@@ -290,7 +317,18 @@ class App extends Component {
                     getOneUser: this.getOneUser
               }}/>
         }}/>
-
+        {/* Shows all the projects followed by any one user */}
+        <Route path="/dashboard" render={(routeProps) => {
+            return <Dashboard
+                      {...routeProps}
+                      {... {
+                        user: this.state.user,
+                        projects: this.state.projects,
+                        limit: 6,
+                        updateProjects: this.updateUserProjects  
+                      }}
+                    />
+        }}/>
         {/* Footer component gets shown in every single page */}
       <Footer />
       </div>
