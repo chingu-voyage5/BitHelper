@@ -16,7 +16,7 @@ import { setProjects } from './actions/projects.js';
 import { connect } from 'react-redux';
 
 // Import stylesheets
-import "./stylesheets/main.css";
+import "./stylesheets/main.scss";
 
 // Import custom components
 import Nav from './components/molecules/Nav';
