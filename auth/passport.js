@@ -29,9 +29,9 @@ module.exports = function(passport) {
             if (!user) {
               user = new User();
               user.github.id = profile.id;
-              user.displayName = profile._json.name;
-              user.email = profile._json.email;
-              user.username = profile._json.login;
+              user.github.displayName = profile._json.name;
+              user.github.email = profile._json.email;
+              user.github.username = profile._json.login;
               user.avatar = profile._json.avatar_url;
 
               user.save(function(err) {
@@ -77,9 +77,11 @@ module.exports = function(passport) {
                 // if the user isnt in our database, create a new user
                 user = new User();
                 user.google.id = profile.id;
-                user.displayName = profile.displayName;
-                user.username = profile.displayName;
-                user.email = profile.emails[0].value;
+                user.google.displayName = profile.displayName;
+                user.google.username = profile.displayName;
+                user.google.email = profile.emails[0].value;
+
+                console.log(user);
 
                 // save the user
                 user.save(function(err) {
@@ -130,8 +132,8 @@ module.exports = function(passport) {
                 console.log("Facebook profile ", profile);
                 // set all of the facebook information in our user model
                 user.facebook.id = profile.id; // set the users facebook id
-                user.displayName = profile.displayName;
-                user.username = profile._json.name;
+                user.facebook.displayName = profile.displayName;
+                user.facebook.username = profile._json.name;
 
                 // save our user to the database
                 user.save(function(err) {

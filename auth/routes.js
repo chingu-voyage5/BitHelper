@@ -9,9 +9,6 @@ module.exports = function(router) {
       res.json({ message: 'API Initialized!'});
     });
 
-
-
-
     // PROJECT ROUTES
 
     // Function for setting properties of a Project schema object

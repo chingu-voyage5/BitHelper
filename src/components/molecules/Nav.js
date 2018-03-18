@@ -62,7 +62,6 @@ class Nav extends Component {
     return <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}>
-            {" "}
             <img id="navbar-brand" className="logo" src={logo} alt="BitHelper" />
           </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +91,6 @@ class Nav extends Component {
                     </ul>
                   </li> : <li>
                     <button className="btn" onClick={this.toggleModal}>
-                      {" "}
                       Login or Sign up
                     </button>
 

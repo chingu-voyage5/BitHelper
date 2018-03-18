@@ -52,7 +52,7 @@ class ProjectInfo extends Component {
 
   handleClick = (project_id, e) => {
     e.stopPropagation();
-    let self = this;
+    // let self = this;
     if (this.props.user) {
         axios.post(`/api/follow/${project_id}`).then(res => {
             this.props.updateProjects(project_id);
