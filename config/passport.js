@@ -12,7 +12,7 @@ module.exports = function(passport) {
       {
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: "/auth/github/callback",
+        callbackURL: process.env.GITHUB_CALLBACK,
         proxy: true
       },
       function(accessToken, refreshToken, profile, cb) {
@@ -56,7 +56,7 @@ module.exports = function(passport) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/auth/google/callback"
+        callbackURL: process.env.GOOGLE_CALLBACK
       },
       function(token, refreshToken, profile, done) {
         // make the code asynchronous
@@ -103,7 +103,7 @@ module.exports = function(passport) {
         // pull in our app id and secret from our auth.js file
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "/auth/facebook/callback"
+        callbackURL: process.env.FACEBOOK_CALLBACK
       },
 
       // facebook will send back the token and profile
