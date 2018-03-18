@@ -9,9 +9,6 @@ import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
-
-
-import Input from "../atoms/Input";
 import SearchBox from '../molecules/SearchBox';
 
 class ProjectCard extends Component {
