@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux'
+
 // Provider allows for each individual component to connect to the store via "connect"
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/index.js';
