@@ -27,6 +27,6 @@ BitHelper is a platform to help people complete their old and unfinished develop
 | All the projects where I helped are showed on my profile                     | v2      | :red_circle: |
 | I can search through projects                                                                             | v2      | :red_circle: |
 | I can tag my own projects with "Help wanted", "In progress" and "Completed project"                       | v2      | :red_circle: |
-| As a help seeker, I can reward helpers with points                                                        | v3     | :red_circle: |
+| When a project is completed, "bit" points are rewarded to all helpers                                                     | v3     | :red_circle: |
 | As a helper, I see all points in my profile                                                        | v3     | :red_circle: |
 
