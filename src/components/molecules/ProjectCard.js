@@ -4,16 +4,20 @@
 ------------------------*/
 
 import React, { Component } from 'react';
+import axios from 'axios';
+import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
+
+
 import Input from "../atoms/Input";
 import SearchBox from '../molecules/SearchBox';
 
-
 class ProjectCard extends Component {
-    // for filtering projects to show, by filter state
-    filterProjects = (projects, filters) => {
+
+      // for filtering projects to show, by filter state
+      filterProjects = (projects, filters) => {
         // if no filter is set, display all projects
 
         if (!filters || filters.length < 1) {
@@ -33,7 +37,21 @@ class ProjectCard extends Component {
             return projects;   
         }
     }
+
+    handleClick = (project_id, e) => {
+        console.log(e, 'this is e');
+        // Prevents link from activating router
+        e.stopPropagation();
+        
+        return axios.post(`/api/follow/${project_id}`)
+            .then(res => {
+                this.props.updateProjects(project_id);
+            });
+    }
+    
     setProjects() {
+        let iconColor = 'red';
+
         if (this.props.projects.length > 0) {
             const filters = (this.props.filters) ? (this.props.filters.filter(item => {
                 return item.length > 1;
@@ -43,13 +61,28 @@ class ProjectCard extends Component {
                 ) : (
                     this.filterProjects(this.props.projects, filters)
                 );
+
             return projects.map((item,i) => {
                 if (!this.props.limit || i < this.props.limit) {
+
+                    if (this.props.user) {
+                        // if user is loggedIn, check whether proect in followed
+                        iconColor = this.props.user.followedProjects.includes(item._id)
+                        ? "#B7140E"
+                        : "#9E9E9E"
+                    }
+                    
                     return (
                         <div className="col-md-3 card"
                             onClick={() => this.props.history.push('/project/view/' + item._id)}
                             key={i}
                             id={item._id}>
+                            {this.props.user && this.props.user.projects.includes(item._id) === false && <FaStar 
+                                className={this.props.user.followedProjects.includes(item._id) ? "follow-icon active-icon" : "follow-icon"} 
+                                size={32} 
+                                color={iconColor} 
+                                onClick={this.handleClick.bind(this, item._id)}
+                            />}
                             <div className="card-body">
                                 <p className="card-category">{item.category}</p>
                                 <h4 className="card-title">{item.title}</h4>

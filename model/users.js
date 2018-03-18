@@ -14,6 +14,7 @@ const UsersSchema = new Schema({
     skillset: [String],   //array of strings, like "React" and "Nodejs"
     email: String,        //email address
     projects: [String],  //array of project IDs that this user has created
+    followedProjects: [String],
     google: {
         id: String,
     },

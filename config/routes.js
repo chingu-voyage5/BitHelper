@@ -168,4 +168,38 @@ module.exports = function(router) {
       res.json({ message: 'User has been deleted' })
     })
   });
+
+  router.route("/follow/:project_id").post(function(req, res) {
+
+    // if user is not logged in reject
+    if (!req.user) {
+      return res.json({ message: "user does not exist" });
+    }
+
+    const { _id: user_id } = req.user;
+    const { project_id } = req.params;
+
+    // Find existing project
+    Project.findById(project_id, function(err, project) {
+      if (err) res.err(err);
+
+      // Search for existing User
+      User.findById(user_id, function(err, user) {
+        if (err) res.err(err);
+
+        // Find project_id Users project array;
+        const projectExists = user.projects.includes(project_id);
+
+        // If project_id does exist either remove or add to projects array
+        const options = projectExists ? { $pull: { projects: project_id } } : { $addToSet: { projects: project_id } };
+
+        // update user information
+        user.update(options, function(err, update) {
+          if (err) return res.err(err);
+
+          return res.json({ message: "Update Successful" });
+        });
+      });
+    });
+  });
 }
