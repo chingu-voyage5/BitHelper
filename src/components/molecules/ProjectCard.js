@@ -48,10 +48,11 @@ class ProjectCard extends Component {
         console.log(e, 'this is e');
         // Prevents link from activating router
         e.stopPropagation();
-        
+        console.log(project_id, 'this is project_id');
         return axios.post(`/api/follow/${project_id}`)
             .then(res => {
-                this.props.updateProjects(project_id);
+                console.log('Follow response', res);
+                //this.props.updateProjects(project_id);
             });
     }
     render() {
