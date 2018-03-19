@@ -4,11 +4,13 @@
 ------------------------*/
 
 import React, { Component } from 'react';
+import axios from 'axios';
+import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import Loader from "../atoms/Loader";
-import SearchBox from '../molecules/SearchBox';
 
+import SearchBox from '../molecules/SearchBox';
 
 class ProjectCard extends Component {
     constructor(props) {
@@ -42,9 +44,20 @@ class ProjectCard extends Component {
           filters: filterArray
         });
     }
+    handleClick = (project_id, e) => {
+        console.log(e, 'this is e');
+        // Prevents link from activating router
+        e.stopPropagation();
+        
+        return axios.post(`/api/follow/${project_id}`)
+            .then(res => {
+                this.props.updateProjects(project_id);
+            });
+    }
     render() {
         const partial = Boolean(this.state.limit);
         let projects = this.filterProjects(this.props.projects, this.state.filters);
+
         if (projects) {
             return (
                 <div className={partial ? "container" : "container project-cards-full"}
@@ -60,8 +73,10 @@ class ProjectCard extends Component {
                                 return (
                                     <Card 
                                         key={project._id}
+                                        user={this.props.user}
                                         project={project}
                                         onClick={() => this.props.history.push('/project/view/' + project._id)}
+                                        onFollow={this.handleClick.bind(this, project._id)}
                                     />
                                 );
                             } else {
@@ -84,11 +99,26 @@ class ProjectCard extends Component {
     }
 }
 
-const Card = ({project, onClick}) => (
+const Card = ({user, project, onClick, onFollow}) => (
     <div className="col-md-3 card"
         onClick={onClick}
         key={project._id}
         id={project._id}>
+        {user ? (
+                <FaStar 
+                    className={user.followedProjects.includes(project._id) 
+                            ? "follow-icon active-icon" 
+                            : "follow-icon"} 
+                    size={32} 
+                    color={user.followedProjects.includes(project._id)
+                            ? "#B7140E"
+                            : "#9E9E9E"} 
+                    onClick={onFollow}
+                />
+            ) : (
+                null
+            )
+        }
         <div className="card-body">
             <p className="card-category">{project.category}</p>
             <h4 className="card-title">{project.title}</h4>

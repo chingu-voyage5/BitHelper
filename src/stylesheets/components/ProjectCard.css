@@ -3,12 +3,31 @@
   border-color: #FE3D3E;
   color: white;
   margin: 5px; }
-
-.btn:active,
-.btn:hover {
-  background-color: #fe7070;
-  border-color: #fe7070;
-  color: white; }
+  .btn:active, .btn:hover {
+    background-color: #fe7070;
+    border-color: #fe7070;
+    color: white; }
+  .btn--primary {
+    background-color: #F2F1EF;
+    color: #E63022;
+    border: none;
+    border-color: #eb5b50; }
+    .btn--primary:active, .btn--primary:hover {
+      background-color: #F2F1EF;
+      color: #E63022;
+      border-color: none; }
+    .btn--primary:focus {
+      border-color: #dbd8d3; }
+  .btn--secondary {
+    background-color: #4D8FAC;
+    color: #EEEEEE;
+    border: none; }
+    .btn--secondary:active, .btn--secondary:hover {
+      background-color: #4D8FAC;
+      color: #EEEEEE;
+      border-color: none; }
+    .btn--secondary:focus {
+      border-color: #6ea6be; }
 
 .material-card {
   background-color: white;
@@ -45,3 +64,22 @@
   color: #9E9E9E;
   font-size: 12px;
   margin-bottom: 0.2em; }
+
+.follow-icon {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  border: 1px solid #9E9E9E;
+  padding: 5px;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px #707070, 0 3px 6px #707070; }
+
+.follow-icon:active {
+  transform: translateY(0.1em);
+  box-shadow: none;
+  transition: 0.25s ease-in-out; }
+
+.active-icon {
+  border-color: #9ecaed;
+  box-shadow: none;
+  transition: 0.1s ease-in; }

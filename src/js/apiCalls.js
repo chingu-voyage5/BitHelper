@@ -4,6 +4,7 @@ import axios from 'axios';
 require('dotenv').load();
 
 const apiUrl = process.env.REACT_APP_APPURL || '';
+console.log('apiUrl', apiUrl);
 
 const apiCall = {
   // Retrieve all projects from server
@@ -48,9 +49,11 @@ const apiCall = {
   },
   // Get logged in user data from api and assign it to state
   getCurrentUser(next) {
+    console.log('api call getCurrentUser');
     axios.get(apiUrl + '/auth')
     .then(res => {
-      let data = (res.data.length > 0) ? res.data : null;
+      console.log('getCurrentUser Response', res);
+      let data = (res.data !== '') ? res.data : null;
       next({data: data});
     })
     .catch(err => {
@@ -94,6 +97,7 @@ const apiCall = {
       next({data: res.data});
     })
     .catch(err => {
+      console.log(err);
       next({error: err});
       throw err;
     });
