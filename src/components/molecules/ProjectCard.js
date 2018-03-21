@@ -52,7 +52,7 @@ class ProjectCard extends Component {
         return axios.post(`/api/follow/${project_id}`)
             .then(res => {
                 console.log('Follow response', res);
-                //this.props.updateProjects(project_id);
+                this.props.updateProjects(project_id);
             });
     }
     render() {
