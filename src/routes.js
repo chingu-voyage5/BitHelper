@@ -221,7 +221,6 @@ class App extends Component {
             {...{
               projects: this.props.projects,
               user: this.props.user,
-              updateProjects: this.updateProject,
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
