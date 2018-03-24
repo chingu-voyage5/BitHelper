@@ -23,7 +23,7 @@ import "./stylesheets/main.css";
 // Import custom components
 import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
-import ProjectCard from './components/molecules/ProjectCard';
+import ProjectList from './components/organisms/ProjectList';
 import ProjectInfo from './components/molecules/ProjectInfo';
 import ProjectEdit from './components/molecules/ProjectEdit';
 import UserInfo from './components/molecules/UserInfo';
@@ -76,8 +76,11 @@ class App extends Component {
   allProjects = () => {
     apiCall.getAllProjects(res => {
       if (res.error) {console.error(res.error)}
-      this.setState({projects: res.data}) // update state to response data
-      this.props.setProjects(res.data); // redux store
+      console.log('res.data', res.data);
+      if (res.data) {
+        this.setState({projects: res.data}); // update state to response data
+        this.props.setProjects(res.data); // redux store
+      }
     });
   }
   // get one project by ID
@@ -191,12 +194,12 @@ class App extends Component {
               }}/> ) :
             ( 
               <div>
-                {/* If user is logged out, render Header, ProjectCard and About components (Landing page) */ }
+                {/* If user is logged out, render Header, ProjectList and About components (Landing page) */ }
                 {/* Header component. */}
                 <Header user={this.props.user} />
 
-                {/* ProjectCard inherits route props, plus App is passed on as ProjectCard prop */}
-                <ProjectCard 
+                {/* ProjectList inherits route props, plus App is passed on as ProjectList prop */}
+                <ProjectList 
                   {...routeProps} 
                   {...{
                     projects: this.props.projects,
