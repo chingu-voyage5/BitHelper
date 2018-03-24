@@ -13,7 +13,8 @@ const ProjectCard = ({user, project, onClick, onFollow}) => (
         onClick={onClick}
         key={project._id}
         id={project._id}>
-        {user ? (
+        {/* Follow button shows only if user is logged in and not the owner */}
+        {(user && project.owner !== user._id) ? (
                 <FaStar 
                     className={user.followedProjects.includes(project._id) 
                             ? "follow-icon active-icon" 

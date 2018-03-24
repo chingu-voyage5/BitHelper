@@ -71,6 +71,7 @@ class ProjectList extends Component {
                     <div className="row justify-content-center">
                         {projects.map((project, i) => {
                             if (!partial || i < this.state.limit) {
+                            console.log('project', project);
                                 return (
                                     <ProjectCard 
                                         key={project._id}

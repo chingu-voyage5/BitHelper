@@ -8,7 +8,7 @@ import Button from '../atoms/Button.js';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
 
-import ProjectCard from './ProjectCard';
+import ProjectList from '../organisms/ProjectList';
 
 const followStyle = { float: "right", display: "inline-block" };
 
@@ -71,7 +71,7 @@ class ProjectInfo extends Component {
 
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
-      return <ProjectCard {...this.props} />;
+      return <ProjectList {...this.props} />;
     } else {
       const project = this.state.project;
       const owner = this.state.owner;
