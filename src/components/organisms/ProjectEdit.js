@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
 import Input from '../atoms/Input'
-import Dropdown from '../molecules/Dropdown.js'
+import Categories from '../molecules/Categories.js'
 
 class ProjectEdit extends Component {
     constructor(props) {
@@ -180,7 +180,7 @@ class ProjectEdit extends Component {
                     <fieldset>
                       {inputFields.map(item => {
                         if (item.name === 'categories') {
-                          return <Dropdown removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
+                          return <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
                         } 
 
                         return <Input onChange={this.onInputChange} data={item}/>;
