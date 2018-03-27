@@ -23,13 +23,16 @@ import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
 import ProjectCard from './components/molecules/ProjectCard';
 import ProjectInfo from './components/molecules/ProjectInfo';
-import ProjectEdit from './components/molecules/ProjectEdit';
+
 import UserInfo from './components/molecules/UserInfo';
 import UserEdit from './components/molecules/UserEdit';
 import ContactForm from './components/molecules/ContactForm';
-import About from "./components/organisms/About";
+
 import Footer from './components/molecules/Footer';
 import Dashboard from './components/molecules/Dashboard';
+
+import ProjectEdit from './components/organisms/ProjectEdit';
+import About from "./components/organisms/About";
 
 // Loads environment variables with dotenv
 require('dotenv').load();
