@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
-import Input from '../atoms/Input'
+import Input from '../atoms/Input';
 
 class ProjectEdit extends Component {
     constructor(props) {
@@ -22,13 +22,14 @@ class ProjectEdit extends Component {
         };
     }
     componentDidMount() {
+      console.log('project edit', this.props.match.params.id);
       // if user is not logged in and therefore user info is null, redirect to home
       // redirect to login page in the future
       if (!this.props.user) {
         setTimeout(() => {
             this.props.history.push('/');
         }, 3000);
-      } else if (this.props.edit) {
+      } else if (this.props.match.params.id) {
         // if editing a project, retrieve project data based on URL
         this.getProjectData();
       } else {
@@ -63,8 +64,9 @@ class ProjectEdit extends Component {
       this.props.handleSubmit(this.state);
       this.props.history.push('/');
     }
+    
     onFormReset = () => {
-      if (this.props.edit) {
+      if (this.props.match.params.id) {
         this.getProjectData();
       } else {
         this.setState({
@@ -140,7 +142,7 @@ class ProjectEdit extends Component {
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                  <h1>{this.props.title}</h1>
+                  <h1>{(this.props.match.params.id) ? 'Edit a Project' : 'Create New Project'}</h1>
                   <form onSubmit={this.onFormSubmit}>
                     <fieldset>
                       {inputFields.map(item => {

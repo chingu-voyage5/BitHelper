@@ -3,7 +3,7 @@
     shows footer
 ------------------------*/
 
-import React, { Component } from 'react';
+import React from 'react';
 import heart from "../../images/heart.svg"
 import github from "../../images/github-logo.svg"
 
