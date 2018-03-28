@@ -24,6 +24,10 @@ module.exports = function(router) {
       project.status = input.status;
       project.repoUrl = input.repoUrl;
       project.img = input.img;
+      project.users = [{
+        _id: input.owner,
+        status: 'owner'
+      }];
 
       return project;
     }
@@ -183,6 +187,30 @@ module.exports = function(router) {
     Project.findById(project_id, function(err, project) {
       if (err) res.err(err);
 
+      // Find status of user for this project
+      let userStatus = project.users.id(user_id);
+      if (userStatus) {
+        console.log('User Found', userStatus.status);
+        if (userStatus.status === 'following') {
+          // User is already following. Unfollow.
+          userStatus.remove();
+          console.log('Unfollowed', project);
+        }
+      } else {
+        // User not associated to project
+        // Add user as a follower
+        project.users.push({
+          _id: user_id,
+          status: 'following'
+        });
+        console.log('Followed', project);  
+      }
+      project.save(function(err, update) {
+        if (err) throw err;
+        console.log('Update Successful new version', update);
+        return res.json({ message: "Update Successful new version"});
+      });
+      /*
       // Search for existing User
       User.findById(user_id, function(err, user) {
         if (err) res.err(err);
@@ -200,6 +228,7 @@ module.exports = function(router) {
           return res.json({ message: "Update Successful" });
         });
       });
+      */
     });
   });
 }
