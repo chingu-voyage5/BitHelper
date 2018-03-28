@@ -180,8 +180,13 @@ class ProjectEdit extends Component {
                     <fieldset>
                       {inputFields.map(item => {
                         if (item.name === 'categories') {
-                          return <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
-                        } 
+                          return (
+                                <div>
+                                    <label className="control-label">Categories</label>
+                                    <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
+                                </div>
+                          )      
+                        }   
 
                         return <Input onChange={this.onInputChange} data={item}/>;
                       })}

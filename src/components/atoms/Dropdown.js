@@ -32,9 +32,9 @@ const Dropdown = (props) => {
     return (
         <div className="dropdown-container">
             <div className="arrow-top"></div>
-            <div className="header-block">
+            <div className="header-block" onClick={props.closeDropdown}>
                 <h5>Tags</h5>
-                <h6>{`Selected: ${items.length}`}</h6>
+                <h6>{`Selected: ${props.categories.length}`}</h6>
                 <FaAngleUp size={24} />
             </div>
             <div className="list-wrapper">

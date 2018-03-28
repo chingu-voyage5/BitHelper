@@ -20,14 +20,14 @@ const Categories = (props) => {
             </div>
             <div className="dropdown-button-container">
                 <button 
-                    style={buttonStyle} 
+                    className="btn" 
                     onClick={props.handleClick}
                 >
                     Select Categories
                     <FaAngleDown size={24} />
                 </button>
             </div>
-                {props.active && <Dropdown categories={props.categories} setActive={props.setActive} />}
+                {props.active && <Dropdown categories={props.categories} setActive={props.setActive} closeDropdown={props.handleClick}/>}
         </div>
     )
 };
