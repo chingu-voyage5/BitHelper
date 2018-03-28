@@ -37,7 +37,7 @@
 }
 
 .header-block {
-    background-color: #2f0d27;
+    background-color: #343a40;
     padding: .5rem .25rem;
     display: flex;
     flex-direction: row;
@@ -45,7 +45,9 @@
     align-items: center;
 
     @at-root {
-        h4, h5, h6, #{&} {
+        & > h5, h6, {
+            color: #E8E8E8;
+            font-size: 0.7em;
             margin: 0px;
         }
      }
@@ -91,6 +93,10 @@
     &--active {
         background-color: #87D37C ; 
       }
+
+    &:hover {
+        border: 1px solid #360036;
+    }
 }
 
 .tag-container {
@@ -109,4 +115,8 @@
 
 .dropdown-item {
     font-size: 0.75em;
+
+    &:hover {
+        background-color: inherit;
+    }
 }
