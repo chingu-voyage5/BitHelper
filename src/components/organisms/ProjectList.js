@@ -47,7 +47,7 @@ class ProjectList extends Component {
     handleClick = (project_id, e) => {
         console.log(e, 'this is e');
         // Prevents link from activating router
-        e.stopPropagation();
+        // e.stopPropagation();
         console.log(project_id, 'this is project_id');
         return axios.post(`/api/follow/${project_id}`)
             .then(res => {
