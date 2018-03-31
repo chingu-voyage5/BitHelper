@@ -225,7 +225,7 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              updateProjects: this.updateUserProjects
+              updateProjects: this.allProjects
             }} />
         }
         }/>

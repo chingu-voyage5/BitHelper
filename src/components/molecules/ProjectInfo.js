@@ -9,6 +9,9 @@ import Loader from "../atoms/Loader";
 import axios from 'axios';
 
 import ProjectList from '../organisms/ProjectList';
+import FollowLarge from '../atoms/FollowLarge';
+
+import projectStatus from '../../js/projectStatus';
 
 const followStyle = { float: "right", display: "inline-block" };
 
@@ -52,6 +55,7 @@ class ProjectInfo extends Component {
   };
 
   handleClick = (project_id, e) => {
+    console.log('e ProjectInfo', e);
     e.stopPropagation();
     if (this.props.user) {
         axios.post(`/api/follow/${project_id}`).then(res => {
@@ -77,7 +81,6 @@ class ProjectInfo extends Component {
       const owner = this.state.owner;
       const user = this.props.user;
       const isOwner = user && owner && user._id === owner._id;
-      const followed = user && this.props.user.followedProjects.includes(projectId);
 
       if (!project) {
         return <Loader />;
@@ -121,17 +124,13 @@ class ProjectInfo extends Component {
                   <hr />
                 </div>
                 {!isOwner && user && (
-                  <button 
-                    style={followStyle} 
-                    className={followed ? "btn btn--primary" : "btn btn--secondary"} 
-                    onClick={this.handleClick.bind(this, projectId)}>
-                    {followed && "Unfollow Project"}
-                    {!followed && "Follow Project"}
-                  </button>
+                  <FollowLarge
+                    follow={projectStatus.getFollowers(project).includes(user._id)}
+                    onFollow={this.handleClick.bind(this, projectId)}
+                  />
                 )}
                 <h1>{project.title}</h1>
                 <p>{project.description}</p>
-                <Button label="Back to main" />
                 <div className="row justify-content-between">
                   <div className="project-tech col-md-8">
                     <h3>Status</h3>
@@ -164,6 +163,7 @@ class ProjectInfo extends Component {
                 </div>
                 {buttons}
               </div>
+              <Button label="Back to main" redirect={'/'}/>
             </div>
           </div>
         </div>

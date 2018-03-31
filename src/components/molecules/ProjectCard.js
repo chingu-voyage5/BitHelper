@@ -4,7 +4,6 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import FollowSmall from '../atoms/FollowSmall';
@@ -32,7 +31,7 @@ const ProjectCard = ({user, project, onClick, onFollow}) => (
                 <p className="card-text">
                     {project.description}</p>
                 </Dotdotdot>
-            <Button label="More" />
+            <Button label="More" onClick={onClick}/>
         </div>
     </div>  
 );

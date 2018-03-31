@@ -1,9 +1,5 @@
-/*----------------------
-    PROJECT CARD COMPONENT:
-    shows little card with basic project info
-------------------------*/
-
 import React, { Component } from 'react';
+import FaStar from "react-icons/lib/fa/star";
 
 class FollowSmall extends Component {
     constructor(props) {
@@ -16,7 +12,7 @@ class FollowSmall extends Component {
         this.setState({
             follow: !this.state.follow
         });
-        this.props.onFollow();
+        this.props.onFollow(e);
     }
     render() {
         return (
