@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
+import FollowSmall from '../atoms/FollowSmall';
 
 import projectStatus from '../../js/projectStatus';
 
@@ -35,35 +36,5 @@ const ProjectCard = ({user, project, onClick, onFollow}) => (
         </div>
     </div>  
 );
-
-class FollowSmall extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            follow: this.props.follow
-        }
-    }
-    handleClick = (e) => {
-        this.setState({
-            follow: !this.state.follow
-        });
-        this.props.onFollow();
-    }
-    render() {
-        console.log('follow', this.state.follow);
-        return (
-            <FaStar 
-                className={this.state.follow
-                        ? "follow-icon active-icon" 
-                        : "follow-icon"} 
-                size={32} 
-                color={this.state.follow
-                        ? "#B7140E"
-                        : "#9E9E9E"} 
-                onClick={this.handleClick}
-            />
-        );
-    }
-}
 
 export default ProjectCard;

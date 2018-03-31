@@ -76,7 +76,6 @@ class App extends Component {
   allProjects = () => {
     apiCall.getAllProjects(res => {
       if (res.error) {console.error(res.error)}
-      console.log('res.data', res.data);
       if (res.data) {
         this.setState({projects: res.data}); // update state to response data
         this.props.setProjects(res.data); // redux store
@@ -176,6 +175,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('routes.js render');
     return(
       
     <Router>
