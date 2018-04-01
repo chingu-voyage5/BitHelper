@@ -99,7 +99,6 @@ class App extends Component {
   }
   // update project
   updateProject = (data) => {
-    console.log('updateProject', data);
     apiCall.postProject(data, this.allProjects());
   }
   // delete project
@@ -125,7 +124,6 @@ class App extends Component {
   setUser = () => {
     console.log('set user');
     apiCall.getCurrentUser(res => {
-      console.log('set user response', res);
       if (res.error) {console.error(res.error)}
       if (res.data) {
         this.setState({user: res.data});
@@ -175,7 +173,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('routes.js render');
     return(
       
     <Router>

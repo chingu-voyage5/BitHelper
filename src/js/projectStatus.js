@@ -1,17 +1,22 @@
 const projectStatus = {
   // Get status for all projects by user
-  myProjects(projects, userId) {
+  userProjects(projects, userId) {
     if (!projects) return null;
     return projects.reduce((result, project) => {
       if (!project.users) return result;
-      let status = project.users.find(user => {
+      let user = project.users.find(user => {
         return user._id === userId;
       });
-      if (status) {
-        result.push([project._id, status]);
-      } 
-      return result;
-    });
+      if (user) {
+        return [...result, {
+          projectId: project._id, 
+          projectTitle: project.title, 
+          status: user.status
+        }];
+      } else {
+        return result;
+      }
+    }, []);
   },
   // Get status of a user for a certain project
   getStatusById(projects, projectId, userId) {

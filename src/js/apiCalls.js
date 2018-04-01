@@ -49,10 +49,8 @@ const apiCall = {
   },
   // Get logged in user data from api and assign it to state
   getCurrentUser(next) {
-    console.log('api call getCurrentUser');
     axios.get(apiUrl + '/auth')
     .then(res => {
-      console.log('getCurrentUser Response', res);
       let data = (res.data !== '') ? res.data : null;
       next({data: data});
     })
