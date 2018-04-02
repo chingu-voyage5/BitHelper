@@ -15,7 +15,6 @@ const ProjectUsersSchema = new Schema({
 const ProjectsSchema = new Schema({
     id: String, 
     title: String,        //title of the project
-    owner: String,        //ID of the post creator ***To be moved to ProjectUsersSchema
     category: String,     //category of the project
     description: String,  //project description
     stack: [String],      //array of technologies used in the project

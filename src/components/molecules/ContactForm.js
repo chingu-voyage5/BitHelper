@@ -140,7 +140,7 @@ class ContactForm extends Component {
                                     </fieldset>
                                 </form>
                             </div>
-                            <Button label='Back to main'/>
+                            <Button label='Back to main' redirect={'/'}/>
                         </div>
                     </div>
                 </div>

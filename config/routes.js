@@ -17,7 +17,6 @@ module.exports = function(router) {
     // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
-      project.owner = input.owner;
       project.category = input.category;
       project.description = input.description;
       project.stack = input.stack;
@@ -39,7 +38,6 @@ module.exports = function(router) {
       user.avatar = input.avatar;
       user.skillset = input.skillset;
       user.email = input.email;
-      user.projects = input.projects;
 
       return user;
     }
