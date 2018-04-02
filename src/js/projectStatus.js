@@ -36,14 +36,6 @@ const projectStatus = {
   },
   // Get owner ID for a project
   getOwner(project) {
-    /*if (!projects) return null;
-    const project = projects.find(item => {
-      return item._id === projectId;
-    });
-    if (!project) {
-      console.log('projectStatus.getStatusById: Project not found')
-      return null;
-    }*/
     if (!project.users) return null;
     const found = project.users.find(user => {
       return user.status === 'owner';
@@ -53,14 +45,6 @@ const projectStatus = {
   },
   // Get all followers for a project
   getFollowers(project) {
-    /*if (!projects) return null;
-    const project = projects.find(item => {
-      return item._id === projectId;
-    });
-    if (!project) {
-      console.log('projectStatus.getStatusById: Project not found')
-      return null;
-    }*/
     if (!project.users) return null;
     const followers = project.users.filter(user => {
       return user.status === 'following';
