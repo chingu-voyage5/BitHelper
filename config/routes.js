@@ -56,24 +56,9 @@ module.exports = function(router) {
       let project = new Project();
       project = setProjectObj(req.body, project);
 
-      // add project ID to owner's data
-      User.findById(project.owner, function(err, user) {
-        // console.log('Add project to owner data', project);
-        if (err) { console.log(err) }
-        if (user) {
-          // save project to database
-          project.save(function(err) {
-            if (err) {'Error: Project could not be saved.'}
-          });
-          //save user with new project ID added
-          user.projects.push(project._id)
-          // console.log('new user profile', user);          
-          user.save(function(err) {
-            if (err) { console.log(err) }
-            res.send('Project successfully added.');
-          });
-        } else {
-            res.send('Error: Owner profile not found.')
+      project.save(function(err) {
+        if (err) {
+          res.send('New project save error', err);
         }
       });
     });

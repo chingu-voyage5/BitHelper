@@ -122,6 +122,10 @@ class App extends Component {
   }
   // get user data from api and assign it to state
   setUser = () => {
+    // set fake user for dev only
+    //this.props.setUser(fakeUser);
+
+    
     console.log('set user');
     apiCall.getCurrentUser(res => {
       if (res.error) {console.error(res.error)}
