@@ -55,7 +55,7 @@ class ProjectEdit extends Component {
     handleClick = (e) => {
       // stop dropdown from closing
       e.stopPropagation();
-      
+
       return this.setState({
         active: !this.state.active
       })
@@ -82,7 +82,7 @@ class ProjectEdit extends Component {
         this.setState({
           title: "",
           owner: "",
-          categories: "",
+          categories: [],
           description: "",
           stack: "",
           status: "",
