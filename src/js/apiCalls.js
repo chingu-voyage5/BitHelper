@@ -90,7 +90,7 @@ const apiCall = {
   // creates new project or updates a project
   postProject(data, next) {
     const id = data._id || '';
-    axios.post(apiUrl + '/api/projects' + id, data)
+    axios.put(apiUrl + '/api/projects/' + id, data)
     .then(res => {
       next({data: res.data});
     })

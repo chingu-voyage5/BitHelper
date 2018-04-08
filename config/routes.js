@@ -51,8 +51,8 @@ module.exports = function(router) {
         res.json(projects)
       });
     })
-    // post new projects to the database
-    .post(function(req, res) {
+    // create new projects on the database
+    .put(function(req, res) {
       let project = new Project();
       project = setProjectObj(req.body, project);
 
@@ -74,7 +74,8 @@ module.exports = function(router) {
     })
     // The put updates project based on the ID passed to the route
     .put(function(req, res) {
-     Project.findById(req.params.project_id, function(err, project) {
+      console.log('Post projects', req.body);
+      Project.findById(req.params.project_id, function(err, project) {
        if (err) { res.send(err); }
        if (project) {
         project = setProjectObj(req.body, project)
