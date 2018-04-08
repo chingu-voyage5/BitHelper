@@ -24,14 +24,13 @@ class ProjectEdit extends Component {
         };
     }
     componentDidMount() {
-      console.log('project edit', this.props.match.params.id);
       // if user is not logged in and therefore user info is null, redirect to home
       // redirect to login page in the future
       if (!this.props.user) {
         setTimeout(() => {
             this.props.history.push('/');
         }, 3000);
-      } else if (this.props.match.params.id) {
+      } else if (this.props.edit) {
         // if editing a project, retrieve project data based on URL
         this.getProjectData();
       } else {
@@ -53,11 +52,7 @@ class ProjectEdit extends Component {
         });
     }
 
-    handleClick = (e) => {
-      
-      e.stopPropagation();
-      console.log('handleClick called');
-      
+    handleClick = () => {
       return this.setState({
         active: !this.state.active
       })
@@ -77,9 +72,8 @@ class ProjectEdit extends Component {
       this.props.handleSubmit(this.state);
       this.props.history.push('/');
     }
-    
     onFormReset = () => {
-      if (this.props.match.params.id) {
+      if (this.props.edit) {
         this.getProjectData();
       } else {
         this.setState({
@@ -95,10 +89,7 @@ class ProjectEdit extends Component {
       }
     }
 
-    setActive = (item, e) => {
-        // prevent container onclick from closing dropdown
-        e.stopPropagation();
-
+    setActive = (item) => {
       console.log(item, 'this is item');
       let { categories } = this.state;
       const index = categories.indexOf(item.title);
@@ -121,13 +112,6 @@ class ProjectEdit extends Component {
       return this.setState({
         categories
       });
-    }
-
-    // Closes the dropdown when clicking off the dropdown
-    closeFocus = () => {
-      this.setState({
-        active: false,
-      })
     }
 
     render() {
@@ -187,11 +171,11 @@ class ProjectEdit extends Component {
           }
         ];
         return (
-          <div className="container" onClick={() => this.closeFocus()}>
+          <div className="container">
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                  <h1>{(this.props.match.params.id) ? 'Edit a Project' : 'Create New Project'}</h1>
+                  <h1>{this.props.title}</h1>
                   <form onSubmit={this.onFormSubmit}>
                     <fieldset>
                       {inputFields.map(item => {
@@ -199,14 +183,7 @@ class ProjectEdit extends Component {
                           return (
                                 <div>
                                     <label className="control-label">Categories</label>
-                                    <Categories 
-                                      removeTag={this.removeTag} 
-                                      categories={this.state.categories} 
-                                      setActive={this.setActive} 
-                                      handleClick={this.handleClick} 
-                                      active={this.state.active}
-                                      setFocus={this.setFocus}
-                                      />
+                                    <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
                                 </div>
                           )      
                         }   

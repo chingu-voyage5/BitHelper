@@ -7,6 +7,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 class Button extends Component {
+  constructor(props){
+    super(props);
+  }
   handleClick = (e) => {
     if (this.props.onClick) {
       this.props.onClick(this.props.label);

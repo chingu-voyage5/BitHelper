@@ -3,7 +3,7 @@
     display a gif of a wheel when pages are loading slowly
 ------------------------*/
 
-import React from 'react';
+import React, { Component } from 'react';
 import loader from "../../images/loader.gif";
 
 
