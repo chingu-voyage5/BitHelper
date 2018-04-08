@@ -105,9 +105,11 @@ const apiCall = {
   deleteProject(data, next) {
     axios.delete(apiUrl + '/api/projects/' + data._id)
     .then(res => {
+      console.log('project deleted', res.data);
       next({data: res.data});
     })
     .catch(err => {
+      console.log('project delete error', err);
       next({error: err});
       throw err;
     });

@@ -23,10 +23,7 @@ module.exports = function(router) {
       project.status = input.status;
       project.repoUrl = input.repoUrl;
       project.img = input.img;
-      project.users = [{
-        _id: input.owner,
-        status: 'owner'
-      }];
+      project.users = input.users;
 
       return project;
     }

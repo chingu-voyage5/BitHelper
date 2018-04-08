@@ -46,6 +46,7 @@ class ProjectInfo extends Component {
     }
   };
   getOwner = ownerId => {
+    console.log('get owner', ownerId);
     this.props.getOneUser(ownerId, profile => {
       let owner = profile && profile.displayName ? profile : null;
       this.setState({
@@ -68,6 +69,7 @@ class ProjectInfo extends Component {
 
   handleDelete = () => {
     this.props.deleteProject(this.state.project);
+    this.props.history.push('/');
   };
   render() {  
     const projectId = this.props.match.params.id;
@@ -77,6 +79,7 @@ class ProjectInfo extends Component {
     const isOwner = user && owner && user._id === owner._id;
     let buttons = null;
 
+    console.log('render', project);
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
       return <ProjectList {...this.props} />;
