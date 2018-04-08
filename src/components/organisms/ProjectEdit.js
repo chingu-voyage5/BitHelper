@@ -52,7 +52,10 @@ class ProjectEdit extends Component {
         });
     }
 
-    handleClick = () => {
+    handleClick = (e) => {
+      // stop dropdown from closing
+      e.stopPropagation();
+      
       return this.setState({
         active: !this.state.active
       })
@@ -84,12 +87,16 @@ class ProjectEdit extends Component {
           stack: "",
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          active: false,
         });
       }
     }
 
-    setActive = (item) => {
+    setActive = (item, e) => {
+      // prevent dropdown from closing
+      e.stopPropagation();
+
       console.log(item, 'this is item');
       let { categories } = this.state;
       const index = categories.indexOf(item.title);
@@ -112,6 +119,12 @@ class ProjectEdit extends Component {
       return this.setState({
         categories
       });
+    }
+
+    removeFocus = () => {
+      this.setState({
+        active: false,
+      })
     }
 
     render() {
@@ -171,7 +184,7 @@ class ProjectEdit extends Component {
           }
         ];
         return (
-          <div className="container">
+          <div className="container" onClick={this.removeFocus}>
             <div className="row">
               <div className="col">
                 <div className="material-card">
