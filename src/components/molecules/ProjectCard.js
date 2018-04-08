@@ -4,26 +4,21 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import FaStar from "react-icons/lib/fa/star";
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
+import FollowSmall from '../atoms/FollowSmall';
+
+import projectStatus from '../../js/projectStatus';
 
 const ProjectCard = ({user, project, onClick, onFollow}) => (
     <div className="col-md-3 card"
-        onClick={onClick}
         key={project._id}
         id={project._id}>
         {/* Follow button shows only if user is logged in and not the owner */}
-        {(user && project.owner !== user._id) ? (
-                <FaStar 
-                    className={user.followedProjects.includes(project._id) 
-                            ? "follow-icon active-icon" 
-                            : "follow-icon"} 
-                    size={32} 
-                    color={user.followedProjects.includes(project._id)
-                            ? "#B7140E"
-                            : "#9E9E9E"} 
-                    onClick={onFollow}
+        {(user && projectStatus.getOwner(project) !== user._id) ? (
+                <FollowSmall 
+                    follow={projectStatus.getFollowers(project).includes(user._id)} 
+                    onFollow={onFollow} 
                 />
             ) : (
                 null
@@ -36,7 +31,7 @@ const ProjectCard = ({user, project, onClick, onFollow}) => (
                 <p className="card-text">
                     {project.description}</p>
                 </Dotdotdot>
-            <Button label="More" />
+            <Button label="More" onClick={onClick}/>
         </div>
     </div>  
 );

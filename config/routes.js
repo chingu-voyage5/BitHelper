@@ -17,13 +17,13 @@ module.exports = function(router) {
     // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
-      project.owner = input.owner;
       project.category = input.category;
       project.description = input.description;
       project.stack = input.stack;
       project.status = input.status;
       project.repoUrl = input.repoUrl;
       project.img = input.img;
+      project.users = input.users;
 
       return project;
     }
@@ -35,7 +35,6 @@ module.exports = function(router) {
       user.avatar = input.avatar;
       user.skillset = input.skillset;
       user.email = input.email;
-      user.projects = input.projects;
 
       return user;
     }
@@ -49,29 +48,14 @@ module.exports = function(router) {
         res.json(projects)
       });
     })
-    // post new projects to the database
-    .post(function(req, res) {
+    // create new projects on the database
+    .put(function(req, res) {
       let project = new Project();
       project = setProjectObj(req.body, project);
 
-      // add project ID to owner's data
-      User.findById(project.owner, function(err, user) {
-        // console.log('Add project to owner data', project);
-        if (err) { console.log(err) }
-        if (user) {
-          // save project to database
-          project.save(function(err) {
-            if (err) {'Error: Project could not be saved.'}
-          });
-          //save user with new project ID added
-          user.projects.push(project._id)
-          // console.log('new user profile', user);          
-          user.save(function(err) {
-            if (err) { console.log(err) }
-            res.send('Project successfully added.');
-          });
-        } else {
-            res.send('Error: Owner profile not found.')
+      project.save(function(err) {
+        if (err) {
+          res.send('New project save error', err);
         }
       });
     });
@@ -87,7 +71,8 @@ module.exports = function(router) {
     })
     // The put updates project based on the ID passed to the route
     .put(function(req, res) {
-     Project.findById(req.params.project_id, function(err, project) {
+      console.log('Post projects', req.body);
+      Project.findById(req.params.project_id, function(err, project) {
        if (err) { res.send(err); }
        if (project) {
         project = setProjectObj(req.body, project)
@@ -183,6 +168,30 @@ module.exports = function(router) {
     Project.findById(project_id, function(err, project) {
       if (err) res.err(err);
 
+      // Find status of user for this project
+      let userStatus = project.users.id(user_id);
+      if (userStatus) {
+        console.log('User Found', userStatus.status);
+        if (userStatus.status === 'following') {
+          // User is already following. Unfollow.
+          userStatus.remove();
+          console.log('Unfollowed', project);
+        }
+      } else {
+        // User not associated to project
+        // Add user as a follower
+        project.users.push({
+          _id: user_id,
+          status: 'following'
+        });
+        console.log('Followed', project);  
+      }
+      project.save(function(err, update) {
+        if (err) throw err;
+        console.log('Update Successful new version', update);
+        return res.json({ message: "Update Successful new version"});
+      });
+      /*
       // Search for existing User
       User.findById(user_id, function(err, user) {
         if (err) res.err(err);
@@ -200,6 +209,7 @@ module.exports = function(router) {
           return res.json({ message: "Update Successful" });
         });
       });
+      */
     });
   });
 }

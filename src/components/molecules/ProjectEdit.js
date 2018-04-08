@@ -12,13 +12,13 @@ class ProjectEdit extends Component {
         super(props);
         this.state = {
           title: "",
-          owner: "",
           category: "",
           description: "",
           stack: [],
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          users: []
         };
     }
     componentDidMount() {
@@ -37,7 +37,10 @@ class ProjectEdit extends Component {
         // NOTE I've changed the owner info to user ID, because displayname can be changed
         // and therefore cannot be used to identify the user.
         this.setState({
-          owner: this.props.user._id
+          users: [{
+              _id: this.props.user._id,
+              status: 'owner'
+          }]
         });
       }
     }
@@ -60,6 +63,7 @@ class ProjectEdit extends Component {
       this.setState(...this.state, newValue);
     }
     onFormSubmit = (e) => {
+      let data = {...this.state};
       e.preventDefault();
       this.props.handleSubmit(this.state);
       this.props.history.push('/');
@@ -71,7 +75,6 @@ class ProjectEdit extends Component {
       } else {
         this.setState({
           title: "",
-          owner: "",
           category: "",
           description: "",
           stack: "",

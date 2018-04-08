@@ -49,10 +49,8 @@ const apiCall = {
   },
   // Get logged in user data from api and assign it to state
   getCurrentUser(next) {
-    console.log('api call getCurrentUser');
     axios.get(apiUrl + '/auth')
     .then(res => {
-      console.log('getCurrentUser Response', res);
       let data = (res.data !== '') ? res.data : null;
       next({data: data});
     })
@@ -92,7 +90,7 @@ const apiCall = {
   // creates new project or updates a project
   postProject(data, next) {
     const id = data._id || '';
-    axios.post(apiUrl + '/api/projects' + id, data)
+    axios.put(apiUrl + '/api/projects/' + id, data)
     .then(res => {
       next({data: res.data});
     })
@@ -107,9 +105,11 @@ const apiCall = {
   deleteProject(data, next) {
     axios.delete(apiUrl + '/api/projects/' + data._id)
     .then(res => {
+      console.log('project deleted', res.data);
       next({data: res.data});
     })
     .catch(err => {
+      console.log('project delete error', err);
       next({error: err});
       throw err;
     });

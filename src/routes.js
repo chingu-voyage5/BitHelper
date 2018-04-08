@@ -76,7 +76,6 @@ class App extends Component {
   allProjects = () => {
     apiCall.getAllProjects(res => {
       if (res.error) {console.error(res.error)}
-      console.log('res.data', res.data);
       if (res.data) {
         this.setState({projects: res.data}); // update state to response data
         this.props.setProjects(res.data); // redux store
@@ -100,7 +99,6 @@ class App extends Component {
   }
   // update project
   updateProject = (data) => {
-    console.log('updateProject', data);
     apiCall.postProject(data, this.allProjects());
   }
   // delete project
@@ -124,9 +122,12 @@ class App extends Component {
   }
   // get user data from api and assign it to state
   setUser = () => {
+    // set fake user for dev only
+    //this.props.setUser(fakeUser);
+
+    
     console.log('set user');
     apiCall.getCurrentUser(res => {
-      console.log('set user response', res);
       if (res.error) {console.error(res.error)}
       if (res.data) {
         this.setState({user: res.data});
@@ -204,7 +205,7 @@ class App extends Component {
                   {...{
                     projects: this.props.projects,
                     user: this.props.user,
-                    updateProjects: this.updateUserProjects
+                    updateProjects: this.allProjects
                   }} 
                 />
                 {/* About component */}
@@ -225,7 +226,7 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              updateProjects: this.updateUserProjects
+              updateProjects: this.allProjects
             }} />
         }
         }/>
