@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from '../atoms/Button';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText }  from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input }  from "reactstrap";
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";
 import githubLogin from "../../images/github-login.svg";
@@ -81,10 +81,18 @@ class Nav extends Component {
             <div>
               <ul className="nav navbar-nav">
                 {this.props.user ? <li className="dropdown">
-                    <img id="avatar" className="nav-avatar-img dropdown-toggle" data-toggle="dropdown" src={this.props.user.avatar} onError={e => {
+                    <img 
+                      id="avatar" 
+                      className="nav-avatar-img dropdown-toggle" 
+                      data-toggle="dropdown" 
+                      alt="avatar"
+                      src={this.props.user.avatar} 
+                      onError={e => {
                         console.log("no avatar", e.target.src);
                         e.target.src = defaultAvatar;
-                      }} width="40px" height="40px" />
+                      }} 
+                      width="40px" 
+                      height="40px" />
                     <ul className="dropdown-menu dropdown-menu-right">
                       {this.state.items.map(item => {
                         return <li key={item} className="nav-dropdown-item" id={item.toLowerCase()} onClick={this.handleClick}>

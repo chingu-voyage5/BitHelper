@@ -10,6 +10,8 @@ import Tag from '../atoms/Tag';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
 
+import ProjectList from '../organisms/ProjectList';
+
 const followStyle = { float: "right", display: "inline-block" };
 
 class ProjectInfo extends Component {
@@ -17,7 +19,8 @@ class ProjectInfo extends Component {
     super(props);
     this.state = {
       project: null,
-      owner: null
+      owner: null,
+      focus: null,
     };
   }
   componentDidMount() {
@@ -53,7 +56,6 @@ class ProjectInfo extends Component {
 
   handleClick = (project_id, e) => {
     e.stopPropagation();
-    let self = this;
     if (this.props.user) {
         axios.post(`/api/follow/${project_id}`).then(res => {
             this.props.updateProjects(project_id);
@@ -72,7 +74,7 @@ class ProjectInfo extends Component {
 
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
-      return <ProjectCard {...this.props} />;
+      return <ProjectList {...this.props} />;
     } else {
       const project = this.state.project;
       const owner = this.state.owner;
@@ -110,7 +112,7 @@ class ProjectInfo extends Component {
       }
 
       return (
-        <div className="container">
+        <div className="container" onClick={() => this.setFocus}>
           <div className="row ">
             <div className="col">
               <div className="material-card">
@@ -158,9 +160,8 @@ class ProjectInfo extends Component {
                 <div className="row d-flex justify-content-center">
                   {project.img.map(imgUrl => {
                     return (
-                      <div>
+                      <div key={imgUrl}>
                         <img
-                          key={imgUrl}
                           src={imgUrl}
                           className="img-fluid screenshots"
                           width="300px"
