@@ -74,7 +74,7 @@
         "start-server": "node scripts/build.js && nodemon server.js",
         "build": "node scripts/build.js",
         "test": "node scripts/test.js --env=jsdom",
-        "postinstall": "npm run build-css && node scripts/build.js"
+        "postinstall": "node scripts/build.js"
     },
     "jest": {
         "collectCoverageFrom": [

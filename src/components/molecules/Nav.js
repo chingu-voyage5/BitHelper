@@ -42,11 +42,6 @@ class Nav extends Component {
       case "profile":
         this.props.history.push("/user/view/" + this.props.user._id);
         break;
-      case "github-login":
-        document.cookie = "redirect=" + window.location.pathname;
-        console.log("login clicked", window.location.pathname);
-        window.location = "/auth/github/";
-        break;
       case "logout":
         this.props.history.push("/");
         this.props.logoutUser();
@@ -99,13 +94,13 @@ class Nav extends Component {
                         Login or sign up
                       </ModalHeader>
                       <ModalBody className="text-center">
-                        <a href="auth/github">
+                        <a href={window.location.origin + "/auth/github/"}>
                           <img src={githubLogin} className="social-login" alt="Sign in with GitHub" />
                         </a>
-                        <a href="auth/google">
+                        <a href={`${window.location.origin}/auth/google/`}>
                           <img src={googleLogin} className="social-login" alt="Sign in with Google" />
                         </a>
-                        <a href="auth/facebook">
+                        <a href={`${window.location.origin}/auth/facebook/`}>
                           <img src={facebookLogin} className="social-login" alt="Sign in with Facebook." />
                         </a>
                         <p>
