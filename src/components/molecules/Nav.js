@@ -53,7 +53,7 @@ class Nav extends Component {
     }
   };
   render() {
-    // console.log("Nav", this.props);
+    console.log("Nav", this.props);
     return <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}>

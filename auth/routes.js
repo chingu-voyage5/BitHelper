@@ -29,7 +29,7 @@ module.exports = function(router) {
     const setUserObj = (input, user) => {
       user.username = input.username;
       user.displayName = input.displayName;
-      user.avatar = input.avatar;
+      user.avatar = input.avatar || '';
       user.skillset = input.skillset;
       user.email = input.email;
       user.projects = input.projects;
