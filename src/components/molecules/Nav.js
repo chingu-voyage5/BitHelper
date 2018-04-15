@@ -13,6 +13,7 @@ import defaultAvatar from "../../images/default-avatar.png";
 import githubLogin from "../../images/github-login.svg";
 import facebookLogin from "../../images/facebook-login.svg";
 import googleLogin from "../../images/google-login.svg";
+import LoginForm from './LoginForm';
 
 
 class Nav extends Component {
@@ -106,29 +107,13 @@ class Nav extends Component {
                         <p>
                           <strong>or sign in with your email</strong>
                         </p>
-                        <Form action="/auth/login" method="POST">
-                          <FormGroup>
-                            <Input type="email" name="email" className="local-login" id="email-login" placeholder="Email" />
-                            <Input type="password" name="password" className="local-login" id="password-login" placeholder="Password" />
-                            <button type="submit" className="btn">
-                              Submit
-                            </button>
-                          </FormGroup>
-                        </Form>
+                        <LoginForm url='/auth/login'/>
                         <p>
                           <strong>
                             You don't have an account? Sign up
                           </strong>
                         </p>
-                        <Form action="/auth/register" method="POST">
-                          <FormGroup>
-                            <Input type="email" name="email" className="local-login" id="email-signup" placeholder="Email" />
-                            <Input type="password" name="password" className="local-login" id="password-signup" placeholder="Password" />
-                          </FormGroup>
-                          <button type="submit" className="btn">
-                            Submit
-                          </button>
-                        </Form>
+                        <LoginForm url='/auth/register'/>
                       </ModalBody>
                     </Modal>
                   </li>}
