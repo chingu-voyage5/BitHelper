@@ -44,6 +44,10 @@ module.exports = function(passport) {
               console.log('User found but no GitHub ID');
               if (!user.github.id) {
                 user.github.id = profile.id;
+                // if no avatar is set, use the GitHub avatar URL
+                if (user.avatar === '') {
+                  user.avatar = profile._json.avatar_url;
+                }
 
                 user.save(function(err) {
                   if (err) console.log(err);
