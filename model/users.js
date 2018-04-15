@@ -17,20 +17,20 @@ const UsersSchema = new Schema({
   followedProjects: [String],
   google: {
     id: String,
-    username: String,
-    displayName: String,
+    //username: String,
+    //displayName: String,
     //email: String
   },
   facebook: {
     id: String,
-    username: String,
-    displayName: String,
+    //username: String,
+    //displayName: String,
     //email: String
   },
   github: {
     id: String,
-    username: String,
-    displayName: String,
+    //username: String,
+    //displayName: String,
     //email: String
   },
   local: {
