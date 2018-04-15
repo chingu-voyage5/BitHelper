@@ -15,32 +15,45 @@ module.exports = function(passport) {
         callbackURL: process.env.GITHUB_CALLBACK,
         proxy: true
       },
-      function(accessToken, refreshToken, profile, cb) {
+      function(accessToken, refreshToken, profile, done) {
         // Look for the user in existing database
         User.findOne(
           {
-            "github.id": profile.id
+            "email": profile._json.email
           },
           function(err, user) {
             if (err) {
               return cb(err);
             }
             // No user was found... so create a new user with values from github
+            console.log('No user found. Create new profile');
             if (!user) {
               user = new User();
               user.github.id = profile.id;
-              user.github.displayName = profile._json.name;
-              user.github.email = profile._json.email;
-              user.github.username = profile._json.login;
+              user.displayName = profile._json.name;
+              user.email = profile._json.email;
+              user.username = profile._json.login;
               user.avatar = profile._json.avatar_url;
 
               user.save(function(err) {
                 if (err) console.log(err);
-                return cb(err, user);
+                return done(err, user);
               });
             } else {
-              // Round user. Return
-              return cb(err, user);
+              // Found user, but github id does not exist
+              console.log('User found but no GitHub ID');
+              if (!user.github.id) {
+                user.github.id = profile.id;
+
+                user.save(function(err) {
+                  if (err) console.log(err);
+                  return done(null, user);
+                })
+              } else {
+                // Found user with existing registered github id
+                console.log('User already exists with this GitHub ID');
+                return done(null, user);
+              }
             }
           }
         );
@@ -65,29 +78,39 @@ module.exports = function(passport) {
           // try to find the user based on their google id
           User.findOne(
             {
-              "google.id": profile.id
+              "email": profile.emails[0].value
             },
             function(err, user) {
               if (err) return done(err);
 
-              if (user) {
-                // if a user is found, log them in
-                return done(null, user);
-              } else {
+              if (!user) {
                 // if the user isnt in our database, create a new user
+                console.log('No user found. Creating new profile from Google');
                 user = new User();
                 user.google.id = profile.id;
-                user.google.displayName = profile.displayName;
-                user.google.username = profile.displayName;
-                user.google.email = profile.emails[0].value;
-
-                console.log(user);
-
+                user.displayName = profile.displayName;
+                user.username = profile.displayName;
+                user.email = profile.emails[0].value;
                 // save the user
                 user.save(function(err) {
                   if (err) throw err;
                   return done(null, user);
                 });
+              } else {
+                // if a user is found but no google id is stored
+                console.log('User found but no Google ID');
+                if (!user.google.id) {
+                  user.google.id = profile.id;
+
+                  user.save(function(err) {
+                    if (err) console.log(err);
+                    return done(null, user);
+                  })
+                } else {
+                  // if a user is found, log them in
+                  console.log('User already exists with this Google ID');
+                  return done(null, user);
+                }
               }
             }
           );
@@ -105,17 +128,19 @@ module.exports = function(passport) {
         // pull in our app id and secret from our auth.js file
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: process.env.FACEBOOK_CALLBACK
+        callbackURL: process.env.FACEBOOK_CALLBACK,
+        profileFields: ['id', 'displayName', 'email']
       },
 
       // facebook will send back the token and profile
       function(token, refreshToken, profile, done) {
         // asynchronous
         process.nextTick(function() {
+          console.log('Facebook profile', profile);
           // find the user in the database based on their facebook id
           User.findOne(
             {
-              "facebook.id": profile.id
+              "email": profile._json.email
             },
             function(err, user) {
               // if there is an error, stop everything and return that
@@ -123,27 +148,35 @@ module.exports = function(passport) {
               if (err) return done(err);
 
               // if the user is found, then log them in
-              if (user) {
-                return done(null, user); // user found, return that user
-              } else {
+              if (!user) {
                 // if there is no user found with that facebook id, create them
+                console.log('User not found. Creating new profile from Facebook');
                 user = new User();
-
-                console.log("Facebook profile ", profile);
                 // set all of the facebook information in our user model
                 user.facebook.id = profile.id; // set the users facebook id
-                user.facebook.displayName = profile.displayName;
-                user.facebook.username = profile._json.name;
-
+                user.displayName = profile.displayName;
+                user.username = profile._json.name;
+                user.email = profile._json.email;
                 // save our user to the database
                 user.save(function(err) {
-                  if (err) {
-                    throw err;
-                  }
-                  console.log(user);
+                  if (err) console.log(err);
                   // if successful, return the new user
                   return done(null, user);
                 });
+              } else {
+                if (!user.facebook.id) {
+                  // User is found but no facebook id
+                  console.log('User found but no Facebook ID');
+                  user.facebook.id = profile.id; // set the users facebook id
+
+                  user.save(function(err) {
+                    if (err) console.log(err);
+                    return done(null, user);
+                  });
+                } else {
+                  console.log('User found with existing Facebook ID');
+                  return done(null, user); // user found, return that user
+                }
               }
             }
           );

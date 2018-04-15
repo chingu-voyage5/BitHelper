@@ -9,6 +9,7 @@ const Schema = mongoose.Schema;
 //the shape of your database entries.
 const UsersSchema = new Schema({
   username: String, //username
+  email: String,
   displayName: String, //display name
   avatar: String, //avatar image URL, can be empty
   skillset: [String], //array of strings, like "React" and "Nodejs"
@@ -18,22 +19,22 @@ const UsersSchema = new Schema({
     id: String,
     username: String,
     displayName: String,
-    email: String
+    //email: String
   },
   facebook: {
     id: String,
     username: String,
     displayName: String,
-    email: String
+    //email: String
   },
   github: {
     id: String,
     username: String,
     displayName: String,
-    email: String
+    //email: String
   },
   local: {
-    email: String,
+    //email: String,
     password: String
   }
 });
