@@ -18,7 +18,7 @@ module.exports = function(router) {
     const setProjectObj = (input, project) => {
       project.title = input.title;
       project.owner = input.owner;
-      project.category = input.category;
+      project.categories = input.categories;
       project.description = input.description;
       project.stack = input.stack;
       project.status = input.status;
@@ -196,7 +196,7 @@ module.exports = function(router) {
         // update user information
         user.update(options, function(err, update) {
           if (err) return res.err(err);
-          console.log('Update Successful', update);
+
           return res.json({ message: "Update Successful" });
         });
       });

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
+import getCookie from './js/getCookie';
+import axios from 'axios';
 import {
     BrowserRouter as Router,
     Route,
     Redirect
   } from 'react-router-dom';
-import axios from 'axios';
 
-// Import Javascript functions
-import getCookie from './js/getCookie';
-import apiCall from './js/apiCalls';
 
 // Actions
 import { setUser, logoutUser } from './actions/users.js';
@@ -23,15 +21,18 @@ import "./stylesheets/main.css";
 // Import custom components
 import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
-import ProjectList from './components/organisms/ProjectList';
+import ProjectCard from './components/molecules/ProjectCard';
 import ProjectInfo from './components/molecules/ProjectInfo';
-import ProjectEdit from './components/molecules/ProjectEdit';
+
 import UserInfo from './components/molecules/UserInfo';
 import UserEdit from './components/molecules/UserEdit';
 import ContactForm from './components/molecules/ContactForm';
-import About from "./components/organisms/About";
+
 import Footer from './components/molecules/Footer';
 import Dashboard from './components/molecules/Dashboard';
+
+import ProjectEdit from './components/organisms/ProjectEdit';
+import About from "./components/organisms/About";
 
 // Loads environment variables with dotenv
 require('dotenv').load();
@@ -48,7 +49,8 @@ class App extends Component {
       
     // component state has 
     this.state = {
-      apiUrl: url
+      apiUrl: url,
+      filters: []
     }
   }
   // Once the app is mounted
@@ -68,75 +70,64 @@ class App extends Component {
   /*
   FUNCTIONS TO PASS DOWN TO CHILDREN COMPONENTS
   AS PROPS WHEN ROUTING
-  (Move them to child components where possible, 
-  once Redux is implemented in children)
   */
 
-  // fetch all projcets
   allProjects = () => {
-    apiCall.getAllProjects(res => {
-      if (res.error) {console.error(res.error)}
-      console.log('res.data', res.data);
-      if (res.data) {
-        this.setState({projects: res.data}); // update state to response data
-        this.props.setProjects(res.data); // redux store
-      }
-    });
-  }
-  // get one project by ID
-  getOneProject = (projectId, next) => {
-    // apiCall expects a "null" if projects are not loaded yet
-    const projects = (this.state.projects.length > 0) ? this.state.projects : null;
-    apiCall.getProjectById(projects, projectId, res => {
-      if (res.error) {console.error(res.error)}
-      next(res.data);
-    });
-  }
-  // creates new project
-  newProject = (data) => {
-    // This is now identical to this.updateProject()...
-    // newProject will eventually be deleted.
-    this.updateProject(data);
-  }
-  // update project
-  updateProject = (data) => {
-    console.log('updateProject', data);
-    apiCall.postProject(data, this.allProjects());
-  }
-  // delete project
-  deleteProject = (data) => {
-    apiCall.deleteProject(data, this.allProjects());
+    // get projects from api
+    axios.get(this.state.apiUrl + '/api/projects')
+    .then(res => {
+      this.setState({projects: res.data}) // update state to response data
+      this.props.setProjects(res.data); // redux store
+    })
+    .catch(err => {
+      console.error('fetch project', err); // handle error if there is one
+    });  
   }
 
-  // get one user profile by ID
+  // delete project
+  deleteProject = (data) => {
+    axios.delete(this.state.apiUrl + '/api/projects/' + data._id)
+    .then(res => {
+      this.allProjects();
+    })
+    .catch(err => {
+      console.error('delete project error', err);
+    });
+  }
+
+
+  
+  
+  getOneProject = (projectId, next) => {
+    // If the project is already stored in state
+    if (this.props.projects.length > 0) { 
+      // check if projectId is equal to the found item
+      const project = this.props.projects.find(item => {
+        console.log("item ", item);
+          return item._id === projectId;
+      });
+      next(project);
+    } else {
+      // otherwise looks for it in the api
+      axios.get(this.state.apiUrl + '/api/projects/' + projectId)
+      .then(res => {
+        next(res.data);
+      })
+      // and handle errors
+      .catch(err => {
+        if (err) throw err;
+      });
+    }
+  }
+
+  // get user data from api
   getOneUser = (id, next) => {
-    apiCall.getUserById(id, res => {
-      if (res.error) {console.error(res.error)}
+    axios.get(this.state.apiUrl + '/api/users/' + id)
+    .then(res => {
       next(res.data);
     });
   }
-  // updates user data 
-  postUser = (data) => {
-    apiCall.postUser(data, () => {
-      this.allProjects();
-      this.setUser();
-    });
-  }
-  // get user data from api and assign it to state
-  setUser = () => {
-    console.log('set user');
-    apiCall.getCurrentUser(res => {
-      console.log('set user response', res);
-      if (res.error) {console.error(res.error)}
-      if (res.data) {
-        this.setState({user: res.data});
-        // send data to redux store
-        this.props.setUser(res.data);
-      } else {
-        console.log('User not logged in');
-      }
-    });
-  }
+
   // logout the user by setting the app state.user as null
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
@@ -149,7 +140,60 @@ class App extends Component {
     });
   }
 
+  // creates new project
+  newProject = (data) => {
+    axios.post(this.state.apiUrl + '/api/projects', data)
+    .then(res => {
+      this.allProjects();
+    })
+    .catch(err => {
+      console.error('error posting new project', err);
+    });
+  }
 
+   // updates user data 
+   postUser = (data) => {
+    axios.put(this.state.apiUrl + '/api/users/' + data._id, data)
+    .then(res => {
+      console.log('update user success');
+      this.allProjects();
+      this.setUser();
+    })
+    .catch(err => {
+      console.error('error posting user update', err);
+    });
+  }
+
+  // get user data from api and assign it to state
+  setUser = () => {
+    axios.get(this.state.apiUrl + '/auth')
+    .then(res => {
+      this.setState({
+        user: res.data
+      });
+
+      // send data to redux store
+      this.props.setUser(res.data);
+    })
+  }
+
+  // update filter
+  updateFilter = (filterArray) => {
+    this.setState({
+      filters: filterArray
+  });
+  }
+
+  // update project
+  updateProject = (data) => {
+    axios.put(this.state.apiUrl + '/api/projects/' + data._id, data)
+    .then(res => {
+      this.allProjects();
+    })
+    .catch(err => {
+      console.error('update project error', err);
+    });
+  }
 
   // once project is unfollowed or followed, matches the db value without calling db
   updateUserProjects = (project_id) => {
@@ -194,16 +238,19 @@ class App extends Component {
               }}/> ) :
             ( 
               <div>
-                {/* If user is logged out, render Header, ProjectList and About components (Landing page) */ }
-                {/* Header component. */}
-                <Header user={this.props.user} />
+                {/* If user is logged out, render Header, ProjectCard and About components (Landing page) */ }
+                {/* Header component. toggleHeader not defined anywhere! */}
+                <Header user={this.props.user} toggleHeader={this.toggleHeader}/>
 
-                {/* ProjectList inherits route props, plus App is passed on as ProjectList prop */}
-                <ProjectList 
+                {/* ProjectCard inherits route props, plus App is passed on as ProjectCard prop */}
+                <ProjectCard 
                   {...routeProps} 
                   {...{
                     projects: this.props.projects,
                     user: this.props.user,
+                    filters: this.state.filters,
+                    limit: 6,
+                    onFilterUpdate: this.updateFilter,
                     updateProjects: this.updateUserProjects
                   }} 
                 />
@@ -213,18 +260,20 @@ class App extends Component {
             )
           )
         }/>
-        {/* Shows single project */}
+        {/* Shows single project */}+
         <Route path="/project/view/:id?" render={(routeProps)=> {
-          // ProjectInfo component shows single project. Functions defined at parent level
+          {/* ProjectInfo component shows single project. Functions defined at parent level */}
           return <ProjectInfo 
             {...routeProps} 
             {...{
               projects: this.props.projects,
               user: this.props.user,
+              filters: this.state.filters,
               deleteProject: this.deleteProject,
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
+              onFilterUpdate: this.updateFilter,
               updateProjects: this.updateUserProjects
             }} />
         }
@@ -254,6 +303,8 @@ class App extends Component {
               return <ProjectEdit
                 {...routeProps}
                 {...{
+                  title: 'Create New Project',
+                  edit: false,
                   user: this.props.user,
                   handleSubmit: this.newProject
                 }} />
@@ -265,6 +316,8 @@ class App extends Component {
               return <ProjectEdit
                 {...routeProps}
                 {...{
+                  title: 'Edit a Project',
+                  edit: true,
                   user: this.props.user,
                   handleSubmit: this.updateProject,
                   getOneProject: this.getOneProject

@@ -1,0 +1,136 @@
+.category-wrapper {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 0.25rem 0.25rem;
+}
+
+.dropdown-button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 5px 10px;
+    margin-bottom: 0.25rem;
+}
+
+.dropdown-container {
+    border-radius: 5px;
+    width: 250px;
+    position: absolute;
+    left: 50px;
+    z-index: 2;
+    background-color: #fff;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.arrow-top  {
+    position: absolute;
+    top: -30px;
+    left: 110px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid white;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    bottom: 10px;
+    z-index: -1;
+}
+
+.header-block {
+    padding: .5rem .25rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border: 0.5px solid hsl(0, 9%, 85%);
+
+    @at-root {
+        & > h5, h6, {
+            color: #4a4a4a;
+            font-size: 0.7em;
+            margin: 0px;
+        }
+     }
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    padding: 0px;
+}
+
+.category-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    padding: 3px 7px;
+    border-radius: 3px;
+    margin-left: 0.5rem;
+    height: 30px;
+ 
+    p {
+        font-size: 0.75em;
+        font-weight: 500y; 
+        margin-bottom: none;
+        color: #050709;
+    }
+ }
+ .category-tag {
+    padding: 3px 7px;
+    border: 1px solid black;
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    height: 30px;
+ }
+
+.item-container {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    &--active {
+        
+        background-color: #fdfbff;
+
+        li {
+            color: #c34666;
+
+            &:hover {
+                color: #212529;
+            }
+        }
+
+       
+      }
+
+    &:hover {
+        li {
+            color: #c34666;
+        }
+    }
+}
+
+.tag-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    p {
+        font-size: 0.65em;
+        margin: 0px;
+    }
+}
+
+.dropdown-item {
+    font-size: 0.75em;
+
+    &:hover {
+        background-color: inherit;
+    }
+}

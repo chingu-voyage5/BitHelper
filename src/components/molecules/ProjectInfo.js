@@ -5,10 +5,10 @@
 
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
+import ProjectCard from './ProjectCard';
+import Tag from '../atoms/Tag';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
-
-import ProjectList from '../organisms/ProjectList';
 
 const followStyle = { float: "right", display: "inline-block" };
 
@@ -53,6 +53,7 @@ class ProjectInfo extends Component {
 
   handleClick = (project_id, e) => {
     e.stopPropagation();
+    let self = this;
     if (this.props.user) {
         axios.post(`/api/follow/${project_id}`).then(res => {
             this.props.updateProjects(project_id);
@@ -71,7 +72,7 @@ class ProjectInfo extends Component {
 
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
-      return <ProjectList {...this.props} />;
+      return <ProjectCard {...this.props} />;
     } else {
       const project = this.state.project;
       const owner = this.state.owner;
@@ -114,7 +115,13 @@ class ProjectInfo extends Component {
             <div className="col">
               <div className="material-card">
                 <div className="project-meta row">
-                  <p className="project-category col">{project.category}</p>
+                  <div style={{display: 'flex', flexDirection: 'row'}}>
+                  {
+                        project.categories.map(category => {
+                          return <p style={{marginRight: '0.5rem'}}>{category}</p>
+                        })
+                      }
+                  </div>
                   <p className="project-owner col text-md-right">
                     {owner ? owner.displayName : "No Owner Info"}
                   </p>
@@ -151,8 +158,9 @@ class ProjectInfo extends Component {
                 <div className="row d-flex justify-content-center">
                   {project.img.map(imgUrl => {
                     return (
-                      <div key={imgUrl}>
+                      <div>
                         <img
+                          key={imgUrl}
                           src={imgUrl}
                           className="img-fluid screenshots"
                           width="300px"

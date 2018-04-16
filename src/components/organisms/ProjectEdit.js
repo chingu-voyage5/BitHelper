@@ -5,7 +5,8 @@
 
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
-import Input from '../atoms/Input';
+import Input from '../atoms/Input'
+import Categories from '../molecules/Categories.js'
 
 class ProjectEdit extends Component {
     constructor(props) {
@@ -13,23 +14,23 @@ class ProjectEdit extends Component {
         this.state = {
           title: "",
           owner: "",
-          category: "",
+          categories: [],
           description: "",
           stack: [],
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          active: false,
         };
     }
     componentDidMount() {
-      console.log('project edit', this.props.match.params.id);
       // if user is not logged in and therefore user info is null, redirect to home
       // redirect to login page in the future
       if (!this.props.user) {
         setTimeout(() => {
             this.props.history.push('/');
         }, 3000);
-      } else if (this.props.match.params.id) {
+      } else if (this.props.edit) {
         // if editing a project, retrieve project data based on URL
         this.getProjectData();
       } else {
@@ -50,6 +51,16 @@ class ProjectEdit extends Component {
             this.setState(res);
         });
     }
+
+    handleClick = (e) => {
+      // stop dropdown from closing
+      e.stopPropagation();
+
+      return this.setState({
+        active: !this.state.active
+      })
+    }
+
     onInputChange = (name, value) => {
       const newValue = {};
       if (name === 'img' || name === 'stack') {
@@ -64,23 +75,58 @@ class ProjectEdit extends Component {
       this.props.handleSubmit(this.state);
       this.props.history.push('/');
     }
-    
     onFormReset = () => {
-      if (this.props.match.params.id) {
+      if (this.props.edit) {
         this.getProjectData();
       } else {
         this.setState({
           title: "",
           owner: "",
-          category: "",
+          categories: [],
           description: "",
           stack: "",
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          active: false,
         });
       }
     }
+
+    setActive = (item, e) => {
+      // prevent dropdown from closing
+      e.stopPropagation();
+
+      console.log(item, 'this is item');
+      let { categories } = this.state;
+      const index = categories.indexOf(item.title);
+
+      categories = index === -1 ? [...categories, item.title]
+        : [...categories.slice(0, index), ...categories.slice(index +1)]
+
+      return this.setState({
+        categories
+      });
+    }
+
+    removeTag = (name) => {
+      let { categories } = this.state;
+      const index = categories.indexOf(name);
+
+      categories = index === -1 ? [...categories, name]
+        : [...categories.slice(0, index), ...categories.slice(index +1)]
+
+      return this.setState({
+        categories
+      });
+    }
+
+    removeFocus = () => {
+      this.setState({
+        active: false,
+      })
+    }
+
     render() {
       if (!this.props.user) {
           return <h3>ERROR: Not logged in. Redirecting...</h3>;
@@ -94,11 +140,11 @@ class ProjectEdit extends Component {
             required: true
           },
           {
-            label: 'Category',
-            name: 'category',
+            label: 'Categories',
+            name: 'categories',
             type: 'text',
             placeholder: 'e.g. Social, Games, Productivity, etc.',
-            value: this.state.category
+            value: this.state.categories
           },
           {
             label: 'Description',
@@ -138,14 +184,23 @@ class ProjectEdit extends Component {
           }
         ];
         return (
-          <div className="container">
+          <div className="container" onClick={this.removeFocus}>
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                  <h1>{(this.props.match.params.id) ? 'Edit a Project' : 'Create New Project'}</h1>
+                  <h1>{this.props.title}</h1>
                   <form onSubmit={this.onFormSubmit}>
                     <fieldset>
                       {inputFields.map(item => {
+                        if (item.name === 'categories') {
+                          return (
+                                <div>
+                                    <label className="control-label">Categories</label>
+                                    <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
+                                </div>
+                          )      
+                        }   
+
                         return <Input onChange={this.onInputChange} data={item}/>;
                       })}
                       <div className='d-flex justify-content-around btn-section'>
