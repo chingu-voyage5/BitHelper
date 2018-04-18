@@ -50,13 +50,13 @@ module.exports = function(router) {
     // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
-      project.owner = input.owner;
       project.categories = input.categories;
       project.description = input.description;
       project.stack = input.stack;
       project.status = input.status;
       project.repoUrl = input.repoUrl;
       project.img = input.img;
+      project.users = input.users;
 
       return project;
     }
@@ -68,7 +68,6 @@ module.exports = function(router) {
       user.avatar = input.avatar || '';
       user.skillset = input.skillset;
       user.email = input.email;
-      user.projects = input.projects;
 
       return user;
     }
@@ -82,29 +81,14 @@ module.exports = function(router) {
         res.json(projects)
       });
     })
-    // post new projects to the database
-    .post(function(req, res) {
+    // create new projects on the database
+    .put(function(req, res) {
       let project = new Project();
       project = setProjectObj(req.body, project);
 
-      // add project ID to owner's data
-      User.findById(project.owner, function(err, user) {
-        // console.log('Add project to owner data', project);
-        if (err) { console.log(err) }
-        if (user) {
-          // save project to database
-          project.save(function(err) {
-            if (err) {'Error: Project could not be saved.'}
-          });
-          //save user with new project ID added
-          user.projects.push(project._id)
-          // console.log('new user profile', user);          
-          user.save(function(err) {
-            if (err) { console.log(err) }
-            res.send('Project successfully added.');
-          });
-        } else {
-            res.send('Error: Owner profile not found.')
+      project.save(function(err) {
+        if (err) {
+          es.send('New project save error', err);
         }
       });
     });
@@ -118,6 +102,8 @@ module.exports = function(router) {
         else { res.json(project); }
       });
     })
+
+    // MERGING WORK CONTINUE HERE... (re-adding auth changes)
     // The put updates project based on the ID passed to the route
     .put(function(req, res) {
 

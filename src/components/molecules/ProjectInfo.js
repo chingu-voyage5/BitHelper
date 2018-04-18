@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
-import ProjectCard from './ProjectCard';
+import ProjectList from '../organisms/ProjectList';
 import Tag from '../atoms/Tag';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
@@ -72,7 +72,7 @@ class ProjectInfo extends Component {
 
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
-      return <ProjectCard {...this.props} />;
+      return <ProjectList {...this.props} />;
     } else {
       const project = this.state.project;
       const owner = this.state.owner;
@@ -158,9 +158,8 @@ class ProjectInfo extends Component {
                 <div className="row d-flex justify-content-center">
                   {project.img.map(imgUrl => {
                     return (
-                      <div>
+                      <div key={imgUrl}>
                         <img
-                          key={imgUrl}
                           src={imgUrl}
                           className="img-fluid screenshots"
                           width="300px"
