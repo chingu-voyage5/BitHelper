@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
 import ProjectCard from './ProjectCard';
+import Tag from '../atoms/Tag';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
 
@@ -114,7 +115,13 @@ class ProjectInfo extends Component {
             <div className="col">
               <div className="material-card">
                 <div className="project-meta row">
-                  <p className="project-category col">{project.category}</p>
+                  <div style={{display: 'flex', flexDirection: 'row'}}>
+                  {
+                        project.categories.map(category => {
+                          return <p style={{marginRight: '0.5rem'}}>{category}</p>
+                        })
+                      }
+                  </div>
                   <p className="project-owner col text-md-right">
                     {owner ? owner.displayName : "No Owner Info"}
                   </p>

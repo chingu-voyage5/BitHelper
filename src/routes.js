@@ -23,12 +23,16 @@ import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
 import ProjectCard from './components/molecules/ProjectCard';
 import ProjectInfo from './components/molecules/ProjectInfo';
-import ProjectEdit from './components/molecules/ProjectEdit';
+
 import UserInfo from './components/molecules/UserInfo';
 import UserEdit from './components/molecules/UserEdit';
 import ContactForm from './components/molecules/ContactForm';
-import About from "./components/organisms/About";
+
 import Footer from './components/molecules/Footer';
+import Dashboard from './components/molecules/Dashboard';
+
+import ProjectEdit from './components/organisms/ProjectEdit';
+import About from "./components/organisms/About";
 
 // Loads environment variables with dotenv
 require('dotenv').load();
@@ -191,6 +195,30 @@ class App extends Component {
     });
   }
 
+  // once project is unfollowed or followed, matches the db value without calling db
+  updateUserProjects = (project_id) => {
+    // copy state
+    let { user } = this.state;
+    let { followedProjects } = user;
+    
+    // findindex of project that was followed
+    const projectIndex = followedProjects.findIndex((e) => {
+      return e === project_id;
+    });
+
+    // if project exists on array, remove it else add it
+    followedProjects = projectIndex !== -1
+      ? [ ...followedProjects.slice(0, projectIndex),
+          ...followedProjects.slice(projectIndex + 1)] 
+      : [...followedProjects, project_id]; 
+
+    // save new state
+    user.followedProjects = followedProjects;  
+    this.setState({
+      user
+    });
+  }
+
   render() {
     return(
       
@@ -222,7 +250,8 @@ class App extends Component {
                     user: this.props.user,
                     filters: this.state.filters,
                     limit: 6,
-                    onFilterUpdate: this.updateFilter
+                    onFilterUpdate: this.updateFilter,
+                    updateProjects: this.updateUserProjects
                   }} 
                 />
                 {/* About component */}
@@ -244,7 +273,8 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              onFilterUpdate: this.updateFilter
+              onFilterUpdate: this.updateFilter,
+              updateProjects: this.updateUserProjects
             }} />
         }
         }/>
@@ -294,6 +324,8 @@ class App extends Component {
                 }} />
           }
         }/>
+
+        <Route path="/dashboard" component={Dashboard} />
 
         {/* Shows contact form to contact project owner */}
         <Route path="/contact/:userId/:projectId?" render={(routeProps)=> {

@@ -9,7 +9,7 @@ const ProjectsSchema = new Schema({
     id: String, 
     title: String,        //title of the project
     owner: String,        //ID of the post creator
-    category: String,     //category of the project
+    categories: [],     //category of the project
     description: String,  //project description
     stack: [String],      //array of technologies used in the project
     status: String,       //status of project, why it's stuck

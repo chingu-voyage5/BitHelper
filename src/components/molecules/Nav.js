@@ -50,6 +50,8 @@ class Nav extends Component {
       case "navbar-brand":
         this.props.history.push("/");
         break;
+      case "dashboard":
+        this.props.history.push("/dashboard");
       default:
     }
   };
@@ -128,6 +130,9 @@ class Nav extends Component {
               </li>
               <li id="profile" className="nav-dropdown-item" onClick={this.handleClick}>
                 Profile
+              </li>
+              <li id="dashboard" className="nav-dropdown-item" onClick={this.handleClick}>
+                Dashboard
               </li>
               <li id="logout" className="nav-dropdown-item" onClick={this.handleClick}>
                 Logout
