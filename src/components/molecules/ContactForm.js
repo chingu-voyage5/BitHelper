@@ -10,6 +10,8 @@ import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Loader from "../atoms/Loader.js";
 
+import projectStatus from '../../js/projectStatus';
+
 class ContactForm extends Component {
     constructor(props) {
         super(props);
@@ -38,7 +40,7 @@ class ContactForm extends Component {
                     project: project,
                     subject: 'RE: ' + project.title
                 });
-                this.setContact(project.owner);
+                this.setContact(projectStatus.getOwner(project));
             } else {
                 console.log('setProject could not find project');
             }
@@ -138,7 +140,7 @@ class ContactForm extends Component {
                                     </fieldset>
                                 </form>
                             </div>
-                            <Button label='Back to main'/>
+                            <Button label='Back to main' redirect='/'/>
                         </div>
                     </div>
                 </div>

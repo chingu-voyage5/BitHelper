@@ -17,7 +17,7 @@ class ProjectList extends Component {
         super(props);
         this.state = {
           filters: [],
-          limit: (this.props.match.path === '/') ? (6) : (null)
+          limit: (this.props.match.path === '/' && !this.props.user) ? (6) : (null)
         };
     }
     // for filtering projects to show, by filter state
@@ -47,8 +47,7 @@ class ProjectList extends Component {
     handleClick = (project_id, e) => {
         console.log(e, 'this is e');
         // Prevents link from activating router
-        e.stopPropagation();
-        console.log(project_id, 'this is project_id');
+        //e.stopPropagation();
         return axios.post(`/api/follow/${project_id}`)
             .then(res => {
                 console.log('Follow response', res);
@@ -71,7 +70,6 @@ class ProjectList extends Component {
                     <div className="row justify-content-center">
                         {projects.map((project, i) => {
                             if (!partial || i < this.state.limit) {
-                            console.log('project', project);
                                 return (
                                     <ProjectCard 
                                         key={project._id}
