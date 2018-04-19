@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import ProjectCard from './ProjectCard.js';
+import ProjectList from '../organisms/ProjectList';
+
+import projectStatus from '../../js/projectStatus';
 
 const dashboardStyle = {
     width: '100%',
@@ -12,23 +14,29 @@ const dashboardStyle = {
 class Dashboard extends Component {
 
     render() {
-        let { projects } = this.props;
+        /*let { projects } = this.props;
         const { followedProjects } = this.props.user;
-
         projects = projects.filter( (e)=> {
             return followedProjects.includes(e._id);
-        });
+        });*/
+        if (this.props.projects && this.props.user) {
+            let projects = projectStatus.userProjects(this.props.projects, this.props.user).filter(item => {
+                return item.status === 'following';
+            });
 
-        return (
-            <div>
-                <h2 style={{"textAlign": 'center'}}>
-                    Dashboard
-                </h2>
-                <div style={dashboardStyle}>
-                    <ProjectCard limit={this.props.limit} updateProjects={this.props.updateProjects} projects={projects} user={this.props.user} />
+            return (
+                <div>
+                    <h2 style={{"textAlign": 'center'}}>
+                        Dashboard
+                    </h2>
+                    <div style={dashboardStyle}>
+                        <ProjectList limit={this.props.limit} updateProjects={this.props.updateProjects} projects={projects} user={this.props.user} />
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return <h1>Loading...</h1>
+        }
     }
 }
 

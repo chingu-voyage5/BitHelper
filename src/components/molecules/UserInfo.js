@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
 import Loader from "../atoms/Loader.js";
 import defaultAvatar from "../../images/default-avatar.png";
+import projectStatus from '../../js/projectStatus';
 
 class UserInfo extends Component {
     constructor(props) {
@@ -21,26 +22,24 @@ class UserInfo extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (this.state.user) {
-            this.getOwnedProjects(nextProps.projects, this.state.user);
+            this.getProjects(nextProps.projects, this.state.user);
         }
     }
     getUserInfo = () => {
         // Get user ID from URL path, and retrieve user data from server
         const userId = this.props.match.params.id;
         this.props.getOneUser(userId, profile => {
-            this.getOwnedProjects(this.props.projects, profile);
+            this.getProjects(this.props.projects, profile);
             this.setState({
                 user: profile
             });
         });
     }
-    getOwnedProjects = (allProjects, owner) => {
+    getProjects = (allProjects, user) => {
         if (allProjects.length > 0) {
-            let ownedProjects = allProjects.filter(item => {
-                return owner.projects.includes(item._id);
-            });
+            let userProjects = projectStatus.userProjects(allProjects, user._id);
             this.setState({
-                projects: ownedProjects
+                projects: userProjects
             });
         }
     }
@@ -88,9 +87,9 @@ class UserInfo extends Component {
                                 {(projects) ? (
                                     projects.map(item => {
                                         return (
-                                            <li key={item._id}>
-                                                <a id={item._id} onClick={this.handleClick}>
-                                                    {item.title}
+                                            <li key={item.projectId}>
+                                                <a id={item.projectId} onClick={this.handleClick}>
+                                                    {`${item.projectTitle} (${item.status})`}
                                                 </a>
                                             </li>
                                         ); 
@@ -118,13 +117,12 @@ class UserInfo extends Component {
     render() {
         let user = this.state.user;
         let projects = this.state.projects;
-        //console.log('Rendering UserInfo', user, projects, this.props.user);
         return (
             <div className='container'>
                 <div className='row'>
                     <div className='col'>
                         {this.renderInfo(user, projects)}
-                        <Button label='Back to main' />
+                        <Button label='Back to main' redirect='/'/>
                     </div>
                 </div>
             </div>

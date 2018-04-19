@@ -204,7 +204,7 @@ class App extends Component {
                   {...{
                     projects: this.props.projects,
                     user: this.props.user,
-                    updateProjects: this.updateUserProjects
+                    updateProjects: this.allProjects
                   }} 
                 />
                 {/* About component */}
@@ -225,7 +225,7 @@ class App extends Component {
               allProjects: this.allProjects,
               getOneProject: this.getOneProject,
               getOneUser: this.getOneUser,
-              updateProjects: this.updateUserProjects
+              updateProjects: this.allProjects
             }} />
         }
         }/>

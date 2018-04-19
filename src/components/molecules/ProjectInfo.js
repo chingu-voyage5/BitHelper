@@ -5,10 +5,13 @@
 
 import React, { Component } from 'react';
 import Button from '../atoms/Button.js';
-import ProjectList from '../organisms/ProjectList';
-import Tag from '../atoms/Tag';
 import Loader from "../atoms/Loader";
 import axios from 'axios';
+
+import ProjectList from '../organisms/ProjectList';
+import FollowLarge from '../atoms/FollowLarge';
+
+import projectStatus from '../../js/projectStatus';
 
 const followStyle = { float: "right", display: "inline-block" };
 
@@ -37,12 +40,13 @@ class ProjectInfo extends Component {
           this.setState({
             project: project
           });
-          this.getOwner(project.owner);
+          this.getOwner(projectStatus.getOwner(project));
         }
       });
     }
   };
   getOwner = ownerId => {
+    console.log('get owner', ownerId);
     this.props.getOneUser(ownerId, profile => {
       let owner = profile && profile.displayName ? profile : null;
       this.setState({
@@ -53,7 +57,6 @@ class ProjectInfo extends Component {
 
   handleClick = (project_id, e) => {
     e.stopPropagation();
-    // let self = this;
     if (this.props.user) {
         axios.post(`/api/follow/${project_id}`).then(res => {
             this.props.updateProjects(project_id);
@@ -66,25 +69,25 @@ class ProjectInfo extends Component {
 
   handleDelete = () => {
     this.props.deleteProject(this.state.project);
+    this.props.history.push('/');
   };
-  render() {
+  render() {  
     const projectId = this.props.match.params.id;
+    const project = this.state.project;
+    const owner = this.state.owner;
+    const user = this.props.user;
+    const isOwner = user && owner && user._id === owner._id;
+    let buttons = null;
 
+    console.log('render', project);
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
       return <ProjectList {...this.props} />;
     } else {
-      const project = this.state.project;
-      const owner = this.state.owner;
-      const user = this.props.user;
-      const isOwner = user && owner && user._id === owner._id;
-      const followed = user && this.props.user.followedProjects.includes(projectId);
-
       if (!project) {
         return <Loader />;
       }
 
-      let buttons = null;
       if (isOwner) {
         buttons = (
           <div className="d-flex justify-content-around btn-section">
@@ -93,89 +96,87 @@ class ProjectInfo extends Component {
           </div>
         );
       } else {
-        buttons = (
-          <div className="d-flex justify-content-around btn-section">
-            {owner ? (
+        buttons = 
+          owner ? (
+            <div className="d-flex justify-content-around btn-section">
               <Button
                 label="View Owner Profile"
                 redirect={"/user/view/" + owner._id}
               />
-            ) : null}
-            <Button
-              label="Contact Project Owner"
-              redirect={"/contact/" + project.owner + "/" + project._id}
-            />
-          </div>
-        );
+              <Button
+                label="Contact Project Owner"
+                redirect={"/contact/" + owner._id + "/" + project._id}
+              />
+            </div>
+          ) : (
+            null
+          )
       }
+    }
 
-      return (
-        <div className="container">
-          <div className="row ">
-            <div className="col">
-              <div className="material-card">
-                <div className="project-meta row">
+    return (
+      <div className="container">
+        <div className="row ">
+          <div className="col">
+            <div className="material-card">
+              <div className="project-meta row">
                   <div style={{display: 'flex', flexDirection: 'row'}}>
-                  {
+                      {
                         project.categories.map(category => {
                           return <p style={{marginRight: '0.5rem'}}>{category}</p>
                         })
                       }
                   </div>
-                  <p className="project-owner col text-md-right">
-                    {owner ? owner.displayName : "No Owner Info"}
-                  </p>
-                  <hr />
-                </div>
-                {!isOwner && user && (
-                  <button 
-                    style={followStyle} 
-                    className={followed ? "btn btn--primary" : "btn btn--secondary"} 
-                    onClick={this.handleClick.bind(this, projectId)}>
-                    {followed && "Unfollow Project"}
-                    {!followed && "Follow Project"}
-                  </button>
-                )}
-                <h1>{project.title}</h1>
-                <p>{project.description}</p>
-                <Button label="Back to main" />
-                <div className="row justify-content-between">
-                  <div className="project-tech col-md-8">
-                    <h3>Status</h3>
-                    <p>{project.status}</p>
-                  </div>
-                  <div className="project-tech col-md-4">
-                    <h3>Stack</h3>
-                    <ul>
-                      {project.stack.map(item => {
-                        return <li key={item}>{item}</li>;
-                      })}
-                    </ul>
-                    <h3>Github repo</h3>
-                    <a href={project.repoUrl}>{project.repoUrl}</a>
-                  </div>
-                </div>
-                <div className="row d-flex justify-content-center">
-                  {project.img.map(imgUrl => {
-                    return (
-                      <div key={imgUrl}>
-                        <img
-                          src={imgUrl}
-                          className="img-fluid screenshots"
-                          width="300px"
-                          alt="Project"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-                {buttons}
+                <p className="project-owner col text-md-right">
+                  {owner ? owner.displayName : "No Owner Info"}
+                </p>
+                <hr />
               </div>
+              {!isOwner && user && (
+                <FollowLarge
+                  follow={projectStatus.getFollowers(project).includes(user._id)}
+                  onFollow={this.handleClick.bind(this, projectId)}
+                />
+              )}
+              <h1>{project.title}</h1>
+              <p>{project.description}</p>
+              <div className="row justify-content-between">
+                <div className="project-tech col-md-8">
+                  <h3>Status</h3>
+                  <p>{project.status}</p>
+                </div>
+                <div className="project-tech col-md-4">
+                  <h3>Stack</h3>
+                  <ul>
+                    {project.stack.map(item => {
+                      return <li key={item}>{item}</li>;
+                    })}
+                  </ul>
+                  <h3>Github repo</h3>
+                  <a href={project.repoUrl}>{project.repoUrl}</a>
+                </div>
+              </div>
+              <div className="row d-flex justify-content-center">
+                {project.img.map(imgUrl => {
+                  return (
+                    <div key={imgUrl}>
+                      <img
+                        src={imgUrl}
+                        className="img-fluid screenshots"
+                        width="300px"
+                        alt="Project"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              {buttons}
             </div>
+            <Button label="Back to main" redirect={'/'}/>
           </div>
         </div>
-      );
-    }
+      </div>
+    );
   }
 }
 

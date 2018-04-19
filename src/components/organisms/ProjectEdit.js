@@ -20,6 +20,7 @@ class ProjectEdit extends Component {
           status: "",
           repoUrl: "",
           img: [],
+          users: [],
           active: false,
         };
     }
@@ -38,7 +39,10 @@ class ProjectEdit extends Component {
         // NOTE I've changed the owner info to user ID, because displayname can be changed
         // and therefore cannot be used to identify the user.
         this.setState({
-          owner: this.props.user._id
+          users: [{
+            _id: this.props.user._id,
+            status: 'owner'
+          }]
         });
       }
     }
@@ -81,13 +85,13 @@ class ProjectEdit extends Component {
       } else {
         this.setState({
           title: "",
-          owner: "",
           categories: [],
           description: "",
           stack: "",
           status: "",
           repoUrl: "",
           img: [],
+          users: [],
           active: false,
         });
       }

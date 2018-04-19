@@ -11,10 +11,11 @@ const UsersSchema = new Schema({
   username: String, //username
   email: String,
   displayName: String, //display name
-  avatar: String, //avatar image URL, can be empty
+  avatar: {
+    type: String,
+    default: ''
+  },
   skillset: [String], //array of strings, like "React" and "Nodejs"
-  projects: [String], //array of project IDs that this user has created
-  followedProjects: [String],
   google: {
     id: String,
     //username: String,
