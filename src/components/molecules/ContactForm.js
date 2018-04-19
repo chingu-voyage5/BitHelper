@@ -78,7 +78,7 @@ class ContactForm extends Component {
             this.props.history.push('/');
         } else {
             console.log('state',this.state);
-            const url = 'https://formspree.io/' + this.props.user.email;
+            const url = 'https://formspree.io/' + this.state.contact.email;
             const body = {
                 name: this.props.user.username,
                 _replyto: this.props.user.email,
