@@ -18,6 +18,9 @@ import { connect } from 'react-redux';
 // Import stylesheets
 import "./stylesheets/main.css";
 
+// App wrapper to reset scroll position
+import ScrollToTop from './js/scroll.js';
+
 // Import custom components
 import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
@@ -33,6 +36,8 @@ import Dashboard from './components/molecules/Dashboard';
 
 import ProjectEdit from './components/organisms/ProjectEdit';
 import About from "./components/organisms/About";
+
+
 
 // Loads environment variables with dotenv
 require('dotenv').load();
@@ -223,6 +228,7 @@ class App extends Component {
     return(
       
     <Router>
+      <ScrollToTop>
       <div>
         {/* Nav components get rendered in all pages. User is set to null when user logged out */}
         <Nav user={this.props.user} logoutUser={this.logoutUser}/>
@@ -342,6 +348,7 @@ class App extends Component {
         {/* Footer component gets shown in every single page */}
       <Footer />
       </div>
+      </ScrollToTop>
      </Router>
    )
  }
