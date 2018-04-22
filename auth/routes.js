@@ -1,9 +1,10 @@
 const Project = require('../model/projects');
 const User = require('../model/users');
 const passport = require("passport");
+const projectStatus = require("../src/js/projectStatus");
 
 
-function checkBodyForProperties (body) {
+/*function checkBodyForProperties (body) {
 
   // remove id and owner - these should be unable to be updated from put
   const {id, title, owner, ...rest } = body;
@@ -15,7 +16,7 @@ function checkBodyForProperties (body) {
   };
   
   return newObj;
-}
+}*/
 
 
 
@@ -50,13 +51,13 @@ module.exports = function(router) {
     // Function for setting properties of a Project schema object
     const setProjectObj = (input, project) => {
       project.title = input.title;
-      project.owner = input.owner;
       project.categories = input.categories;
       project.description = input.description;
       project.stack = input.stack;
       project.status = input.status;
       project.repoUrl = input.repoUrl;
       project.img = input.img;
+      project.users = input.users;
 
       return project;
     }
@@ -65,10 +66,9 @@ module.exports = function(router) {
     const setUserObj = (input, user) => {
       user.username = input.username;
       user.displayName = input.displayName;
-      user.avatar = input.avatar;
+      user.avatar = input.avatar || '';
       user.skillset = input.skillset;
       user.email = input.email;
-      user.projects = input.projects;
 
       return user;
     }
@@ -82,29 +82,16 @@ module.exports = function(router) {
         res.json(projects)
       });
     })
-    // post new projects to the database
-    .post(function(req, res) {
-      let project = new Project();
-      project = setProjectObj(req.body, project);
-
-      // add project ID to owner's data
-      User.findById(project.owner, function(err, user) {
-        // console.log('Add project to owner data', project);
-        if (err) { console.log(err) }
-        if (user) {
-          // save project to database
-          project.save(function(err) {
-            if (err) {'Error: Project could not be saved.'}
+    // create new projects on the database
+    .put(function(req, res) {
+      console.log('New project', req.body);
+      let project = setProjectObj(req.body, new Project());
+      project.save(function(err) {
+        if (err) {
+          res.json( {
+            message: 'New project save error', 
+            error: err
           });
-          //save user with new project ID added
-          user.projects.push(project._id)
-          // console.log('new user profile', user);          
-          user.save(function(err) {
-            if (err) { console.log(err) }
-            res.send('Project successfully added.');
-          });
-        } else {
-            res.send('Error: Owner profile not found.')
         }
       });
     });
@@ -118,58 +105,61 @@ module.exports = function(router) {
         else { res.json(project); }
       });
     })
+
+    // MERGING WORK CONTINUE HERE... (re-adding auth changes)
     // The put updates project based on the ID passed to the route
     .put(function(req, res) {
+      console.log('Edit project', req.body);
+      Project.findById(req.params.project_id, function(err, project) {
+        if (err) { res.send(err); }
 
-      // Search for user to check whether they own the project
-      User.findById(req.user._id)
-      .exec(function (err, user) {
-        // user does not own project cannot update it
-        if (!user.projects.includes(req.params.project_id)) return res.json({message: "Cannot update project you do now own."});
-        
-        // user owns project
-        Project.findById(req.params.project_id, function(err, project) {
-          if (err) { res.send(err); }
-          if (project) {
-
-            // check project for title (required field) 
-            if (!req.body.title) return res.json({ message: 'Title is required'});
-
-            // filter project so certain values are protected
-            const projectUpdate = checkBodyForProperties(req.body);
-            
-            // updates current document with new values
-            project.update(projectUpdate)
-              .exec(function (err, doc) {
-                  if (err) { res.send(err); }
-                  console.log(doc, 'this is doc')
-                  return res.json({ message: 'Project has been updated' });
-              }) 
+        if (project) {
+          const ownerId = projectStatus.getOwner(project);
+          if (ownerId === req.user._id.toString()) {
+            project = setProjectObj(req.body, project)
+            //save project
+            project.save(function(err) {
+              if (err) { res.send(err); }
+              res.json({ message: 'Project has been updated' });
+            });
           } else {
-            res.json({ message: "Project not found by the id... no action performed" });
+            // project is found but requester is not the owner
+            console.log('Not the owner. Cannot proceed', ownerId, req.user._id);
+            res.status(401).json({ message: 'Project update request by non-owner. Cannot proceed'});
           }
-        });
-      })
+        } else {
+          console.log('Invalid Project ID');
+          res.status(400).json({ message: "Invalid Project ID" });
+        }
+      });
     })
+
     //delete method for removing a project from our database
     .delete(function(req, res) {
-     //selects the project by its ID, then removes it.
-     console.log('delete requested', req.params.project_id);
+      //selects the project by its ID, then removes it.
+      console.log('delete requested', req.params.project_id);
+      Project.findById(req.params.project_id, function(err, project) {
+        if (err) { res.send(err); }
 
-    // Check whether loggedin user owns the project
-      User.findById(req.user._id)
-        .exec(function (err, user) {
-          
-          // user does not own project reject request
-          if (!user) return res.status(400).json({message: 'User does not exist'});
-          // check whether users created projects includes the project id
-          user.projects.includes(req.params.project_id) 
-            ? Project.remove({ _id: req.params.project_id }, function(err, project) {
-                if (err) { res.send(err); }
-                return res.json({ message: 'Project has been deleted' })
-              })
-            : res.status(400).json({message: 'You do not own that project'});     
-        });
+        const ownerId = projectStatus.getOwner(project);
+
+        if (project) {
+          if (ownerId === req.user._id.toString()) {
+            //delete project
+            Project.remove({ _id: req.params.project_id }, function(err) {
+              if (err) { res.send(err); }
+              res.json({ message: 'Project has been deleted' });
+            });
+          } else {
+            // project is found but requester is not the owner
+            console.log('Not the owner. Cannot proceed', ownerId, req.user._id);
+            res.status(401).json({ message: 'Project delete request by non-owner. Cannot proceed'});
+          }
+        } else {
+          console.log('Invalid Project ID');
+          res.status(400).json({ message: "Invalid Project ID" });
+        }
+      });
     });
 
     // USER ROUTES
@@ -242,24 +232,29 @@ module.exports = function(router) {
 
     // Find existing project
     Project.findById(project_id, function(err, project) {
-      if (err) res.err(err);
-
-      // Search for existing User
-      User.findById(user_id, function(err, user) {
-        if (err) res.err(err);
-
-        // Find project_id Users project array;
-        const projectExists = user.projects.includes(project_id);
-
-        // If project_id does exist either remove or add to projects array
-        const options = projectExists ? { $pull: { projects: project_id } } : { $addToSet: { projects: project_id } };
-
-        // update user information
-        user.update(options, function(err, update) {
-          if (err) return res.err(err);
-
-          return res.json({ message: "Update Successful" });
+      if (err) return res.err(err);
+      // Find status of user for this project
+      let userStatus = project.users.id(user_id);
+      if (userStatus) {
+        console.log('User Found', userStatus.status);
+        if (userStatus.status === 'following') {
+          // User is already following. Unfollow.
+          userStatus.remove();
+          console.log('Unfollowed', project);
+        }
+      } else {
+        // User not associated to project
+        // Add user as a follower
+        project.users.push({
+          _id: user_id,
+          status: 'following'
         });
+        console.log('Followed', project);  
+      }
+      project.save(function(err, update) {
+        if (err) throw err;
+        console.log('Update Successful', update);
+        return res.json({ message: "Update Successful"});
       });
     });
   });

@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const routes = require('./config/routes.js');
+const routes = require('./auth/routes.js');
 
 // Auth libraries
 const passport = require('passport');
@@ -10,13 +10,13 @@ const session = require('express-session')
 
 const app = express();
 const router = express.Router();
-const auth = require('./config/auth')
+const auth = require('./auth/auth')
 
 // Load .env variables
 require('dotenv').load();
 
 // passport.js contains the Passport auth strategies. Currently only GitHub
-require('./config/passport')(passport);
+require('./auth/passport')(passport);
 
 const port = process.env.PORT || 3001;
 

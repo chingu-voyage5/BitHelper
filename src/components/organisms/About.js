@@ -5,7 +5,6 @@
 
 
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import Button from '../atoms/Button.js';
 import target from "../../images/target.svg";
 import startup from "../../images/startup.svg";

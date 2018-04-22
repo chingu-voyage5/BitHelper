@@ -8,25 +8,36 @@ const Schema = mongoose.Schema;
 //create new instance of the mongoose.schema. the schema takes an object that shows
 //the shape of your database entries.
 const UsersSchema = new Schema({
-    username: String,     //username
-    displayName: String,  //display name
-    avatar: String,       //avatar image URL, can be empty
-    skillset: [String],   //array of strings, like "React" and "Nodejs"
-    email: String,        //email address
-    projects: [String],  //array of project IDs that this user has created
-    followedProjects: [String],
-    google: {
-        id: String,
-    },
-    facebook: {
-        id: String, 
-    },
-    github: {
-        id: String
-    },
-    local: {
-        password: String
-    }
+  username: String, //username
+  email: String,
+  displayName: String, //display name
+  avatar: {
+    type: String,
+    default: ''
+  },
+  skillset: [String], //array of strings, like "React" and "Nodejs"
+  google: {
+    id: String,
+    //username: String,
+    //displayName: String,
+    //email: String
+  },
+  facebook: {
+    id: String,
+    //username: String,
+    //displayName: String,
+    //email: String
+  },
+  github: {
+    id: String,
+    //username: String,
+    //displayName: String,
+    //email: String
+  },
+  local: {
+    //email: String,
+    password: String
+  }
 });
 
 

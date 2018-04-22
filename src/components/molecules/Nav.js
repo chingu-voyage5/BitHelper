@@ -7,12 +7,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from '../atoms/Button';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText }  from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input }  from "reactstrap";
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";
 import githubLogin from "../../images/github-login.svg";
 import facebookLogin from "../../images/facebook-login.svg";
 import googleLogin from "../../images/google-login.svg";
+import LoginForm from './LoginForm';
 
 
 class Nav extends Component {
@@ -42,11 +43,6 @@ class Nav extends Component {
       case "profile":
         this.props.history.push("/user/view/" + this.props.user._id);
         break;
-      case "github-login":
-        document.cookie = "redirect=" + window.location.pathname;
-        console.log("login clicked", window.location.pathname);
-        window.location = "/auth/github/";
-        break;
       case "logout":
         this.props.history.push("/");
         this.props.logoutUser();
@@ -60,11 +56,10 @@ class Nav extends Component {
     }
   };
   render() {
-    // console.log("Nav", this.props);
+    console.log("Nav", this.props);
     return <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a id="navbar-brand" className="navbar-brand" onClick={this.handleClick}>
-            {" "}
             <img id="navbar-brand" className="logo" src={logo} alt="BitHelper" />
           </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +76,7 @@ class Nav extends Component {
             <div>
               <ul className="nav navbar-nav">
                 {this.props.user ? <li className="dropdown">
-                    <img id="avatar" className="nav-avatar-img dropdown-toggle" data-toggle="dropdown" src={this.props.user.avatar} onError={e => {
+                    <img id="avatar" alt="avatar" className="nav-avatar-img dropdown-toggle" data-toggle="dropdown" src={this.props.user.avatar} onError={e => {
                         console.log("no avatar", e.target.src);
                         e.target.src = defaultAvatar;
                       }} width="40px" height="40px" />
@@ -94,7 +89,6 @@ class Nav extends Component {
                     </ul>
                   </li> : <li>
                     <button className="btn" onClick={this.toggleModal}>
-                      {" "}
                       Login or Sign up
                     </button>
 
@@ -103,41 +97,25 @@ class Nav extends Component {
                         Login or sign up
                       </ModalHeader>
                       <ModalBody className="text-center">
-                        <a href="auth/github">
+                        <a href={window.location.origin + "/auth/github/"}>
                           <img src={githubLogin} className="social-login" alt="Sign in with GitHub" />
                         </a>
-                        <a href="auth/google">
+                        <a href={`${window.location.origin}/auth/google/`}>
                           <img src={googleLogin} className="social-login" alt="Sign in with Google" />
                         </a>
-                        <a href="auth/facebook">
+                        <a href={`${window.location.origin}/auth/facebook/`}>
                           <img src={facebookLogin} className="social-login" alt="Sign in with Facebook." />
                         </a>
                         <p>
                           <strong>or sign in with your email</strong>
                         </p>
-                        <Form action="/auth/login" method="POST">
-                          <FormGroup>
-                            <Input type="email" name="email" className="local-login" id="email-login" placeholder="Email" />
-                            <Input type="password" name="password" className="local-login" id="password-login" placeholder="Password" />
-                            <button type="submit" className="btn">
-                              Submit
-                            </button>
-                          </FormGroup>
-                        </Form>
+                        <LoginForm url='/auth/login'/>
                         <p>
                           <strong>
                             You don't have an account? Sign up
                           </strong>
                         </p>
-                        <Form action="/auth/register" method="POST">
-                          <FormGroup>
-                            <Input type="email" name="email" className="local-login" id="email-signup" placeholder="Email" />
-                            <Input type="password" name="password" className="local-login" id="password-signup" placeholder="Password" />
-                          </FormGroup>
-                          <button type="submit" className="btn">
-                            Submit
-                          </button>
-                        </Form>
+                        <LoginForm url='/auth/register'/>
                       </ModalBody>
                     </Modal>
                   </li>}
