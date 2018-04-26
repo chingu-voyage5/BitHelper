@@ -17,9 +17,6 @@ import { setProjects } from './actions/projects.js';
 // Connects component to Store state & dispatch actions to store
 import { connect } from 'react-redux';
 
-// Import stylesheets
-import "./stylesheets/main.css";
-
 // Import custom components
 import Nav from './components/molecules/Nav';
 import Header from './components/molecules/Header';
