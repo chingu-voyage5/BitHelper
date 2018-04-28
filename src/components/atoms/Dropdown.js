@@ -3,22 +3,22 @@ import FaAngleUp from 'react-icons/lib/fa/angle-up';
 
 const items = [
     {
-        title: 'Web App'
+        title: 'Web app'
     },
     {
-        title: 'Desktop App'
+        title: 'Desktop app'
     },
     {
-        title: 'Javascript'
+        title: 'iOS native app'
     },
     {
-        title: 'React'
+        title: 'Android native app'
     },
     {
-        title: 'Node'
+        title: 'Data science'
     },
     {
-        title: 'Python'
+        title: 'Other'
     }
 ];
 
