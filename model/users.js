@@ -8,9 +8,13 @@ const Schema = mongoose.Schema;
 //create new instance of the mongoose.schema. the schema takes an object that shows
 //the shape of your database entries.
 const UsersSchema = new Schema({
-  username: String, //username
+  username: { type: String, default: '', 
+    
+  }, //username
   email: String,
-  displayName: String, //display name
+  displayName: {
+    type: String,
+  }, 
   avatar: {
     type: String,
     default: ''
@@ -48,6 +52,39 @@ UsersSchema.methods.generateHash = function(password) {
 UsersSchema.methods.validPassword = function(password) {
   return bcrypt.compareSync(password, this.local.password);
 };
+
+UsersSchema.pre('save', function (next) {
+
+  let user = this;
+
+  // username / displayName isnt changed then skip
+  if (!user.isModified('username') || !user.isModified('displayName')) {
+    return next()
+  };
+  // checker username does not already exist
+  user.constructor.findOne()
+    .or([{username: user.username}, { displayName: user.displayName}])
+    .exec((err, doc) => {
+      if (err) return next(err);
+      // no results
+      if (!doc) {
+        return next();
+      }
+      
+      // if document has a username, reset
+      if (doc.username === user.username) {
+        user.username = "";
+      }
+
+      // if document has a displayName reset
+      if (doc.displayName === user.displayName) {
+        user.displayName = "";
+      }
+
+      return next();
+    })
+
+});
 
 //export our module to use in server.js
 module.exports = mongoose.model('User', UsersSchema);
