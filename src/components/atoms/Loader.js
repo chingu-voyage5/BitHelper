@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
-import '../../stylesheets/main.css'; 
+/*----------------------
+    LOADER COMPONENT:
+    display a gif of a wheel when pages are loading slowly
+------------------------*/
+
+import React from 'react';
 import loader from "../../images/loader.gif";
 
 

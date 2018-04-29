@@ -1,20 +1,12 @@
-import React, { Component } from 'react';
-// import '../stylesheets/components/addProject.css';
-import '../../stylesheets/main.css'; // for dev
-import Button from '../atoms/Button.js';
-import Input from '../atoms/Input'
+/*----------------------
+    PROJECT EDIT COMPONENT:
+    owners can edit their own projects from here.
+------------------------*/
 
-// const ProjectsSchema = new Schema({
-//   id: String, 
-//   title: String,        //title of the project
-//   owner: String,        //username of the post creator
-//   category: String,     //category of the project
-//   description: String,  //project description
-//   stack: [String],      //array of technologies used in the project
-//   status: String,       //status of project, why it's stuck
-//   repoUrl: String,      //GitHub repo URL
-//   img: [String]         //image URLs of screenshots
-// });
+import React, { Component } from 'react';
+import Button from '../atoms/Button.js';
+import Input from '../atoms/Input';
+import Categories from '../molecules/Categories.js';
 
 class ProjectEdit extends Component {
     constructor(props) {
@@ -22,12 +14,14 @@ class ProjectEdit extends Component {
         this.state = {
           title: "",
           owner: "",
-          category: "",
+          categories: [],
           description: "",
           stack: [],
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          users: [],
+          active: false,
         };
     }
     componentDidMount() {
@@ -37,7 +31,7 @@ class ProjectEdit extends Component {
         setTimeout(() => {
             this.props.history.push('/');
         }, 3000);
-      } else if (this.props.edit) {
+      } else if (this.props.match.params.id) {
         // if editing a project, retrieve project data based on URL
         this.getProjectData();
       } else {
@@ -45,7 +39,10 @@ class ProjectEdit extends Component {
         // NOTE I've changed the owner info to user ID, because displayname can be changed
         // and therefore cannot be used to identify the user.
         this.setState({
-          owner: this.props.user._id
+          users: [{
+            _id: this.props.user._id,
+            status: 'owner'
+          }]
         });
       }
     }
@@ -58,6 +55,16 @@ class ProjectEdit extends Component {
             this.setState(res);
         });
     }
+
+    handleClick = (e) => {
+      // stop dropdown from closing
+      e.stopPropagation();
+
+      return this.setState({
+        active: !this.state.active
+      })
+    }
+
     onInputChange = (name, value) => {
       const newValue = {};
       if (name === 'img' || name === 'stack') {
@@ -73,21 +80,57 @@ class ProjectEdit extends Component {
       this.props.history.push('/');
     }
     onFormReset = () => {
-      if (this.props.edit) {
+      if (this.props.match.params.id) {
         this.getProjectData();
       } else {
         this.setState({
           title: "",
-          owner: "",
-          category: "",
+          categories: [],
           description: "",
           stack: "",
           status: "",
           repoUrl: "",
-          img: []
+          img: [],
+          users: [],
+          active: false,
         });
       }
     }
+
+    setActive = (item, e) => {
+      // prevent dropdown from closing
+      e.stopPropagation();
+
+      console.log(item, 'this is item');
+      let { categories } = this.state;
+      const index = categories.indexOf(item.title);
+
+      categories = index === -1 ? [...categories, item.title]
+        : [...categories.slice(0, index), ...categories.slice(index +1)]
+
+      return this.setState({
+        categories
+      });
+    }
+
+    removeTag = (name) => {
+      let { categories } = this.state;
+      const index = categories.indexOf(name);
+
+      categories = index === -1 ? [...categories, name]
+        : [...categories.slice(0, index), ...categories.slice(index +1)]
+
+      return this.setState({
+        categories
+      });
+    }
+
+    removeFocus = () => {
+      this.setState({
+        active: false,
+      })
+    }
+
     render() {
       if (!this.props.user) {
           return <h3>ERROR: Not logged in. Redirecting...</h3>;
@@ -101,11 +144,11 @@ class ProjectEdit extends Component {
             required: true
           },
           {
-            label: 'Category',
-            name: 'category',
+            label: 'Categories',
+            name: 'categories',
             type: 'text',
             placeholder: 'e.g. Social, Games, Productivity, etc.',
-            value: this.state.category
+            value: this.state.categories
           },
           {
             label: 'Description',
@@ -145,14 +188,23 @@ class ProjectEdit extends Component {
           }
         ];
         return (
-          <div className="container">
+          <div className="container" onClick={this.removeFocus}>
             <div className="row">
               <div className="col">
                 <div className="material-card">
-                  <h1>{this.props.title}</h1>
+                <h1>{(this.props.match.params.id) ? 'Edit a Project' : 'Create New Project'}</h1>
                   <form onSubmit={this.onFormSubmit}>
                     <fieldset>
                       {inputFields.map(item => {
+                        if (item.name === 'categories') {
+                          return (
+                                <div>
+                                    <label className="control-label">Categories</label>
+                                    <Categories removeTag={this.removeTag} categories={this.state.categories} setActive={this.setActive} handleClick={this.handleClick} active={this.state.active} />
+                                </div>
+                          )      
+                        }   
+
                         return <Input onChange={this.onInputChange} data={item}/>;
                       })}
                       <div className='d-flex justify-content-around btn-section'>

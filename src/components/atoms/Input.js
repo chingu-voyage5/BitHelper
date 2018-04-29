@@ -1,5 +1,10 @@
+/*----------------------
+    INPUT COMPONENT:
+    text area inputs to be used in forms
+------------------------*/
+
+
 import React, { Component } from 'react';
-import '../../stylesheets/main.css';  // for dev
 
 class Input extends Component {
   onChange = (e) => {
@@ -15,10 +20,10 @@ class Input extends Component {
             <textarea
               id={data.name}
               name={data.name}
-              type={data.type ? data.type : 'text'}
+              type={data.type || 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value}
+              value={data.value || ''}
               onChange={this.onChange}
               required={data.required} 
             />
@@ -31,12 +36,12 @@ class Input extends Component {
             <input
               id={data.name}
               name={data.name}
-              type={data.type ? data.type : 'text'}
+              type={data.type || 'text'}
               placeholder={data.placeholder}
               className="form-control input-md"
-              value={data.value}
+              value={data.value || ''}
               onChange={this.onChange}
-              required={data.required ? data.required : false} 
+              required={data.required || false} 
             />
           </div>
         );        

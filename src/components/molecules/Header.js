@@ -1,6 +1,11 @@
+/*----------------------
+    HEADER COMPONENT:
+    if user is logged in, shows header with picture and tagline
+------------------------*/
+
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import '../../stylesheets/main.css';  // for dev
 import Button from '../atoms/Button.js';
 
 class Header extends Component{
@@ -16,7 +21,7 @@ class Header extends Component{
     
                 <h1 className="header-heading display-3">Build more. Together.</h1>
                 <p className="header-lead lead">Discover interesting projects. Find new teammates. Finish your projects faster.</p>
-                <Button label="Find projects" onClick={this.props.toggleHeader} redirect="/project/view/"/>
+                <Button label="Find projects" redirect="/project/view/"/>
     
               </div>
             </div>

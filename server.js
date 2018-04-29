@@ -2,21 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const routes = require('./config/routes.js');
-//const faker = require("faker"); // for dev only
+const routes = require('./routes/index.js');
 
+// Auth libraries
 const passport = require('passport');
 const session = require('express-session')
 
 const app = express();
-const router = express.Router();
-const auth = require('./config/auth')
 
 // Load .env variables
 require('dotenv').load();
 
 // passport.js contains the Passport auth strategies. Currently only GitHub
-require('./config/passport')(passport);
+require('./auth/passport')(passport);
 
 const port = process.env.PORT || 3001;
 
@@ -53,12 +51,8 @@ app.use(function(req, res, next) {
 // Serve static assets
 app.use(express.static(path.resolve('build')));
 
-// Load api routes
-routes(router);
-
-// Defines api route root
-app.use('/api', router);
-app.use('/auth', auth);
+//  Connect all our routes to our application
+app.use('/', routes);
 
 // If request doesn't match api request always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {

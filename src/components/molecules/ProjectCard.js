@@ -1,57 +1,39 @@
+/*----------------------
+    PROJECT CARD COMPONENT:
+    shows little card with basic project info
+------------------------*/
+
 import React, { Component } from 'react';
-// import '../stylesheets/components/ProjectCard.css';
-import '../../stylesheets/main.css'; // for dev
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
-import Loader from "../atoms/Loader";
+import FollowSmall from '../atoms/FollowSmall';
 
+import projectStatus from '../../js/projectStatus';
 
-class ProjectCard extends Component {
-    setProjects() {
-    if (this.props.projects.length > 0) {
-        const projects = this.props.projects.slice(0, this.props.limit);
-        return projects.map((item,i) => {
-            return (
-            <div className="col-md-3 card"
-                onClick={() => this.props.history.push('/project/view/' + item._id)}
-                key={i}
-                id={item._id}>
-                <div className="card-body">
-                    <p className="card-category">{item.category}</p>
-                    <h4 className="card-title">{item.title}</h4>
-                        <Dotdotdot clamp={4}>
-                        <p className="card-text">
-                            {item.description}</p>
-                        </Dotdotdot>
-                    <Button label="More" />
-                </div>
-            </div>
-        );   
-    })
-
-      } else {
-        return <Loader />
-      }
-    }
-    render() {
-        const partial = Boolean(this.props.limit);
-        return (
-            <div className={(partial) ? 
-                ("container") : 
-                ("container project-cards-full")}
-            >
-                <div className="row justify-content-center">
-                    {this.setProjects()}
-                </div>
-                <div className="text-center">
-                    {(partial) ? 
-                        (<Button label="All projects" redirect="/project/view/"/>) :
-                        (<Button label="Back to main" redirect="/" />)
-                    }
-                </div>
-            </div>
-        );
-    }
-}
+const ProjectCard = ({user, project, onClick, onFollow}) => (
+    <div className="col-md-3 card"
+        key={project._id}
+        id={project._id}>
+        {/* Follow button shows only if user is logged in and not the owner */}
+        {(user && projectStatus.getOwner(project) !== user._id) ? (
+                <FollowSmall 
+                    follow={projectStatus.getFollowers(project).includes(user._id)} 
+                    onFollow={onFollow} 
+                />
+            ) : (
+                null
+            )
+        }
+        <div className="card-body">
+            <p className="card-category">{project.category}</p>
+            <h4 className="card-title">{project.title}</h4>
+                <Dotdotdot clamp={4}>
+                <p className="card-text">
+                    {project.description}</p>
+                </Dotdotdot>
+            <Button label="More" onClick={onClick}/>
+        </div>
+    </div>  
+);
 
 export default ProjectCard;

@@ -1,22 +1,27 @@
+/*----------------------
+    BUTTON COMPONENT:
+    button that redirects somewhere when clicked
+------------------------*/
+
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-// import '../stylesheets/components/Header.css'; 
-import '../../stylesheets/main.css'; // for dev
 
 class Button extends Component {
-  constructor(props){
-    super(props);
-  }
   handleClick = (e) => {
     if (this.props.onClick) {
-      this.props.onClick(this.props.label);
+      console.log('button click', this.props.label);
+      this.props.onClick(e);
     }
-    let redirect = this.props.redirect ? this.props.redirect : '/';
-    this.props.history.push(redirect);
+    if (this.props.redirect) {
+      this.props.history.push(this.props.redirect);
+    }
   }
   render(){
+    const style = this.props.style || null;
+
+    console.log("Button style: ", style);
     return(
-      <button className="btn" onClick={this.handleClick}>{this.props.label}</button>
+      <button className="btn" style={style} onClick={this.handleClick}>{this.props.label}</button>
     )
   }
 }
