@@ -6,8 +6,6 @@
 
 import React, { Component } from 'react';
 
-import '../../stylesheets/components/SearchBox.scss';
-
 class SearchBox extends Component{
     constructor(props) {
         super(props);

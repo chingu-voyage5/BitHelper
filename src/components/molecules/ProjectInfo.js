@@ -4,16 +4,13 @@
 ------------------------*/
 
 import React, { Component } from 'react';
-import Button from '../atoms/Button.js';
-import Loader from "../atoms/Loader";
 import axios from 'axios';
 
 import ProjectList from '../organisms/ProjectList';
 import FollowLarge from '../atoms/FollowLarge';
-
+import Button from "../atoms/Button.js";
+import Loader from "../atoms/Loader";
 import projectStatus from '../../js/projectStatus';
-
-const followStyle = { float: "right", display: "inline-block" };
 
 class ProjectInfo extends Component {
   constructor(props) {
@@ -120,10 +117,10 @@ class ProjectInfo extends Component {
           <div className="col">
             <div className="material-card">
               <div className="project-meta row">
-                  <div style={{display: 'flex', flexDirection: 'row'}}>
+                  <div className="flex-row">
                       {
                         project.categories.map(category => {
-                          return <p style={{marginRight: '0.5rem'}}>{category}</p>
+                          return <p className="mr-1">{category}</p>
                         })
                       }
                   </div>

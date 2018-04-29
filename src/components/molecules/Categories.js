@@ -3,12 +3,12 @@ import Tag from '../atoms/Tag.js';
 import Dropdown from '../atoms/Dropdown.js';
 import FaAngleDown from 'react-icons/lib/fa/angle-down';
 
-const buttonStyle = {
-    backgroundColor: '#F3752B',
-    borderRadius: '5px',
-    padding: '5px 10px',
-    border: '1px solid black'
-};
+// const buttonStyle = {
+//     backgroundColor: '#F3752B',
+//     borderRadius: '5px',
+//     padding: '5px 10px',
+//     border: '1px solid black'
+// };
 
 const Categories = (props) => {
     return (

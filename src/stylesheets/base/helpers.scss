@@ -22,46 +22,39 @@ $breakpoint-large: 60em; // 960px
     border-color: $primary;
     color: white;
     margin: 5px;
-
     &:active,
     &:hover {
         background-color: lighten( $primary, 10%);
         border-color: lighten( $primary, 10%);
         color: white;
     }
-
     &--primary {
         background-color: #F2F1EF;
         color: #E63022;
         border: none;
         border-color: lighten( #E63022, 10%);
-
         &:active,
         &:hover {
             background-color: #F2F1EF;
             color: #E63022;
             border-color: none;
         }
-
         &:focus {
-            border-color: darken( #F2F1EF, 10% );
+            border-color: darken( #F2F1EF, 10%);
         }
     }
-
     &--secondary {
         background-color: #4D8FAC;
         color: #EEEEEE;
         border: none;
-
         &:active,
         &:hover {
             background-color: #4D8FAC;
             color: #EEEEEE;
             border-color: none;
         }
-
-         &:focus {
-            border-color: lighten( #4D8FAC, 10% );
+        &:focus {
+            border-color: lighten( #4D8FAC, 10%);
         }
     }
 }
@@ -91,4 +84,9 @@ $breakpoint-large: 60em; // 960px
 
 .white-text {
     color: white;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
 }
