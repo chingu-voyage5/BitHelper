@@ -5,12 +5,6 @@ import ProjectList from '../organisms/ProjectList';
 
 import projectStatus from '../../js/projectStatus';
 
-const dashboardStyle = {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-}
-
 class Dashboard extends Component {
 
     render() {
@@ -26,10 +20,10 @@ class Dashboard extends Component {
 
             return (
                 <div>
-                    <h2 style={{"textAlign": 'center'}}>
+                    <h2 className="text-center">
                         Dashboard
                     </h2>
-                    <div style={dashboardStyle}>
+                    <div className="dashboard">
                         <ProjectList limit={this.props.limit} updateProjects={this.props.updateProjects} projects={projects} user={this.props.user} />
                     </div>
                 </div>
