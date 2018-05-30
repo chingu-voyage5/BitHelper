@@ -78,14 +78,13 @@ class ContactForm extends Component {
             this.props.history.push('/');
         } else {
             console.log('state',this.state);
-            const url = 'https://formspree.io/' + this.state.contact.email;
+            const url = '/api/users/contact/' + this.props.user._id;
             const body = {
+                senderId: this.props.user._id,
                 name: this.props.user.username,
-                _replyto: this.props.user.email,
                 subject: this.state.subject,
                 message: this.state.body
             };
-            console.log('message ready to be sent', url, body);
             axios.post(url, body)
             .then(res => {
                 console.log('message submitted', res);
