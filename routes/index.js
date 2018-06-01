@@ -10,7 +10,6 @@ routes.use(function(req, res, next) {
 
     // GET request is allowed without login
     if (req.method === "GET") {
-        console.log("GET route. Pass Through");
         return next();
     }
 

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const request = require('request');
+
 const User = require('../../model/users');
 const userHelpers = require('./userHelpers.js')
 
@@ -8,7 +10,7 @@ const userHelpers = require('./userHelpers.js')
 
 router.route('/')
   // retrieve all users from the database
-  .get(function(req, res) {
+  /*.get(function(req, res) {
    User.find(function(err, users) {
      if (err) { res.send(err); }
      let users_filtered = users.map(function(item) {
@@ -21,9 +23,9 @@ router.route('/')
         };
      })
      //respond with full user data if logged in, filterd data if not logged in.
-     res.json((req.user) ? (users) : (users_filtered));
+     res.json(users_filtered);
    });
- })
+  })*/
   // post new users to the database
   .post(function(req, res) {
 
@@ -50,7 +52,7 @@ router.route('/:user_id')
             skillset: user.skillset
           };
           // respond with full user data only if logged in.
-          res.json((req.user) ? (user) : (user_filtered)); 
+          res.json(user_filtered); 
         }
     });
   })
@@ -98,22 +100,41 @@ router.route('/contact/:user_id')
   // Contact Form Submission
   .post(function(req, res) {
     console.log("Contact Form Submission", req.body);
-    /* Contact submission code from React
-    const url = 'https://formspree.io/' + this.state.contact.email;
-              const body = {
-                  name: this.props.user.username,
-                  _replyto: this.props.user.email,
-                  subject: this.state.subject,
-                  message: this.state.body
-              };
-              console.log('message ready to be sent', url, body);
-              axios.post(url, body)
-              .then(res => {
-                  console.log('message submitted', res);
-                  alert('Message successfully sent!');
-              })
-              .catch(err => { if (err) throw err; });
+    /* Received data from frontend
+      senderId: this.props.user._id,
+      recipientId: this.state.contact._id,
+      subject: this.state.subject,
+      message: this.state.body
     */
+    // Find recipient info
+    User.findById(req.body.recipientId, function(err, recipient) {
+      if (err) { res.send(err); }
+      else { 
+        // Find sender info
+        User.findById(req.body.senderId, function(err, sender) {
+          if (err) { res.send(err); }
+          else { 
+            const url = 'https://formspree.io/' + recipient.email;
+            const body = {
+              name: sender.username,
+              _replyto: sender.email,
+              subject: req.body.subject,
+              message: req.body.message
+            };
+            console.log('message ready to be sent', url, body);
+            request.post(url, {form: body}, function(error, response, body) {
+              if (error) { 
+                console.log(error);
+                res.error(error);
+              } else {
+                console.log('message submitted', response);
+                res.json({message: 'Message successfully sent!'});
+              }
+            });
+          }
+        })
+      }
+    });
   });
 
 module.exports = router;
