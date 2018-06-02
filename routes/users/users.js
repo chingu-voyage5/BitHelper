@@ -10,6 +10,7 @@ const userHelpers = require('./userHelpers.js')
 
 router.route('/')
   // retrieve all users from the database
+  // this route is to be removed.
   /*.get(function(req, res) {
    User.find(function(err, users) {
      if (err) { res.send(err); }
@@ -26,6 +27,7 @@ router.route('/')
      res.json(users_filtered);
    });
   })*/
+  
   // post new users to the database
   .post(function(req, res) {
 
@@ -51,6 +53,10 @@ router.route('/:user_id')
             avatar: user.avatar,
             skillset: user.skillset
           };
+          // Only if user is requesting own info, share email address.
+          if (req.user._id === req.params.user_id) {
+            user_filtered.email = user.email;
+          }
           // respond with full user data only if logged in.
           res.json(user_filtered); 
         }
@@ -99,13 +105,6 @@ router.route('/:user_id')
 router.route('/contact/:user_id')
   // Contact Form Submission
   .post(function(req, res) {
-    console.log("Contact Form Submission", req.body);
-    /* Received data from frontend
-      senderId: this.props.user._id,
-      recipientId: this.state.contact._id,
-      subject: this.state.subject,
-      message: this.state.body
-    */
     // Find recipient info
     User.findById(req.body.recipientId, function(err, recipient) {
       if (err) { res.send(err); }

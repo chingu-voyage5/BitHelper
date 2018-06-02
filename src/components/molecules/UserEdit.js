@@ -63,8 +63,7 @@ class UserEditNew extends Component {
             displayName: this.state.displayName,
             avatar: this.state.avatar,
             skillset: this.state.skillset,
-            email: this.state.email,
-            projects: this.props.user.projects
+            email: this.state.email
         });
         this.props.history.push('/user/view/'+this.props.user._id);
     }
