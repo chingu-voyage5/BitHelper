@@ -8,9 +8,9 @@ const Schema = mongoose.Schema;
 //create new instance of the mongoose.schema. the schema takes an object that shows
 //the shape of your database entries.
 const UsersSchema = new Schema({
-  username: { type: String, default: '', 
-    
-  }, //username
+  username: { 
+    type: String, default: '', 
+  },
   email: String,
   displayName: {
     type: String,

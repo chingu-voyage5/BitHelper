@@ -75,23 +75,26 @@ class ContactForm extends Component {
         if (!this.props.user) {
             console.log('user not logged in');
             alert('Please login first!');
-            this.props.history.push('/');
+            this.props.history.push('/project/view/' + this.state.project._id);
         } else {
             console.log('state',this.state);
-            const url = 'https://formspree.io/' + this.state.contact.email;
+            const url = '/api/users/contact/' + this.props.user._id;
             const body = {
-                name: this.props.user.username,
-                _replyto: this.props.user.email,
+                senderId: this.props.user._id,
+                recipientId: this.state.contact._id,
                 subject: this.state.subject,
                 message: this.state.body
             };
-            console.log('message ready to be sent', url, body);
             axios.post(url, body)
             .then(res => {
-                console.log('message submitted', res);
+                //console.log('message submitted', res);
                 alert('Message successfully sent!');
+                this.props.history.push('/project/view/' + this.state.project._id);
             })
-            .catch(err => { if (err) throw err; });
+            .catch(err => { 
+                if (err) throw err; 
+                this.props.history.push('/project/view/' + this.state.project._id);
+            });
         }
     }
     render() {

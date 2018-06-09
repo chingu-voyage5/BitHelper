@@ -6,24 +6,21 @@ const projects = require('./projects/projects.js');
 const users = require('./users/users.js');
 const follow = require('./follow/follow.js');
 
-/*
-
 routes.use(function(req, res, next) {
 
-    // get requests allowse
+    // GET request is allowed without login
     if (req.method === "GET") {
-    return next();
+        return next();
     }
 
-    // if req.user does not exist for POST || PUT || DELETE redirect
+    // if req.user does not exist for POST || PUT || DELETE
     if (!req.user) {
-    return res.status(400).json({message: 'You have to be loggedin to access this route.'});
+        return res.status(400).json({message: 'You have to be loggedin to access this route.'});
     }
 
     // user is logged in move to next step
     return next();
 });
-*/
 
 routes.use('/auth', auth);
 
