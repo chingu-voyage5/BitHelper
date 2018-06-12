@@ -16,7 +16,7 @@ const Footer = () => {
               Developed with <FaHeart /> by
               <a href="https://github.com/shibatas/"> Shibatas</a>,
               <a href="https://github.com/marckimbrey"> MarcKimbrey</a> and
-              <a href="https://github.com/alexgherardelli">AlexGherardelli</a>
+              <a href="https://github.com/alexgherardelli"> AlexGherardelli</a>
             </p>
           </div>
           <div className="col">
