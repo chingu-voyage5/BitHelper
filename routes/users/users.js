@@ -54,7 +54,7 @@ router.route('/:user_id')
             skillset: user.skillset
           };
           // Only if user is requesting own info, share email address.
-          if (req.user._id === req.params.user_id) {
+          if (req.user && req.user._id === req.params.user_id) {
             user_filtered.email = user.email;
           }
           // respond with full user data only if logged in.
