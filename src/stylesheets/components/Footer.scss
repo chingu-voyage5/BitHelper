@@ -10,9 +10,21 @@ footer {
 }
 
 .github-logo {
-    width: 42px;
-    position: relative;
-    bottom: 10px;
+    display: block;
+}
+
+$tap-target-size: 48px;
+$github-icon-size: 40px;
+
+.github-link {
+    /* make the tap target big enough for all fingers */
+    min-width: $tap-target-size;
+    min-height: $tap-target-size;
+    /* make the icon a bit smaller for style and compensate with padding */
+    font-size: $github-icon-size;
+    padding: ($tap-target-size - $github-icon-size) / 2;
+    /* compensate the offset on the left with a negative margin */
+    margin-left: -($tap-target-size - $github-icon-size) / 2;
 }
 
 .footer-row {

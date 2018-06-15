@@ -19,13 +19,13 @@ const Footer = () => {
               <a href="https://github.com/alexgherardelli"> AlexGherardelli</a>
             </p>
           </div>
-          <div className="col-md mb-3 mb-md-4">
-            <div className="footer-copyrights">
-              <a href="https://github.com/chingu-voyage3/bears-20">
-                <GoMarkGithub className="github-logo" />
-              </a>
-              <p className="my-0"> A Chingu project. © Copyright {new Date().getFullYear()}</p>
-            </div>
+          <div className="col-md mb-3 mb-md-4 d-flex justify-content-center align-items-center">
+            <a className="github-link" href="https://github.com/chingu-voyage3/bears-20">
+              <GoMarkGithub className="github-logo" />
+            </a>
+            <p className="my-0 ml-3">
+              A Chingu project. <span className="d-inline-block">© {new Date().getFullYear()}</span>
+            </p>
           </div>
         </div>
       </div>
