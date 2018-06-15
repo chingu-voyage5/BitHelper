@@ -13,12 +13,12 @@ const Footer = () => {
         <div className="row mt-3 mt-md-4 footer-row">
           <div className="col-md col-lg-8 mb-3 mb-md-4 d-flex justify-content-center justify-content-md-start align-items-center">
             <p className="my-0 text-md-left">
-              Developed with <FaHeart /> by
-              <a href="https://github.com/shibatas/"> Shibatas</a>,
-              <a href="https://github.com/marckimbrey"> MarcKimbrey</a>,
-              <a href="https://github.com/heyjp"> HeyJP</a>,
-              <a href="https://github.com/sfiquet"> SFiquet</a> and
-              <a href="https://github.com/alexgherardelli"> AlexGherardelli</a>
+              <span>Developed with <FaHeart /> by </span>
+              <a href="https://github.com/shibatas/">Shibatas</a><span>, </span>
+              <a href="https://github.com/marckimbrey">MarcKimbrey</a><span>, </span>
+              <a href="https://github.com/heyjp">HeyJP</a><span>, </span>
+              <a href="https://github.com/sfiquet">SFiquet</a><span> and </span> 
+              <a href="https://github.com/alexgherardelli">AlexGherardelli</a>
             </p>
           </div>
           <div className="col-md col-lg-4 mb-3 mb-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
