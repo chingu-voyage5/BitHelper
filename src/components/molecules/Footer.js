@@ -20,7 +20,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="col-md mb-3 mb-md-4 d-flex justify-content-center align-items-center">
-            <a className="github-link" href="https://github.com/chingu-voyage3/bears-20">
+            <a className="github-link" href="https://github.com/chingu-voyage3/bears-20" aria-label="GitHub Repository">
               <GoMarkGithub className="github-logo" />
             </a>
             <p className="my-0 ml-3">
