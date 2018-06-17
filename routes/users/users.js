@@ -91,15 +91,20 @@ router.route('/:user_id')
 
   //delete method for removing a user from our database
   .delete(function(req, res) {
-   User.findById(req.user._id)
-     .exec(function (err, user) {
-       if (!user._id.equals(req.user._id)) return res.json({ message: 'Users do not match'});
-       //selects the user by its ID, then removes it.
-       User.remove({ _id: req.params.user_id }, function(err, user) {
-         if (err) { res.send(err); }
-         return res.json({ message: 'User has been deleted' })
-       })
-     })
+    User.findById(req.params.user_id)
+      .exec(function (err, user) {
+        if (err) return res.send(err);
+        if (user._id === req.user._id) {
+          // user to be deleted is owned by the logged in user
+          user.remove({ _id: req.params.user_id }, function(err, user) {
+            if (err) { res.send(err); }
+          });
+          return res.redirect('/');
+        } else {
+          // user to be deleted is not owned by the logged in user
+          return res.send('Cannot delete account not owned by the user');
+        }
+      })
   });
 
 router.route('/contact/:user_id')
