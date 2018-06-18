@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import Button from '../atoms/Button';
-import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input }  from "reactstrap";
+import { Modal, ModalHeader, ModalBody }  from "reactstrap";
 import logo from "../../images/logo.svg"
 import defaultAvatar from "../../images/default-avatar.png";
 import githubLogin from "../../images/github-login.svg";
@@ -52,6 +52,7 @@ class Nav extends Component {
         break;
       case "dashboard":
         this.props.history.push("/dashboard");
+        break;
       default:
     }
   };

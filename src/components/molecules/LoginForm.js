@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input }  from "reactstrap";
+import { Form, FormGroup, Input }  from "reactstrap";
 import axios from 'axios';
 
 class LoginForm extends Component {

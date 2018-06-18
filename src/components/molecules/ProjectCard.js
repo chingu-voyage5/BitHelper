@@ -3,7 +3,7 @@
     shows little card with basic project info
 ------------------------*/
 
-import React, { Component } from 'react';
+import React from 'react';
 import Dotdotdot from 'react-dotdotdot';
 import Button from '../atoms/Button';
 import FollowSmall from '../atoms/FollowSmall';
