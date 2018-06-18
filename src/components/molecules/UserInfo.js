@@ -102,7 +102,11 @@ class UserInfo extends Component {
                     </div>
                     <div className='d-flex justify-content-around btn-section'>
                         {(this.props.user && user._id === this.props.user._id) ? 
-                            (<Button label='Edit Profile' redirect='/user/edit/' />) : 
+                            (<div>
+                                <Button label='Edit Profile' redirect='/user/edit/' />
+                                <Button label='Delete User' />
+                             </div>
+                            ) : 
                             (<Button label={'Contact ' + user.displayName} redirect={'/contact/'+user._id} />)
                         }
                     </div>
