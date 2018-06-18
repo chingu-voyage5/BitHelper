@@ -78,7 +78,7 @@ class ProjectList extends Component {
                                         onClick={() => this.props.history.push('/project/view/' + project._id)}
                                         onFollow={this.handleClick.bind(this, project._id)}
                                     />
-                                );
+                               );
                             } else {
                                 return null
                             }

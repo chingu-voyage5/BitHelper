@@ -4,9 +4,8 @@
 }
 
 .card {
-    // position: relative;
-    // top: -90px;
-    width: 285px;
+    max-width: 16em;
+    width: 100%;
     margin: 10px;
     border: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
