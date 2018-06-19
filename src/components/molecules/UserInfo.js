@@ -4,6 +4,8 @@
 ------------------------*/
 
 import React, { Component } from 'react';
+import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input }  from "reactstrap";
+
 import Button from '../atoms/Button.js';
 import Loader from "../atoms/Loader.js";
 import defaultAvatar from "../../images/default-avatar.png";
@@ -14,7 +16,8 @@ class UserInfo extends Component {
         super(props);
         this.state = {
             user: null,
-            projects: null
+            projects: null,
+            showModal: false
         };
     }
     componentDidMount() {
@@ -45,6 +48,12 @@ class UserInfo extends Component {
     }
     handleClick = (e) => {
         this.props.history.push('/project/view/' + e.target.id);
+    }
+    toggleModal = () => {
+        console.log('toggle modal', this.state.showModal);
+        this.setState({
+          showModal: !this.state.showModal
+        });
     }
     renderInfo = (user, projects) => {
         if (user) {
@@ -104,11 +113,20 @@ class UserInfo extends Component {
                         {(this.props.user && user._id === this.props.user._id) ? 
                             (<div>
                                 <Button label='Edit Profile' redirect='/user/edit/' />
-                                <Button label='Delete User' />
+                                <button className='btn' label='Delete User' onClick={this.toggleModal}>Delete User</button>
                              </div>
                             ) : 
                             (<Button label={'Contact ' + user.displayName} redirect={'/contact/'+user._id} />)
                         }
+
+                        <Modal isOpen={this.state.showModal} toggle={this.toggleModal} className={this.props.className}>
+                            <ModalHeader toggle={this.toggleModal}>
+                                Delete your account.
+                            </ModalHeader>
+                            <ModalBody className="text-center">
+                                Are you sure?
+                            </ModalBody>
+                        </Modal>
                     </div>
                 </div>
             );
