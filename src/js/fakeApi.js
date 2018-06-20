@@ -42,11 +42,15 @@ const fakeApi = {
     console.log('FAKE postProject');
     next({data: "FAKE postProject"});
   },
-
   // delete project
   deleteProject(data, next) {
     console.log('FAKE deleteProject');
     next({data: "FAKE deleteProject"});
+  },
+  // delete user
+  deleteUser(id, next) {
+    console.log('FAKE deleteUser');
+    next({data: "FAKE deleteUser Success"});
   }
 };
 

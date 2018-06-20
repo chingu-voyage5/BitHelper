@@ -50,10 +50,12 @@ class UserInfo extends Component {
         this.props.history.push('/project/view/' + e.target.id);
     }
     toggleModal = () => {
-        console.log('toggle modal', this.state.showModal);
         this.setState({
           showModal: !this.state.showModal
         });
+    }
+    deleteUser = () => {
+        this.props.onUserDelete(this.props.match.params.id);
     }
     renderInfo = (user, projects) => {
         if (user) {
@@ -126,8 +128,8 @@ class UserInfo extends Component {
                             <ModalBody className="text-center">
                                 This will also delete all of your owned projects, and this action cannot be undone. <br/> Are you sure? 
                                 <div>
-                                    <button className='btn'>Yes</button>
-                                    <button className='btn'>NO</button>
+                                    <button className='btn' onClick={this.deleteUser}>Yes</button>
+                                    <button className='btn' onClick={this.toggleModal}>NO</button>
                                 </div>
                             </ModalBody>
                         </Modal>

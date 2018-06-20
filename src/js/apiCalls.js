@@ -116,6 +116,19 @@ const apiCall = {
       next({error: err});
       throw err;
     });
+  },
+  
+  // delete user
+  deleteUser(id, next) {
+    console.log('deleteUser');
+    axios.delete(`${apiUrl}/api/users/${id}`)
+    .then(res => {
+      next({data: res.data});
+    })
+    .catch(err => {
+      next({error: err});
+      throw err;
+    });
   }
 };
 

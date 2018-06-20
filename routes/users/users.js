@@ -91,7 +91,8 @@ router.route('/:user_id')
 
   //delete method for removing a user from our database
   .delete(function(req, res) {
-    User.findById(req.params.user_id)
+    console.log('Delete User request', req.params.user_id);
+/*    User.findById(req.params.user_id)
       .exec(function (err, user) {
         if (err) return res.send(err);
         if (user._id === req.user._id) {
@@ -104,7 +105,7 @@ router.route('/:user_id')
           // user to be deleted is not owned by the logged in user
           return res.send('Cannot delete account not owned by the user');
         }
-      })
+      }) */
   });
 
 router.route('/contact/:user_id')

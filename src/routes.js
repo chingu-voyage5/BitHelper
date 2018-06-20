@@ -143,6 +143,19 @@ class App extends Component {
       }
     });
   }
+  // delete user 
+  deleteUser = (id) => {
+    console.log(`delete user ${id}`);
+    api.deleteUser(id, res => {
+      if (res.error) {
+        console.error(res.error);
+        window.location = '/';
+      } else {
+        console.log(res.data);
+        window.location = '/';
+      }
+    })
+  }
   // logout the user by setting the app state.user as null
   logoutUser = () => { // logout user
     axios.get('/auth/logout').then(()=> {
@@ -154,9 +167,6 @@ class App extends Component {
       window.location = '/'; // and redirects to the homepage
     });
   }
-
-
-
   // once project is unfollowed or followed, matches the db value without calling db
   updateUserProjects = (project_id) => {
     // copy state
@@ -242,7 +252,8 @@ class App extends Component {
             {...{
               user: this.props.user,
               projects: this.props.projects,
-              getOneUser: this.getOneUser
+              getOneUser: this.getOneUser,
+              onUserDelete: this.deleteUser
             }} />
         }
         }/>
