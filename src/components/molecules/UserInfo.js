@@ -113,7 +113,7 @@ class UserInfo extends Component {
                         {(this.props.user && user._id === this.props.user._id) ? 
                             (<div>
                                 <Button label='Edit Profile' redirect='/user/edit/' />
-                                <button className='btn' label='Delete User' onClick={this.toggleModal}>Delete User</button>
+                                <button className='btn' onClick={this.toggleModal}>Delete User</button>
                              </div>
                             ) : 
                             (<Button label={'Contact ' + user.displayName} redirect={'/contact/'+user._id} />)
@@ -124,7 +124,11 @@ class UserInfo extends Component {
                                 Delete your account.
                             </ModalHeader>
                             <ModalBody className="text-center">
-                                Are you sure?
+                                This will also delete all of your owned projects, and this action cannot be undone. <br/> Are you sure? 
+                                <div>
+                                    <button className='btn'>Yes</button>
+                                    <button className='btn'>NO</button>
+                                </div>
                             </ModalBody>
                         </Modal>
                     </div>

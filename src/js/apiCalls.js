@@ -10,6 +10,7 @@ const apiCall = {
   // Retrieve all projects from server
   getAllProjects(next) {
     // get projects from api
+    console.log('get all projects url', apiUrl + '/api/projects');
     axios.get(apiUrl + '/api/projects')
     .then(res => {
       next({data: res.data});

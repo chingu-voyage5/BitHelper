@@ -9,6 +9,7 @@ import axios from 'axios';
 // Import Javascript functions
 import getCookie from './js/getCookie';
 import apiCall from './js/apiCalls';
+import fakeApi from './js/fakeApi';
 
 // Actions
 import { setUser, logoutUser } from './actions/users.js';
@@ -36,9 +37,15 @@ import Dashboard from './components/molecules/Dashboard';
 // Loads environment variables with dotenv
 require('dotenv').load();
 
+let api = apiCall;
+if (process.env.REACT_APP_FAKE) {
+  console.log("***FAKE MODE***");
+  api = fakeApi;
+}
+
 // Declare App component 
 class App extends Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
 
     // url is REACT_APP_APPURL if set, otherwise it's window.location.origin
@@ -50,7 +57,7 @@ class App extends Component {
     this.state = {
       apiUrl: url
     }
-  }
+  }*/
   // Once the app is mounted
   componentDidMount() {
     // load all projects 
@@ -74,9 +81,8 @@ class App extends Component {
 
   // fetch all projcets
   allProjects = () => {
-    apiCall.getAllProjects(res => {
+    api.getAllProjects(res => {
       if (res.error) {console.error(res.error)}
-      console.log('res.data', res.data);
       if (res.data) {
         this.setState({projects: res.data}); // update state to response data
         this.props.setProjects(res.data); // redux store
@@ -86,8 +92,8 @@ class App extends Component {
   // get one project by ID
   getOneProject = (projectId, next) => {
     // apiCall expects a "null" if projects are not loaded yet
-    const projects = (this.state.projects.length > 0) ? this.state.projects : null;
-    apiCall.getProjectById(projects, projectId, res => {
+    const projects = (this.props.projects.length > 0) ? this.props.projects : null;
+    api.getProjectById(projects, projectId, res => {
       if (res.error) {console.error(res.error)}
       next(res.data);
     });
@@ -101,23 +107,23 @@ class App extends Component {
   // update project
   updateProject = (data) => {
     console.log('updateProject', data);
-    apiCall.postProject(data, this.allProjects());
+    api.postProject(data, this.allProjects());
   }
   // delete project
   deleteProject = (data) => {
-    apiCall.deleteProject(data, this.allProjects());
+    api.deleteProject(data, this.allProjects());
   }
 
   // get one user profile by ID
   getOneUser = (id, next) => {
-    apiCall.getUserById(id, res => {
+    api.getUserById(id, res => {
       if (res.error) {console.error(res.error)}
       next(res.data);
     });
   }
   // updates user data 
   postUser = (data) => {
-    apiCall.postUser(data, () => {
+    api.postUser(data, () => {
       this.allProjects();
       this.setUser();
     });
@@ -125,7 +131,7 @@ class App extends Component {
   // get user data from api and assign it to state
   setUser = () => {
     console.log('set user');
-    apiCall.getCurrentUser(res => {
+    api.getCurrentUser(res => {
       console.log('set user response', res);
       if (res.error) {console.error(res.error)}
       if (res.data) {

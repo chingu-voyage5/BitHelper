@@ -76,7 +76,6 @@ class ProjectInfo extends Component {
     const isOwner = user && owner && user._id === owner._id;
     let buttons = null;
 
-    console.log('render', project);
     if (!projectId) {
       //this is the '/projects/view/' route without projectId
       return <ProjectList {...this.props} />;
