@@ -11,7 +11,7 @@ import FollowSmall from '../atoms/FollowSmall';
 import projectStatus from '../../js/projectStatus';
 
 const ProjectCard = ({user, project, onClick, onFollow}) => (
-    <div className="card"
+    <div className="card project-card"
         key={project._id}
         id={project._id}>
         {/* Follow button shows only if user is logged in and not the owner */}
