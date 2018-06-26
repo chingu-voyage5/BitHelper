@@ -103,18 +103,58 @@ router.route('/:user_id')
         if (err) return res.send(err);
         if (String(user._id) == String(req.user._id)) {
           // user to be deleted is owned by the logged in user
+          // Find and remove owned projects
+          Project.find({
+            users: { 
+                $elemMatch: {
+                    _id: user._id,
+                    status: "owner"
+                }
+            }     
+          })
+          .exec(function (err, projects) {
+              if (err) throw err;
+              console.log('Owned projects to be deleted');
+              if (projects) {
+                projects.forEach(function(project) {
+                  console.log(project.title, project.users);
+                  project.remove();
+                  project.save(function(err, update) {
+                    if (err) throw err;
+                  });
+                })
+              }
+          });
+          // also find followed projects and remove status
+          Project.find({
+            users: { 
+                $elemMatch: {
+                    _id: user._id,
+                    status: "following"
+                }
+            }
+          })
+          .exec(function (err, projects) {
+              if (err) throw err;
+              if (projects) {
+                projects.forEach(function(project) {
+                  //unfollow all followed projects
+                  let status = project.users.id(user._id);
+                  status.remove();
+                  
+                  project.save(function(err, update) {
+                    if (err) throw err;
+                  });
+                });
+                
+              }
+          });
+          // Finally remove user account
           console.log('User to be deleted', user.username);
-          //user.remove({ _id: req.params.user_id }, function(err, user) {
-            //if (err) { res.send(err); }
-          //});
-          // also find and remove associated projects
-          Project.find({ users: { _id: user._id} })
-            .exec(function (err, projects) {
-              console.log('Projects to be deleted', projects);
-              //projects.remove({}, function(err, doc) {
-                //if (err) { res.send(err); }
-              //})
-            });
+          user.remove();
+          user.save(function(err, update) {
+            if (err) throw err;
+          });
           return res.redirect('/');
         } else {
           // user to be deleted is not owned by the logged in user
