@@ -6,6 +6,8 @@ const request = require('request');
 const User = require('../../model/users');
 const userHelpers = require('./userHelpers.js')
 
+const Project = require('../../model/projects');
+
  // USER ROUTES
 
 router.route('/')
@@ -45,7 +47,10 @@ router.route('/:user_id')
   .get(function(req, res) {
     User.findById(req.params.user_id, function(err, user) {
       if (err) { res.send(err); }
-      else { 
+      else if (!user) {
+          console.log("User not found!");
+          res.send("User not found!");
+      } else { 
           let user_filtered = {
             _id: user._id,
             username: user.username,
@@ -54,7 +59,7 @@ router.route('/:user_id')
             skillset: user.skillset
           };
           // Only if user is requesting own info, share email address.
-          if (req.user._id === req.params.user_id) {
+          if (req.user && req.user._id === req.params.user_id) {
             user_filtered.email = user.email;
           }
           // respond with full user data only if logged in.
@@ -91,15 +96,62 @@ router.route('/:user_id')
 
   //delete method for removing a user from our database
   .delete(function(req, res) {
-   User.findById(req.user._id)
-     .exec(function (err, user) {
-       if (!user._id.equals(req.user._id)) return res.json({ message: 'Users do not match'});
-       //selects the user by its ID, then removes it.
-       User.remove({ _id: req.params.user_id }, function(err, user) {
-         if (err) { res.send(err); }
-         return res.json({ message: 'User has been deleted' })
-       })
-     })
+    console.log('Delete User request', req.params.user_id);
+    User.findById(req.params.user_id)
+      .exec(function (err, user) {
+        if (err) return res.send(err);
+        if (String(user._id) == String(req.user._id)) {
+          // user to be deleted is owned by the logged in user
+          // Find and remove owned projects
+          Project.deleteMany({
+            users: { 
+                $elemMatch: {
+                    _id: user._id,
+                    status: "owner"
+                }
+            }     
+          })
+          .exec(function (err, res) {
+              if (err) throw err;
+              console.log("Projects deleted", res.deletedCount);
+          });
+          // also find followed projects and remove status
+          Project.find({
+            users: { 
+                $elemMatch: {
+                    _id: user._id,
+                    status: "following"
+                }
+            }
+          })
+          .exec(function (err, projects) {
+              if (err) throw err;
+              if (projects) {
+                projects.forEach(function(project) {
+                  //unfollow all followed projects
+                  let status = project.users.id(user._id);
+                  status.remove();
+                  project.save(function(err, update) {
+                    if (err) throw err;
+                    console.log("Unfollowed projects", update.title);
+                  });
+                });
+                
+              }
+          });
+          // Finally remove user account
+          console.log('User to be deleted', user.username);
+          user.remove();
+          user.save(function(err, update) {
+            if (err) throw err;
+          });
+          return res.redirect('/');
+        } else {
+          // user to be deleted is not owned by the logged in user
+          console.log('logged in user ID does not match user to be deleted');
+          return res.send('Cannot delete account not owned by the user');
+        }
+      }) 
   });
 
 router.route('/contact/:user_id')

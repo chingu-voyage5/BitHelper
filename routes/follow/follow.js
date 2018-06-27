@@ -7,6 +7,8 @@ router.route("/:project_id").post(function(req, res) {
 
     const { _id: user_id } = req.user;
     const { project_id } = req.params;
+    
+    console.log('Follow/Unfollow Request', project_id, req.user._id);
 
     // Find existing project
     Project.findById(project_id, function(err, project) {
@@ -18,7 +20,7 @@ router.route("/:project_id").post(function(req, res) {
         if (userStatus.status === 'following') {
           // User is already following. Unfollow.
           userStatus.remove();
-          console.log('Unfollowed', project);
+          console.log('Unfollowed', project.title);
         }
       } else {
         // User not associated to project
@@ -27,7 +29,7 @@ router.route("/:project_id").post(function(req, res) {
           _id: user_id,
           status: 'following'
         });
-        console.log('Followed', project);  
+        console.log('Followed', project.title);  
       }
       project.save(function(err, update) {
         if (err) throw err;

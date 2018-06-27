@@ -9,7 +9,6 @@ import { withRouter } from 'react-router-dom';
 class Button extends Component {
   handleClick = (e) => {
     if (this.props.onClick) {
-      console.log('button click', this.props.label);
       this.props.onClick(e);
     }
     if (this.props.redirect) {
@@ -18,8 +17,6 @@ class Button extends Component {
   }
   render(){
     const style = this.props.style || null;
-
-    console.log("Button style: ", style);
     return(
       <button className="btn" style={style} onClick={this.handleClick}>{this.props.label}</button>
     )

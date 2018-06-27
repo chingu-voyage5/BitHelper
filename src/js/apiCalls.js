@@ -10,6 +10,7 @@ const apiCall = {
   // Retrieve all projects from server
   getAllProjects(next) {
     // get projects from api
+    console.log('get all projects url', apiUrl + '/api/projects');
     axios.get(apiUrl + '/api/projects')
     .then(res => {
       next({data: res.data});
@@ -108,6 +109,19 @@ const apiCall = {
   // delete project
   deleteProject(data, next) {
     axios.delete(apiUrl + '/api/projects/' + data._id)
+    .then(res => {
+      next({data: res.data});
+    })
+    .catch(err => {
+      next({error: err});
+      throw err;
+    });
+  },
+  
+  // delete user
+  deleteUser(id, next) {
+    console.log('deleteUser');
+    axios.delete(`${apiUrl}/api/users/${id}`)
     .then(res => {
       next({data: res.data});
     })

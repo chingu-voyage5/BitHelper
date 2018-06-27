@@ -4,3 +4,4 @@ src/**/*.css
 build/* 
 npm-debug.log
 TODO
+mongo/
