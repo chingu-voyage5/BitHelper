@@ -37,6 +37,7 @@ import Dashboard from './components/molecules/Dashboard';
 // Loads environment variables with dotenv
 require('dotenv').load();
 
+// Code below triggers fake auth mode for development
 let api = apiCall;
 if (process.env.REACT_APP_FAKE) {
   console.log("***FAKE MODE***");

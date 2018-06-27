@@ -99,12 +99,11 @@ router.route('/:user_id')
     console.log('Delete User request', req.params.user_id);
     User.findById(req.params.user_id)
       .exec(function (err, user) {
-        console.log('User found?', user._id, req.user._id);
         if (err) return res.send(err);
         if (String(user._id) == String(req.user._id)) {
           // user to be deleted is owned by the logged in user
           // Find and remove owned projects
-          Project.find({
+          Project.deleteMany({
             users: { 
                 $elemMatch: {
                     _id: user._id,
@@ -112,18 +111,9 @@ router.route('/:user_id')
                 }
             }     
           })
-          .exec(function (err, projects) {
+          .exec(function (err, res) {
               if (err) throw err;
-              console.log('Owned projects to be deleted');
-              if (projects) {
-                projects.forEach(function(project) {
-                  console.log(project.title, project.users);
-                  project.remove();
-                  project.save(function(err, update) {
-                    if (err) throw err;
-                  });
-                })
-              }
+              console.log("Projects deleted", res.deletedCount);
           });
           // also find followed projects and remove status
           Project.find({
@@ -141,9 +131,9 @@ router.route('/:user_id')
                   //unfollow all followed projects
                   let status = project.users.id(user._id);
                   status.remove();
-                  
                   project.save(function(err, update) {
                     if (err) throw err;
+                    console.log("Unfollowed projects", update.title);
                   });
                 });
                 
