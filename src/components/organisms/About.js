@@ -32,8 +32,8 @@ class About extends Component{
                </div>
             </div>
             <div className="row join">
-                <div className="col-md-12 text-center">
-                    <h2 className="display-4 white-text">Start your journey</h2>
+                <div className="col-md-12 text-center my-5">
+                    <h2 className="display-4 white-text mt-0">Start your journey</h2>
                     <p className="white-text">Build more projects, faster and together</p>
                     <a href="/auth/github"><Button label="Join" /></a>
                 </div>
